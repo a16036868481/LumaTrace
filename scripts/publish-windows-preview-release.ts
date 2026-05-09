@@ -165,6 +165,10 @@ function toExecutable(command: string): string {
     return process.execPath;
   }
   if (command === "gh") {
+    const installedGh = "C:\\Program Files\\GitHub CLI\\gh.exe";
+    if (existsSync(installedGh)) {
+      return installedGh;
+    }
     return "gh.exe";
   }
   if (command === "git") {
