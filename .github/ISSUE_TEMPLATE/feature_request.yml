@@ -1,23 +1,29 @@
-name: Feature request
-description: Suggest an improvement for LumaTrace.
+name: Feature request / 功能建议
+description: Suggest an improvement for LumaTrace. / 提交功能建议。
 title: "[Feature]: "
 labels: ["enhancement"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing an improvement. Please keep privacy, platform permissions, and metric accuracy in mind.
+
+        感谢你的建议。请尽量说明用户场景，并注意隐私、平台权限和指标真实性。
   - type: textarea
     id: problem
     attributes:
-      label: Problem
-      description: What user problem should this solve?
+      label: Problem / 用户问题
+      description: What user problem should this solve? / 这个功能要解决什么用户问题？
     validations:
       required: true
   - type: textarea
     id: proposal
     attributes:
-      label: Proposal
-      description: What would a good solution look like?
+      label: Proposal / 建议方案
+      description: What would a good solution look like? / 你希望它如何工作？
+      placeholder: Describe the workflow from a user's point of view. / 从用户视角描述流程。
   - type: textarea
     id: constraints
     attributes:
-      label: Safety and platform constraints
-      description: Note any privacy, permission, platform API, or metric accuracy constraints.
-
+      label: Safety and platform constraints / 安全和平台限制
+      description: Note any privacy, permission, platform API, or metric accuracy constraints. / 请说明隐私、权限、平台 API 或指标准确性限制。

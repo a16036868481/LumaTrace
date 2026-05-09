@@ -1,45 +1,70 @@
-name: Bug report
-description: Report a reproducible LumaTrace issue.
+name: Bug report / Bug 反馈
+description: Report a reproducible LumaTrace issue. / 提交可复现的问题。
 title: "[Bug]: "
 labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        Please do not paste tokens, full local paths, raw logs, device serial numbers, logcat, bugreports, or raw CSV files.
+        Thanks for helping improve LumaTrace.
+
+        Please do not paste tokens, accounts, full local paths, raw logs, device serial numbers, logcat, bugreports, raw CSV files, or private screenshots.
+
+        感谢你帮助改进 LumaTrace。请不要粘贴 token、账号、完整本地路径、原始日志、设备完整序列号、logcat、bugreport、raw CSV 或包含隐私的截图。
   - type: input
     id: version
     attributes:
-      label: Version or commit
-      description: Which version or commit did you test?
+      label: Version or commit / 版本或提交
+      description: Which LumaTrace version, release, or commit did you test? / 你使用的是哪个版本、Release 或 commit？
+      placeholder: v0.1.0-preview.2
   - type: dropdown
     id: platform
     attributes:
-      label: Platform
+      label: Platform / 平台
       options:
         - Windows
         - Android
         - iOS
         - Desktop packaging
+        - Report/export
         - Other
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment / 环境
+      description: OS version, device model, emulator name, adb/PresentMon/Xcode status if relevant. / 系统版本、设备型号、模拟器名称，以及相关的 adb/PresentMon/Xcode 状态。
+      placeholder: Windows 11 24H2, Android 14, MuMu emulator, LumaTrace preview build
   - type: textarea
     id: summary
     attributes:
-      label: Summary
-      description: What happened?
+      label: Summary / 问题概述
+      description: What happened? / 发生了什么？
     validations:
       required: true
   - type: textarea
     id: steps
     attributes:
-      label: Steps to reproduce
-      description: Keep this minimal and avoid sensitive data.
+      label: Steps to reproduce / 复现步骤
+      description: Keep this minimal and avoid sensitive data. / 尽量简洁，避免敏感信息。
+      placeholder: |
+        1. Open LumaTrace / 打开 LumaTrace
+        2. Choose Android / 选择 Android
+        3. Start test / 开始测试
+        4. ...
+    validations:
+      required: true
   - type: textarea
     id: expected
     attributes:
-      label: Expected behavior
+      label: Expected behavior / 预期结果
   - type: textarea
     id: actual
     attributes:
-      label: Actual behavior
-
+      label: Actual behavior / 实际结果
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Sanitized diagnostics / 脱敏诊断
+      description: Attach or summarize sanitized diagnostics export if available. Do not paste raw logs. / 如果可以，请附上或概述脱敏诊断导出。不要粘贴原始日志。

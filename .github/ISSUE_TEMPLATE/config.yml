@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report / 安全问题
+    url: https://github.com/a16036868481/LumaTrace/security/advisories/new
+    about: Please report security issues privately. / 安全问题请私下报告。
+  - name: Latest Windows preview / 最新 Windows 预览版
+    url: https://github.com/a16036868481/LumaTrace/releases/latest
+    about: Download the latest unsigned preview installer. / 下载最新未签名预览版安装包。

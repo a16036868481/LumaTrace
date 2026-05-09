@@ -4,6 +4,20 @@
 
 LumaTrace 是一个开源、本地优先、clean-room 的跨平台性能测试工具。它面向 Windows、Android 和 iOS 的应用或游戏测试流程，重点是让用户能够开始测试、查看实时指标、结束测试并生成报告。所有指标都会保留 `source`、`precision`、`confidence` 和 availability 信息；无法采集的指标显示 `N/A`，不会填 0 或伪造。
 
+## 下载
+
+当前 Windows 预览版安装包在 GitHub Releases：
+
+[下载最新 Windows 预览版](https://github.com/a16036868481/LumaTrace/releases/latest)
+
+注意：当前安装包仍是未签名预览版，`productionReady=false`，Windows 可能会显示 SmartScreen 提示。它不是正式生产发布。
+
+## 界面截图
+
+| 仪表盘 | 进行测试 | 测试报告 |
+| --- | --- | --- |
+| ![仪表盘](docs/screenshots/dashboard.png) | ![进行测试](docs/screenshots/test-session-running.png) | ![测试报告](docs/screenshots/report.png) |
+
 ## 当前能力
 
 - Windows：发现本机进程，选择应用或游戏进程后采集 CPU、内存；PresentMon 可用且用户显式启用时，尝试采集 FPS 和帧时间。

@@ -2,35 +2,60 @@
 
 [![CI](https://github.com/a16036868481/LumaTrace/actions/workflows/ci.yml/badge.svg)](https://github.com/a16036868481/LumaTrace/actions/workflows/ci.yml)
 
-English is the primary documentation language for this repository. A Chinese overview is available in [README.zh-CN.md](README.zh-CN.md), and the most important Chinese notes are included below.
+English is the primary documentation language for this repository. 中文说明见 [README.zh-CN.md](README.zh-CN.md)，本页也包含中文快速说明。
 
-LumaTrace is a clean-room, local-first device metrics testing toolkit. Milestone 1A backend and Milestone 1B web UI are complete. Milestone 2F closes Android Beta with non-root CPU, memory, battery, network, explicit app lifecycle, process rebind, experimental FPS probe paths, sanitized diagnostics, and report diagnostics. Milestone 3C closes PC Beta with Windows local process CPU/memory sampling plus explicit, experimental PresentMon CSV capture, capture status, compatibility checks, CSV retention, permission hints, and sanitized report diagnostics. Milestone 4B hardens the Tauri packaging foundation with toolchain detection, sidecar manifest validation, crash recovery, log rotation metadata, packaged storage smoke, and installer/signing draft docs without changing collector metrics. Milestone 5A starts iOS Foundation with Xcode/xcrun discovery and simulator target parsing; Milestone 5B adds manual xctrace CSV import parsing and target-matched MetricEvent mapping; Milestone 5C adds explicit macOS/Xcode xctrace record/export capture foundation.
+LumaTrace is a clean-room, local-first performance testing desktop app for Windows, Android, and iOS workflows. It helps you choose a target app or process, start a test, watch live metrics, stop the test, and export a report with honest source/precision/confidence metadata.
 
-## 中文快速说明
+LumaTrace 是一个开源、本地优先、clean-room 的性能测试桌面工具。它帮助你选择 Windows 进程、Android App 或 iOS trace，开始测试、查看实时指标、结束测试并导出报告。无法采集的指标会显示 `N/A`，不会伪造成 0。
 
-LumaTrace 是一个开源、本地优先、clean-room 的性能测试工具，用来帮助普通用户和开发者查看 Windows、Android、iOS 测试过程中的核心指标、实时曲线和测试报告。它不会上传云端，不默认采集隐私日志，不使用 ROOT、越狱、私有 API，也不会把无法采集的指标伪造成 0。
+[Download Windows Preview](https://github.com/a16036868481/LumaTrace/releases/latest) · [Chinese README](README.zh-CN.md) · [Report a Bug](https://github.com/a16036868481/LumaTrace/issues/new?template=bug_report.yml) · [Request a Feature](https://github.com/a16036868481/LumaTrace/issues/new?template=feature_request.yml)
 
-- Windows：选择本机正在运行的应用或游戏进程后开始测试，可采集 CPU、内存；FPS/帧时间依赖 PresentMon，仍按实验能力标记。
-- Android：连接手机或模拟器，开启开发者选项和 USB 调试，授权电脑后打开要测试的 App，再开始测试。CPU、内存、电池、网络可用；FPS/帧时间仍是实验能力。
-- iOS：当前主要是 macOS + Xcode/xctrace 相关能力和 trace 导入基础，不承诺稳定实时采集。
-- 报告：测试结束后生成 HTML、JSON、CSV 报告，缺失指标显示 `N/A`，不会填 0。
-- 隐私：导出的诊断和报告默认脱敏 token、邮箱、完整本地路径、设备序列号、原始日志等敏感信息。
+## Why LumaTrace
 
-### 中文问题反馈
+- Local-first: the desktop app talks to a `127.0.0.1` sidecar and does not upload your data to the cloud by default.
+- Honest metrics: missing or unavailable metrics stay `N/A`; mock data is clearly marked as mock.
+- Cross-platform workflow: Windows process metrics, Android adb-based metrics, and iOS xctrace foundations live in one UI.
+- Report-first: each test can produce HTML, JSON, and CSV exports with source, precision, confidence, and diagnostics.
+- Privacy-aware: diagnostics and reports sanitize tokens, emails, full local paths, device serials, command lines, raw logs, raw CSV, logcat, and bugreport content.
 
-如果你发现 Bug、安装失败、设备识别异常、FPS 不显示、报告不正确，或者有功能建议，请到 [GitHub Issues](https://github.com/a16036868481/LumaTrace/issues) 提交。
+## 中文亮点
 
-提交时建议附上：LumaTrace 版本、Windows/Android/iOS 版本、设备型号、复现步骤、预期结果、实际结果、截图，以及软件里的脱敏诊断导出。请不要上传 token、账号、完整本地路径、原始日志、raw CSV、logcat、bugreport 或包含隐私的截图。
+- 本地优先：默认不上传云端，桌面端只连接本机 `127.0.0.1` sidecar。
+- 指标诚实：采不到的指标显示 `N/A`，不会填 0；Mock 数据会明确标记。
+- 平台流程：Windows 选择本机应用/游戏进程；Android 连接手机或模拟器并打开要测试的 App；iOS 当前以 xctrace/trace 导入基础为主。
+- 报告导出：测试结束后生成 HTML、JSON、CSV，并保留指标来源、精度、置信度和诊断信息。
+- 隐私保护：报告和诊断默认脱敏 token、邮箱、完整本地路径、设备序列号、原始日志、raw CSV、logcat、bugreport 等敏感内容。
+
+## Screenshots / 界面截图
+
+| Dashboard / 仪表盘 | Run Test / 进行测试 | Report / 测试报告 |
+| --- | --- | --- |
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Run Test](docs/screenshots/test-session-running.png) | ![Report](docs/screenshots/report.png) |
+
+## Download And Install / 下载和安装
+
+The current Windows build is a preview release. It is unsigned and not production-ready yet, so Windows may show a SmartScreen warning.
+
+当前 Windows 安装包是预览版，尚未进行正式代码签名，也不是生产正式版；Windows 可能会显示 SmartScreen 提示。
+
+1. Open [Releases](https://github.com/a16036868481/LumaTrace/releases/latest).
+2. Download `LumaTrace-...-windows-x64-setup.exe`.
+3. Install and launch LumaTrace.
+4. In the app, choose **Run Test / 进行测试**, select Windows, Android, or iOS, then follow the on-screen steps.
+
+## Bug Reports And Feature Requests / 问题反馈
+
+Please submit bugs and feature requests in [GitHub Issues](https://github.com/a16036868481/LumaTrace/issues). Include the LumaTrace version, operating system, device model, steps to reproduce, expected result, actual result, screenshots when useful, and a sanitized diagnostics export.
+
+如果你发现 Bug、安装失败、设备识别异常、FPS 不显示、报告不正确，或者有功能建议，请到 [GitHub Issues](https://github.com/a16036868481/LumaTrace/issues) 提交。建议附上 LumaTrace 版本、系统版本、设备型号、复现步骤、预期结果、实际结果、截图和软件里的脱敏诊断导出。
+
+Do not upload tokens, accounts, full local paths, raw logs, raw PresentMon CSV files, logcat, bugreport, or screenshots that expose private information.
+
+请不要上传 token、账号、完整本地路径、原始日志、raw CSV、logcat、bugreport 或包含隐私的截图。
 
 ## Clean-Room Statement
 
 LumaTrace does not copy any commercial tool's code, UI, icons, text, protocols, product layout, private implementation, or proprietary behavior. This repository only implements the general product category of cross-platform device metrics testing.
-
-## Bug Reports And Feature Requests
-
-Please submit bugs and feature requests in [GitHub Issues](https://github.com/a16036868481/LumaTrace/issues). Include the LumaTrace version, operating system, device model, steps to reproduce, expected result, actual result, screenshots when useful, and a sanitized diagnostics export.
-
-Do not upload tokens, accounts, full local paths, raw logs, raw PresentMon CSV files, logcat, bugreport, or screenshots that expose private information.
 
 ## Current Capabilities
 
