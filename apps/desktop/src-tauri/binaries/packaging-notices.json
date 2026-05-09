@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-04T16:44:48.432Z",
+  "generatedAt": "2026-05-09T17:40:27.056Z",
   "artifactKind": "self-contained",
   "productionReady": false,
   "licenseReviewStatus": "draft_requires_review",
@@ -446,7 +446,7 @@
     },
     {
       "name": "fast-json-stringify",
-      "version": "6.3.0",
+      "version": "6.4.0",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
@@ -470,7 +470,7 @@
     },
     {
       "name": "fast-uri",
-      "version": "3.1.1",
+      "version": "3.1.2",
       "componentType": "npm-package",
       "license": "BSD-3-Clause",
       "licenseSource": "package_json",
@@ -530,7 +530,7 @@
     },
     {
       "name": "find-my-way",
-      "version": "9.5.0",
+      "version": "9.6.0",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
@@ -698,7 +698,7 @@
     },
     {
       "name": "node-abi",
-      "version": "3.90.0",
+      "version": "3.92.0",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
@@ -952,7 +952,7 @@
     },
     {
       "name": "semver",
-      "version": "7.7.4",
+      "version": "7.8.0",
       "componentType": "npm-package",
       "license": "ISC",
       "licenseSource": "package_json",

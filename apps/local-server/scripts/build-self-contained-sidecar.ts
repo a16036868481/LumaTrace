@@ -201,6 +201,12 @@ fn find_runtime_app(sidecar_dir: &Path) -> Option<(PathBuf, PathBuf)> {
     if node.exists() && app.join("dist").join("src").join("index.js").exists() {
         return Some((node, app));
     }
+    let resource_runtime = sidecar_dir.join("binaries").join("lumatrace-local-server-runtime");
+    let resource_node = resource_runtime.join("node.exe");
+    let resource_app = resource_runtime.join("app");
+    if resource_node.exists() && resource_app.join("dist").join("src").join("index.js").exists() {
+        return Some((resource_node, resource_app));
+    }
     None
 }
 

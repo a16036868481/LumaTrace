@@ -76,6 +76,25 @@ if (command === "dev") {
   }
 }
 
+if (command === "build") {
+  const sidecarBuild =
+    process.platform === "win32"
+      ? spawnSync("cmd.exe", ["/d", "/c", "pnpm build:self-contained-sidecar"], {
+          cwd: root,
+          env: commandEnv,
+          stdio: "inherit",
+          windowsHide: false
+        })
+      : spawnSync(pnpmCommand, ["build:self-contained-sidecar"], {
+          cwd: root,
+          env: commandEnv,
+          stdio: "inherit"
+        });
+  if (sidecarBuild.status !== 0) {
+    process.exit(sidecarBuild.status ?? 1);
+  }
+}
+
 const child =
   command === "check"
     ? spawn(cargoCommand, ["check", "--manifest-path", resolve(root, "apps/desktop/src-tauri/Cargo.toml")], {

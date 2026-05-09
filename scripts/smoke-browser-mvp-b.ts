@@ -7,11 +7,11 @@ type SmokeBrowser = {
   newPage(options?: { viewport?: { width: number; height: number } }): Promise<{
     addInitScript(fn: () => void): Promise<unknown>;
     goto(url: string, options?: { waitUntil?: "networkidle" }): Promise<unknown>;
-    getByRole(role: string, options?: { name?: string; exact?: boolean }): {
+    getByRole(role: string, options?: { name?: string | RegExp; exact?: boolean }): {
       waitFor(): Promise<unknown>;
       click(): Promise<unknown>;
     };
-    getByText(text: string, options?: { exact?: boolean }): {
+    getByText(text: string | RegExp, options?: { exact?: boolean }): {
       first(): { waitFor(): Promise<unknown> };
       waitFor(): Promise<unknown>;
     };
@@ -206,7 +206,7 @@ async function main(): Promise<void> {
 
     step("dashboard");
     await page.goto(previewUrl, { waitUntil: "networkidle" });
-    await page.getByRole("heading", { name: "Dashboard" }).waitFor();
+    await page.getByRole("heading", { name: /Dashboard|仪表盘/u }).waitFor();
     await page.getByText("Local PC", { exact: true }).waitFor();
     await page.screenshot({ path: resolve(screenshotDir, "dashboard.png"), fullPage: true });
 
@@ -214,8 +214,8 @@ async function main(): Promise<void> {
     await page.goto(`${previewUrl}/session?deviceId=mock-local-device-1&targetId=mock-game`, {
       waitUntil: "networkidle"
     });
-    await page.getByRole("heading", { name: "Test Session" }).waitFor();
-    await page.getByRole("button", { name: "Start Test", exact: true }).click();
+    await page.getByRole("heading", { name: /Test Session|进行测试/u }).waitFor();
+    await page.getByRole("button", { name: /^(Start Test|开始测试)$/u }).click();
     try {
       await page.getByText("session: running", { exact: true }).waitFor();
     } catch (error) {
@@ -238,15 +238,15 @@ async function main(): Promise<void> {
     });
 
     step("stop and report");
-    await page.getByRole("button", { name: "End Test", exact: true }).click();
-    await page.getByRole("button", { name: "Stop Session" }).click();
-    await page.getByRole("link", { name: "View Report" }).waitFor();
-    await page.getByRole("link", { name: "View Report" }).click();
-    await page.getByRole("heading", { name: "Report" }).waitFor();
-    await page.getByText("Mock metrics are for development and testing only").first().waitFor();
-    await page.getByRole("button", { name: "Export JSON" }).waitFor();
-    await page.getByRole("button", { name: "Export CSV" }).waitFor();
-    await page.getByRole("button", { name: "Export HTML" }).waitFor();
+    await page.getByRole("button", { name: /^(End Test|结束测试)$/u }).click();
+    await page.getByRole("button", { name: /^(Stop Session|停止会话|确认停止)$/u }).click();
+    await page.getByRole("link", { name: /^(View Report|查看报告)$/u }).waitFor();
+    await page.getByRole("link", { name: /^(View Report|查看报告)$/u }).click();
+    await page.getByRole("heading", { name: /^(Test Results|最近测试结果|Report|报告)$/u }).waitFor();
+    await page.getByText(/Missing values stay N\/A|无法采集的指标保持 N\/A/u).first().waitFor();
+    await page.getByRole("button", { name: /^(Export JSON|导出 JSON)$/u }).waitFor();
+    await page.getByRole("button", { name: /^(Export CSV|导出 CSV)$/u }).waitFor();
+    await page.getByRole("button", { name: /^(Export HTML|导出 HTML)$/u }).waitFor();
     await page.screenshot({ path: resolve(screenshotDir, "report.png"), fullPage: true });
 
     console.log("MVP-B browser smoke test passed");

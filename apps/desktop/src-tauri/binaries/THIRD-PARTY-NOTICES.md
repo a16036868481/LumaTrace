@@ -1,6 +1,6 @@
-﻿# Third-Party Notices
+# Third-Party Notices
 
-Generated: 2026-05-04T16:44:48.432Z
+Generated: 2026-05-09T17:40:27.056Z
 
 This draft notice file is generated from the bundled sidecar runtime. It is intended for packaging QA and release review. It is not a claim that production packaging, code signing, updater support, or store distribution is complete.
 
@@ -56,14 +56,14 @@ License review status: draft_requires_review
 | expand-template | 2.0.3 | npm-package | (MIT OR WTFPL) | recorded |
 | fast-decode-uri-component | 1.0.1 | npm-package | MIT | recorded |
 | fast-deep-equal | 3.1.3 | npm-package | MIT | recorded |
-| fast-json-stringify | 6.3.0 | npm-package | MIT | recorded |
+| fast-json-stringify | 6.4.0 | npm-package | MIT | recorded |
 | fast-querystring | 1.1.2 | npm-package | MIT | recorded |
-| fast-uri | 3.1.1 | npm-package | BSD-3-Clause | recorded |
+| fast-uri | 3.1.2 | npm-package | BSD-3-Clause | recorded |
 | fastify | 5.8.5 | npm-package | MIT | recorded |
 | fastify-plugin | 5.1.0 | npm-package | MIT | recorded |
 | fastq | 1.20.1 | npm-package | ISC | recorded |
 | file-uri-to-path | 1.0.0 | npm-package | MIT | recorded |
-| find-my-way | 9.5.0 | npm-package | MIT | recorded |
+| find-my-way | 9.6.0 | npm-package | MIT | recorded |
 | fs-constants | 1.0.0 | npm-package | MIT | recorded |
 | github-from-package | 0.0.0 | npm-package | MIT | recorded |
 | ieee754 | 1.2.1 | npm-package | BSD-3-Clause | recorded |
@@ -77,7 +77,7 @@ License review status: draft_requires_review
 | minimist | 1.2.8 | npm-package | MIT | recorded |
 | mkdirp-classic | 0.5.3 | npm-package | MIT | recorded |
 | napi-build-utils | 2.0.0 | npm-package | MIT | recorded |
-| node-abi | 3.90.0 | npm-package | MIT | recorded |
+| node-abi | 3.92.0 | npm-package | MIT | recorded |
 | on-exit-leak-free | 2.1.2 | npm-package | MIT | recorded |
 | once | 1.4.0 | npm-package | ISC | recorded |
 | pino | 10.3.1 | npm-package | MIT | recorded |
@@ -98,7 +98,7 @@ License review status: draft_requires_review
 | safe-regex2 | 5.1.1 | npm-package | MIT | recorded |
 | safe-stable-stringify | 2.5.0 | npm-package | MIT | recorded |
 | secure-json-parse | 4.1.0 | npm-package | BSD-3-Clause | recorded |
-| semver | 7.7.4 | npm-package | ISC | recorded |
+| semver | 7.8.0 | npm-package | ISC | recorded |
 | set-cookie-parser | 2.7.2 | npm-package | MIT | recorded |
 | simple-concat | 1.0.1 | npm-package | MIT | recorded |
 | simple-get | 4.0.1 | npm-package | MIT | recorded |

@@ -31,7 +31,8 @@
     "resources": [
       "binaries/sidecar-manifest.json",
       "binaries/packaging-notices.json",
-      "binaries/THIRD-PARTY-NOTICES.md"
+      "binaries/THIRD-PARTY-NOTICES.md",
+      "binaries/lumatrace-local-server-runtime"
     ]
   }
 }
