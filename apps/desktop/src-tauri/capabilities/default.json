@@ -1,0 +1,10 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Minimal LumaTrace desktop permissions. No arbitrary shell command execution is allowed. Packaging commands are fixed Rust commands and do not accept user-provided executable paths.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "opener:default"
+  ]
+}

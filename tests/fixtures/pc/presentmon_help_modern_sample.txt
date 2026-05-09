@@ -1,0 +1,1 @@
+Usage: PresentMon.exe --output_file capture.csv --timed 10 --process_id 1234 --process_name Game.exe --stop_existing_session

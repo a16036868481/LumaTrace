@@ -1,0 +1,7 @@
+{
+  "com.apple.mobilesafari": {
+    "ApplicationType": "System",
+    "CFBundleIdentifier": "com.apple.mobilesafari",
+    "CFBundleName": "MobileSafari"
+  }
+}

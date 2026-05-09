@@ -1,0 +1,30 @@
+{
+  "name": "@lumatrace/local-server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "scripts": {
+    "dev": "turbo run build --filter=@lumatrace/local-server... && node --import ./scripts/register-esm-loader.mjs dist/src/index.js",
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@fastify/websocket": "^11.0.2",
+    "@lumatrace/collectors-android": "workspace:*",
+    "@lumatrace/collectors-ios": "workspace:*",
+    "@lumatrace/collectors-mock": "workspace:*",
+    "@lumatrace/collectors-pc": "workspace:*",
+    "@lumatrace/core": "workspace:*",
+    "@lumatrace/report": "workspace:*",
+    "@lumatrace/storage": "workspace:*",
+    "fastify": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.13",
+    "ws": "^8.18.0"
+  }
+}

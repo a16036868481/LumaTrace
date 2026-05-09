@@ -1,0 +1,7 @@
+Layer name: com.example.app
+Average FPS: 58.5
+Total frames: 120
+Present-to-present histogram:
+16ms=100
+33ms=10
+50ms=2

@@ -1,0 +1,17 @@
+Package [com.example.app] (123456):
+  Activities:
+    Activity #0:
+      com.example.app/.MainActivity filter 111
+        Action: "android.intent.action.MAIN"
+        Category: "android.intent.category.LAUNCHER"
+        exported=true enabled=true
+    Activity #1:
+      com.example.app/com.example.app.GameActivity filter 222
+        Action: "android.intent.action.MAIN"
+        Category: "android.intent.category.LAUNCHER"
+        exported=true enabled=true
+    Activity #2:
+      com.example.app/.DisabledActivity filter 333
+        Action: "android.intent.action.MAIN"
+        Category: "android.intent.category.LAUNCHER"
+        enabled=false

@@ -1,0 +1,1172 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-04T16:44:48.432Z",
+  "artifactKind": "self-contained",
+  "productionReady": false,
+  "licenseReviewStatus": "draft_requires_review",
+  "bundledRuntime": {
+    "name": "Node.js",
+    "version": "v24.14.1",
+    "license": "MIT",
+    "reviewStatus": "draft_requires_review"
+  },
+  "entries": [
+    {
+      "name": "Node.js",
+      "version": "v24.14.1",
+      "componentType": "node-runtime",
+      "license": "MIT",
+      "licenseSource": "known_runtime",
+      "noticeFileNames": [],
+      "packagePath": "lumatrace-local-server-runtime/node",
+      "reviewStatus": "draft_requires_review"
+    },
+    {
+      "name": "@fastify/ajv-compiler",
+      "version": "4.0.5",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/@fastify/ajv-compiler",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "@fastify/error",
+      "version": "4.2.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/@fastify/error",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "@fastify/fast-json-stringify-compiler",
+      "version": "5.0.3",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/@fastify/fast-json-stringify-compiler",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "@fastify/forwarded",
+      "version": "3.0.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/@fastify/forwarded",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "@fastify/merge-json-schemas",
+      "version": "0.2.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/@fastify/merge-json-schemas",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "@fastify/proxy-addr",
+      "version": "5.1.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/@fastify/proxy-addr",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "@fastify/websocket",
+      "version": "11.2.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/@fastify/websocket",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "@lumatrace/collectors-android",
+      "version": "0.0.0",
+      "componentType": "npm-package",
+      "license": "UNKNOWN",
+      "licenseSource": "missing",
+      "noticeFileNames": [],
+      "packagePath": "node_modules/@lumatrace/collectors-android",
+      "private": true,
+      "reviewStatus": "missing_license"
+    },
+    {
+      "name": "@lumatrace/collectors-ios",
+      "version": "0.0.0",
+      "componentType": "npm-package",
+      "license": "UNKNOWN",
+      "licenseSource": "missing",
+      "noticeFileNames": [],
+      "packagePath": "node_modules/@lumatrace/collectors-ios",
+      "private": true,
+      "reviewStatus": "missing_license"
+    },
+    {
+      "name": "@lumatrace/collectors-mock",
+      "version": "0.0.0",
+      "componentType": "npm-package",
+      "license": "UNKNOWN",
+      "licenseSource": "missing",
+      "noticeFileNames": [],
+      "packagePath": "node_modules/@lumatrace/collectors-mock",
+      "private": true,
+      "reviewStatus": "missing_license"
+    },
+    {
+      "name": "@lumatrace/collectors-pc",
+      "version": "0.0.0",
+      "componentType": "npm-package",
+      "license": "UNKNOWN",
+      "licenseSource": "missing",
+      "noticeFileNames": [],
+      "packagePath": "node_modules/@lumatrace/collectors-pc",
+      "private": true,
+      "reviewStatus": "missing_license"
+    },
+    {
+      "name": "@lumatrace/core",
+      "version": "0.0.0",
+      "componentType": "npm-package",
+      "license": "UNKNOWN",
+      "licenseSource": "missing",
+      "noticeFileNames": [],
+      "packagePath": "node_modules/@lumatrace/core",
+      "private": true,
+      "reviewStatus": "missing_license"
+    },
+    {
+      "name": "@lumatrace/report",
+      "version": "0.0.0",
+      "componentType": "npm-package",
+      "license": "UNKNOWN",
+      "licenseSource": "missing",
+      "noticeFileNames": [],
+      "packagePath": "node_modules/@lumatrace/report",
+      "private": true,
+      "reviewStatus": "missing_license"
+    },
+    {
+      "name": "@lumatrace/storage",
+      "version": "0.0.0",
+      "componentType": "npm-package",
+      "license": "UNKNOWN",
+      "licenseSource": "missing",
+      "noticeFileNames": [],
+      "packagePath": "node_modules/@lumatrace/storage",
+      "private": true,
+      "reviewStatus": "missing_license"
+    },
+    {
+      "name": "@pinojs/redact",
+      "version": "0.4.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/@pinojs/redact",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "abstract-logging",
+      "version": "2.0.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [],
+      "packagePath": "node_modules/abstract-logging",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "ajv",
+      "version": "8.20.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/ajv",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "ajv-formats",
+      "version": "3.0.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/ajv-formats",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "atomic-sleep",
+      "version": "1.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/atomic-sleep",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "avvio",
+      "version": "9.2.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/avvio",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "base64-js",
+      "version": "1.5.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/base64-js",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "better-sqlite3",
+      "version": "12.9.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/better-sqlite3",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "bindings",
+      "version": "1.5.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE.md"
+      ],
+      "packagePath": "node_modules/bindings",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "bl",
+      "version": "4.1.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE.md"
+      ],
+      "packagePath": "node_modules/bl",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "buffer",
+      "version": "5.7.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/buffer",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "chownr",
+      "version": "1.1.4",
+      "componentType": "npm-package",
+      "license": "ISC",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/chownr",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "cookie",
+      "version": "1.1.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/cookie",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "decompress-response",
+      "version": "6.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "license"
+      ],
+      "packagePath": "node_modules/decompress-response",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "deep-extend",
+      "version": "0.6.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/deep-extend",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "dequal",
+      "version": "2.0.3",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "license"
+      ],
+      "packagePath": "node_modules/dequal",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "detect-libc",
+      "version": "2.1.2",
+      "componentType": "npm-package",
+      "license": "Apache-2.0",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/detect-libc",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "duplexify",
+      "version": "4.1.3",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/duplexify",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "end-of-stream",
+      "version": "1.4.5",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/end-of-stream",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "expand-template",
+      "version": "2.0.3",
+      "componentType": "npm-package",
+      "license": "(MIT OR WTFPL)",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/expand-template",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "fast-decode-uri-component",
+      "version": "1.0.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/fast-decode-uri-component",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "fast-deep-equal",
+      "version": "3.1.3",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/fast-deep-equal",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "fast-json-stringify",
+      "version": "6.3.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/fast-json-stringify",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "fast-querystring",
+      "version": "1.1.2",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/fast-querystring",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "fast-uri",
+      "version": "3.1.1",
+      "componentType": "npm-package",
+      "license": "BSD-3-Clause",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/fast-uri",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "fastify",
+      "version": "5.8.5",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/fastify",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "fastify-plugin",
+      "version": "5.1.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/fastify-plugin",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "fastq",
+      "version": "1.20.1",
+      "componentType": "npm-package",
+      "license": "ISC",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/fastq",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "file-uri-to-path",
+      "version": "1.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/file-uri-to-path",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "find-my-way",
+      "version": "9.5.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/find-my-way",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "fs-constants",
+      "version": "1.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/fs-constants",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "github-from-package",
+      "version": "0.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/github-from-package",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "ieee754",
+      "version": "1.2.1",
+      "componentType": "npm-package",
+      "license": "BSD-3-Clause",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/ieee754",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "inherits",
+      "version": "2.0.4",
+      "componentType": "npm-package",
+      "license": "ISC",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/inherits",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "ini",
+      "version": "1.3.8",
+      "componentType": "npm-package",
+      "license": "ISC",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/ini",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "ipaddr.js",
+      "version": "2.4.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/ipaddr.js",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "json-schema-ref-resolver",
+      "version": "3.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/json-schema-ref-resolver",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "json-schema-traverse",
+      "version": "1.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/json-schema-traverse",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "light-my-request",
+      "version": "6.6.0",
+      "componentType": "npm-package",
+      "license": "BSD-3-Clause",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/light-my-request",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "mimic-response",
+      "version": "3.1.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "license"
+      ],
+      "packagePath": "node_modules/mimic-response",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "minimist",
+      "version": "1.2.8",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/minimist",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "mkdirp-classic",
+      "version": "0.5.3",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/mkdirp-classic",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "napi-build-utils",
+      "version": "2.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/napi-build-utils",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "node-abi",
+      "version": "3.90.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/node-abi",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "on-exit-leak-free",
+      "version": "2.1.2",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/on-exit-leak-free",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "once",
+      "version": "1.4.0",
+      "componentType": "npm-package",
+      "license": "ISC",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/once",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "pino",
+      "version": "10.3.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/pino",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "pino-abstract-transport",
+      "version": "3.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/pino-abstract-transport",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "pino-std-serializers",
+      "version": "7.1.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/pino-std-serializers",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "prebuild-install",
+      "version": "7.1.3",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/prebuild-install",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "process-warning",
+      "version": "5.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/process-warning",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "pump",
+      "version": "3.0.4",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/pump",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "quick-format-unescaped",
+      "version": "4.0.4",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/quick-format-unescaped",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "rc",
+      "version": "1.2.8",
+      "componentType": "npm-package",
+      "license": "(BSD-2-Clause OR MIT OR Apache-2.0)",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE.APACHE2",
+        "LICENSE.BSD",
+        "LICENSE.MIT"
+      ],
+      "packagePath": "node_modules/rc",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "readable-stream",
+      "version": "3.6.2",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/readable-stream",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "real-require",
+      "version": "0.2.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE.md"
+      ],
+      "packagePath": "node_modules/real-require",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "require-from-string",
+      "version": "2.0.2",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "license"
+      ],
+      "packagePath": "node_modules/require-from-string",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "ret",
+      "version": "0.5.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/ret",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "reusify",
+      "version": "1.1.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/reusify",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "rfdc",
+      "version": "1.4.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/rfdc",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "safe-buffer",
+      "version": "5.2.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/safe-buffer",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "safe-regex2",
+      "version": "5.1.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/safe-regex2",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "safe-stable-stringify",
+      "version": "2.5.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/safe-stable-stringify",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "secure-json-parse",
+      "version": "4.1.0",
+      "componentType": "npm-package",
+      "license": "BSD-3-Clause",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/secure-json-parse",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "semver",
+      "version": "7.7.4",
+      "componentType": "npm-package",
+      "license": "ISC",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/semver",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "set-cookie-parser",
+      "version": "2.7.2",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/set-cookie-parser",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "simple-concat",
+      "version": "1.0.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/simple-concat",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "simple-get",
+      "version": "4.0.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/simple-get",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "sonic-boom",
+      "version": "4.2.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/sonic-boom",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "split2",
+      "version": "4.2.0",
+      "componentType": "npm-package",
+      "license": "ISC",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/split2",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "stream-shift",
+      "version": "1.0.3",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/stream-shift",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "string_decoder",
+      "version": "1.3.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/string_decoder",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "strip-json-comments",
+      "version": "2.0.1",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "license"
+      ],
+      "packagePath": "node_modules/strip-json-comments",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "tar-fs",
+      "version": "2.1.4",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/tar-fs",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "tar-stream",
+      "version": "2.2.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/tar-stream",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "thread-stream",
+      "version": "4.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/thread-stream",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "toad-cache",
+      "version": "3.7.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/toad-cache",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "tunnel-agent",
+      "version": "0.6.0",
+      "componentType": "npm-package",
+      "license": "Apache-2.0",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/tunnel-agent",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "util-deprecate",
+      "version": "1.0.2",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/util-deprecate",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "wrappy",
+      "version": "1.0.2",
+      "componentType": "npm-package",
+      "license": "ISC",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/wrappy",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "ws",
+      "version": "8.20.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "packagePath": "node_modules/ws",
+      "reviewStatus": "recorded"
+    }
+  ],
+  "summary": {
+    "totalComponents": 96,
+    "packageCount": 95,
+    "runtimeCount": 1,
+    "missingLicenseCount": 7,
+    "privatePackageCount": 7,
+    "draftReviewRequired": true
+  },
+  "limitations": [
+    "This notice manifest is generated for packaging review and is not a substitute for release counsel review.",
+    "Node.js is bundled as a runtime in the self-contained sidecar draft and requires final release notice review.",
+    "Private LumaTrace workspace packages are listed as bundled components but are not third-party dependencies.",
+    "productionReady remains false until license notice review, signing, installer QA, and release checks are complete."
+  ]
+}

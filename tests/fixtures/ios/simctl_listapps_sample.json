@@ -1,0 +1,21 @@
+{
+  "com.apple.mobilesafari": {
+    "ApplicationType": "System",
+    "CFBundleIdentifier": "com.apple.mobilesafari",
+    "CFBundleName": "MobileSafari",
+    "CFBundleDisplayName": "Safari",
+    "Path": "/Users/alice/Library/Developer/CoreSimulator/Devices/ABC/data/Containers/Bundle/Application/Safari.app"
+  },
+  "com.example.game": {
+    "ApplicationType": "User",
+    "CFBundleIdentifier": "com.example.game",
+    "CFBundleName": "ExampleGame",
+    "CFBundleDisplayName": "Example Game",
+    "Path": "/Users/alice/Library/Developer/CoreSimulator/Devices/ABC/data/Containers/Bundle/Application/Example.app"
+  },
+  "com.example.tool": {
+    "ApplicationType": "User",
+    "CFBundleIdentifier": "com.example.tool",
+    "CFBundleName": "ExampleTool"
+  }
+}

@@ -1,0 +1,3 @@
+  mCurrentFocus=Window{6c4777c u0 NotificationShade}
+  mFocusedApp=null
+  mTopFocusedDisplayId=0

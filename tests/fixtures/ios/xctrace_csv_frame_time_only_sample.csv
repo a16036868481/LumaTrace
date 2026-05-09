@@ -1,0 +1,3 @@
+Timestamp (ms),Process,Bundle ID,PID,Frame Duration (ms)
+0,ExampleGame,com.example.game,421,16.67
+17,ExampleGame,com.example.game,421,20

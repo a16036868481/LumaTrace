@@ -1,0 +1,9 @@
+Name:	com.example.app
+State:	S (sleeping)
+Pid:	12345
+VmSize:	  456789 kB
+VmRSS:	   98765 kB
+RssAnon:	   76543 kB
+RssFile:	   20000 kB
+RssShmem:	    2222 kB
+

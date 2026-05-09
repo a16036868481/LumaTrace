@@ -1,0 +1,6 @@
+== Devices ==
+This line is not a valid xctrace device line
+Bob iPhone (17.4) (00008110-001C195E0E91801E)
+
+== Simulators ==
+iPhone 15 (17.4) missing-udid

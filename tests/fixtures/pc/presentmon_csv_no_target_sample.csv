@@ -1,0 +1,2 @@
+Application,ProcessID,Runtime,MsBetweenPresents,FPS,CPUStartTime
+Other.exe,7777,D3D11,16.67,60,1.000

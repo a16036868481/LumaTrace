@@ -1,0 +1,4 @@
+List of devices attached
+R58M123ABC device product:oriole model:Pixel_6 device:oriole transport_id:3
+emulator-5554 device product:sdk_gphone64_x86_64 model:sdk_gphone64_x86_64 device:emu64x transport_id:4
+

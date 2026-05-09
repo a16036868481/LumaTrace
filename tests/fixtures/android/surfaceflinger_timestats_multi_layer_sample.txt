@@ -1,0 +1,15 @@
+Layer name: StatusBar
+Average FPS: 60
+Total frames: 240
+16ms=240
+
+Layer name: SurfaceView - com.example.app
+Average FPS: 57.2
+Total frames: 200
+16ms=180
+33ms=20
+
+Layer name: SurfaceView - com.example.game
+Average FPS: 60
+Total frames: 210
+16ms=210

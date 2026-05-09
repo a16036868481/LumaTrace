@@ -1,0 +1,4 @@
+com.example.app
+SurfaceView - com.example.app
+StatusBar
+NavigationBar

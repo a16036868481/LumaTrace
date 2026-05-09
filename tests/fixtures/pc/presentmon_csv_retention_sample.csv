@@ -1,0 +1,2 @@
+Application,ProcessID,MsBetweenPresents,FPS,Runtime,CPUStartTime
+Game.exe,4321,16.67,60,D3D12,0.001

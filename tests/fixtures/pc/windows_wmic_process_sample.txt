@@ -1,0 +1,25 @@
+[
+  {
+    "ProcessId": 4321,
+    "Name": "Game.exe",
+    "ExecutablePath": "C:\\Users\\player\\Games\\Game.exe",
+    "CommandLine": "C:\\Users\\player\\Games\\Game.exe --token secret-value",
+    "ParentProcessId": 100,
+    "CreationDate": "20260428120000.000000+540",
+    "WorkingSetSize": 104857600,
+    "PrivatePageCount": 73400320,
+    "KernelModeTimeMs": 1200,
+    "UserModeTimeMs": 3400
+  },
+  {
+    "ProcessId": 9876,
+    "Name": "Editor.exe",
+    "ExecutablePath": "C:\\Program Files\\Editor\\Editor.exe",
+    "ParentProcessId": 100,
+    "CreationDate": "20260428120100.000000+540",
+    "WorkingSetSize": 209715200,
+    "PrivatePageCount": 157286400,
+    "KernelModeTimeMs": 100,
+    "UserModeTimeMs": 300
+  }
+]

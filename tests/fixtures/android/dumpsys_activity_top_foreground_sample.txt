@@ -1,0 +1,3 @@
+  ACTIVITY tv.danmaku.bili/.MainActivityV2 a6f48c9 pid=19908 userId=0 uid=10234 displayId=0(type=INTERNAL)
+    Local Activity 3265e67 State:
+      mCurrentConfig={1.0 440mcc51mnc [zh_CN] ldltr}

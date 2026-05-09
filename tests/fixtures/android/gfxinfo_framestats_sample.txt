@@ -1,0 +1,12 @@
+Applications Graphics Acceleration Info:
+Uptime: 123456 Realtime: 123456
+
+** Graphics info for pid 12345 [com.example.app] **
+
+---PROFILEDATA---
+Flags,IntendedVsync,Vsync,OldestInputEvent,NewestInputEvent,HandleInputStart,AnimationStart,TraversalsStart,DrawStart,SyncQueued,SyncStart,IssueDrawCommandsStart,SwapBuffers,FrameCompleted
+0,1000000000,1000000000,0,0,0,0,0,0,0,0,0,0,1000000000
+0,1016666667,1016666667,0,0,0,0,0,0,0,0,0,0,1016666667
+0,1033333334,1033333334,0,0,0,0,0,0,0,0,0,0,1050000000
+1,1050000001,1050000001,0,0,0,0,0,0,0,0,0,0,1105000000
+---PROFILEDATA---

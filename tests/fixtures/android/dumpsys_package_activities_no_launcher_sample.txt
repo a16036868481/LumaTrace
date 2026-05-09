@@ -1,0 +1,6 @@
+Package [com.example.headless] (123456):
+  Activities:
+    Activity #0:
+      com.example.headless/.InternalActivity filter 123abc
+        Action: "android.intent.action.VIEW"
+        Category: "android.intent.category.DEFAULT"

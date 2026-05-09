@@ -1,0 +1,4 @@
+package:com.example.app
+package:com.example.game
+not-a-package
+

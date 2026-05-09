@@ -1,0 +1,4 @@
+NetworkStats detail:
+  ident=[{type=WIFI}]
+    [0] uid=10123 iface=wlan0 rxBytes=bad txBytes=100
+    [1] uid=10123 iface=wlan0 rxBytes=200 rxPackets=2 txBytes=300 txPackets=3 operations=0

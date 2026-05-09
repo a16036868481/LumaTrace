@@ -1,0 +1,5 @@
+NetworkStats detail:
+  ident=[{type=WIFI, subType=COMBINED, networkId="LabWifi"}]
+    [0] uid=10001 set=DEFAULT tag=0x0 iface=wlan0 rxBytes=999999 rxPackets=9 txBytes=888888 txPackets=8 operations=0
+    [1] uid=10123 set=DEFAULT tag=0x0 iface=wlan0 rxBytes=300 rxPackets=3 txBytes=400 txPackets=4 operations=0
+    [2] uid=10222 set=DEFAULT tag=0x0 iface=wlan0 rxBytes=777777 rxPackets=7 txBytes=666666 txPackets=6 operations=0

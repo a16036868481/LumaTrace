@@ -1,0 +1,22 @@
+{
+  "name": "lumatrace-local-server",
+  "version": "0.0.0",
+  "artifactKind": "dev-wrapper",
+  "platform": "win32",
+  "arch": "x64",
+  "targetTriple": "x86_64-pc-windows-msvc",
+  "fileName": "lumatrace-local-server-x86_64-pc-windows-msvc.exe",
+  "buildTime": "2026-05-06T18:44:38.249Z",
+  "sourcePackageVersion": "0.0.0",
+  "sha256": "d8115cf81f8a6ea081ef5f87e2375dd2f373f556f77147b055de9fe56cae800e",
+  "sizeBytes": 239104,
+  "nodeRequired": true,
+  "productionReady": false,
+  "limitations": [
+    "Development wrapper uses the local Node.js runtime.",
+    "Windows Tauri externalBin uses a small dev wrapper executable that launches local Node.js.",
+    "Production self-contained sidecar is not complete in Milestone 4B.",
+    "Do not ship this artifact as a final end-user binary."
+  ],
+  "tauriExternalBin": "lumatrace-local-server"
+}

@@ -1,0 +1,2442 @@
+openapi: 3.1.0
+info:
+  title: LumaTrace Local Server API
+  version: mvp-a
+  description: >
+    REST API for the LumaTrace MVP-A local server. The WebSocket endpoint
+    is ws://127.0.0.1:3100/api/sessions/{id}/stream and emits session_status,
+    metric, session_stopped, and error messages.
+servers:
+  - url: http://127.0.0.1:3100
+paths:
+  /api/health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: Server health
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /api/devices:
+    get:
+      summary: Discover devices
+      responses:
+        "200":
+          description: Devices
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Device"
+  /api/devices/{id}/targets:
+    get:
+      summary: List targets for a device
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: Targets
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Target"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/capabilities:
+    get:
+      summary: List metric capabilities
+      description: Android capabilities include adb discovery/package/PID availability, CPU/memory/battery sampling, Milestone 2C network sampling, and Milestone 2D experimental FPS/frame-time probe paths. Android network prefers UID-level netstats and can fall back to device-level /proc/net/dev. Android FPS remains experimental; missing or ambiguous target layers produce no FPS metric. Windows PC capabilities include Local PC discovery, process targets, PID-bound CPU/memory sampling, and PresentMon-dependent FPS/frame-time placeholders. iOS Foundation capabilities include Xcode/xcrun discovery, simulator app listing, and experimental explicit xctrace capture; iOS CPU/memory/FPS/frame-time remain requires_manual_trace and unavailable values are not filled with zero.
+      parameters:
+        - name: platform
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/Platform"
+      responses:
+        "200":
+          description: Capabilities
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/MetricAvailability"
+  /api/sessions:
+    get:
+      summary: List recent sessions
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+      responses:
+        "200":
+          description: Recent sessions
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Session"
+    post:
+      summary: Create a session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSessionRequest"
+      responses:
+        "200":
+          description: Created session
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/Session"
+        "400":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}:
+    get:
+      summary: Get a session
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          $ref: "#/components/responses/SessionResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/start:
+    post:
+      summary: Start a session
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          $ref: "#/components/responses/SessionResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "409":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/pause:
+    post:
+      summary: Pause a session
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          $ref: "#/components/responses/SessionResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "409":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/stop:
+    post:
+      summary: Stop a session
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          $ref: "#/components/responses/SessionResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/metrics:
+    get:
+      summary: Query raw metrics
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+        - name: fromTimestampMs
+          in: query
+          schema:
+            type: integer
+        - name: toTimestampMs
+          in: query
+          schema:
+            type: integer
+        - name: metricNames
+          in: query
+          schema:
+            type: string
+            example: fps,cpu_percent
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 1000
+            maximum: 10000
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: Metrics
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/MetricEvent"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/metrics/downsampled:
+    get:
+      summary: Query downsampled metric buckets
+      description: Groups stored raw metrics into fixed-size buckets for long-session charting. Only numeric values are included; null or missing metrics are skipped and never converted to zero.
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+        - name: bucketSizeMs
+          in: query
+          schema:
+            type: integer
+            default: 1000
+            minimum: 1
+            maximum: 3600000
+        - name: fromTimestampMs
+          in: query
+          schema:
+            type: integer
+        - name: toTimestampMs
+          in: query
+          schema:
+            type: integer
+        - name: metricNames
+          in: query
+          schema:
+            type: string
+            example: fps,cpu_percent
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 1000
+            maximum: 10000
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: Downsampled metric buckets
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DownsampledMetricBucket"
+        "400":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/markers:
+    get:
+      summary: List session markers
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: Markers
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/EventMarker"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+    post:
+      summary: Add marker
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMarkerRequest"
+      responses:
+        "200":
+          description: Marker
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/EventMarker"
+        "400":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/report:
+    get:
+      summary: Get report summary
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: Report summary response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        required:
+                          - summary
+                          - cached
+                          - rawMetricCount
+                        properties:
+                          summary:
+                            $ref: "#/components/schemas/ReportSummary"
+                          cached:
+                            type: boolean
+                          rawMetricCount:
+                            type: integer
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/export:
+    get:
+      summary: Export report content
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+        - name: format
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [json, csv, html]
+      responses:
+        "200":
+          description: Export content
+          content:
+            application/json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/ios/trace-import:
+    post:
+      summary: Import manual iOS xctrace CSV metrics
+      description: Parses user-provided xctrace CSV text and stores MetricEvents only when target matching succeeds. Does not start xctrace recording and does not include raw CSV in diagnostics.
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IosTraceImportRequest"
+      responses:
+        "200":
+          description: iOS trace import result
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/IosTraceImportResult"
+        "400":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/ios/xctrace-capture:
+    post:
+      summary: Run explicit iOS xctrace capture
+      description: Runs macOS/Xcode xcrun xctrace record/export for an existing iOS session. Metrics are stored only when a configured export produces per-row data and target matching succeeds. Raw trace data and raw CSV are not included in diagnostics.
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IosXctraceCaptureRequest"
+      responses:
+        "200":
+          description: iOS xctrace capture result
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/IosXctraceCaptureResult"
+        "400":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "503":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/android/{deviceId}/apps/{packageName}/start:
+    post:
+      summary: Explicitly start an Android app
+      description: Uses adb shell am start -W when a launcher activity is known. Monkey fallback is optional and disabled by default. This does not start a metric session by itself.
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AndroidAppStartRequest"
+      responses:
+        "200":
+          description: Android app start result
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/AndroidAppStartResult"
+        "400":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "503":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/android/{deviceId}/apps/{packageName}/stop:
+    post:
+      summary: Explicitly force-stop an Android app
+      description: Uses adb shell am force-stop only as an explicit user action. It does not delete sessions or metrics.
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AndroidAppStopRequest"
+      responses:
+        "200":
+          description: Android app stop result
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/AndroidAppStopResult"
+        "400":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "503":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/android/{deviceId}/health:
+    get:
+      summary: Android device health
+      description: Returns adb/device state, sanitized cache summary, and Android Beta limitations. Does not include logcat or bugreport.
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Android health
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+        "400":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/android/{deviceId}/cache/status:
+    get:
+      summary: Android metadata cache status
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cache status
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+  /api/android/{deviceId}/cache/refresh:
+    post:
+      summary: Refresh Android metadata cache
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cache refresh result
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+  /api/pc/{deviceId}/presentmon/status:
+    get:
+      summary: PresentMon tool and compatibility status
+      description: Returns sanitized PresentMon tool status and compatibility for a Local PC device. PresentMon missing does not block PC CPU/memory.
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: PresentMon status
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PcPresentMonStatus"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/presentmon/status:
+    get:
+      summary: PresentMon capture status for a session
+      description: Returns the current or last sanitized capture status. No raw CSV or full local paths are returned.
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: PresentMon capture status
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PresentMonCaptureStatus"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/tools/status:
+    get:
+      summary: List tool status
+      description: Includes adb status for Android discovery and 2B/2C/2D sampling/probe paths, PresentMon status for PC Foundation, and xcrun status for iOS Foundation. PresentMon missing does not block PC CPU/memory, and xcrun missing does not block Mock, Android, or PC collectors.
+      responses:
+        "200":
+          description: Tool status records
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/ToolStatus"
+  /api/diagnostics:
+    get:
+      summary: List diagnostics
+      parameters:
+        - name: sessionId
+          in: query
+          schema:
+            type: string
+        - name: deviceId
+          in: query
+          schema:
+            type: string
+        - name: level
+          in: query
+          schema:
+            type: string
+            enum: [debug, info, warn, error]
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+        - name: fromTimestampMs
+          in: query
+          schema:
+            type: integer
+        - name: toTimestampMs
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Diagnostics
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DiagnosticRecord"
+  /api/sessions/{id}/diagnostics:
+    get:
+      summary: List sanitized diagnostics for a session
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: Session diagnostics
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DiagnosticRecord"
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/sessions/{id}/diagnostics/export:
+    get:
+      summary: Export sanitized session diagnostics
+      description: Returns sanitized JSON or static HTML. Does not include logcat, bugreport, full serials, or raw long stdout/stderr.
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+        - name: format
+          in: query
+          schema:
+            type: string
+            enum: [json, html]
+            default: json
+      responses:
+        "200":
+          description: Diagnostics export
+          content:
+            application/json:
+              schema:
+                type: object
+            text/html:
+              schema:
+                type: string
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/packaged/status:
+    get:
+      summary: Get packaged sidecar status
+      description: Requires auth in packaged mode. Returned paths are sanitized and the auth token is never returned.
+      responses:
+        "200":
+          description: Packaged status
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PackagedStatus"
+        "401":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/packaged/diagnostics/export:
+    get:
+      summary: Export sanitized packaging diagnostics
+      description: Requires auth in packaged mode. Returns JSON only. Raw logs, auth tokens, full local paths, raw CSV, logcat, and bugreport data are omitted or redacted.
+      parameters:
+        - name: format
+          in: query
+          schema:
+            type: string
+            enum: [json]
+            default: json
+      responses:
+        "200":
+          description: Sanitized packaging diagnostics export
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PackagingDiagnosticsExport"
+        "400":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "401":
+          $ref: "#/components/responses/ApiErrorResponse"
+  /api/packaged/shutdown:
+    post:
+      summary: Gracefully shutdown packaged sidecar
+      description: Requires auth in packaged mode. Used by Tauri during application exit.
+      responses:
+        "200":
+          description: Shutdown requested
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          shuttingDown:
+                            type: boolean
+        "401":
+          $ref: "#/components/responses/ApiErrorResponse"
+components:
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    ApiErrorResponse:
+      description: API error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    SessionResponse:
+      description: Session response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ApiSuccess"
+              - type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Session"
+  schemas:
+    ApiSuccess:
+      type: object
+      required: [ok, data]
+      properties:
+        ok:
+          type: boolean
+          const: true
+        data: {}
+    ApiError:
+      type: object
+      required: [ok, error]
+      properties:
+        ok:
+          type: boolean
+          const: false
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+    HealthResponse:
+      allOf:
+        - $ref: "#/components/schemas/ApiSuccess"
+        - type: object
+          properties:
+            data:
+              type: object
+              required: [status, version, uptimeMs]
+              properties:
+                status:
+                  type: string
+                  const: ok
+                version:
+                  type: string
+                uptimeMs:
+                  type: integer
+    Platform:
+      type: string
+      enum: [android, ios, windows, macos, linux]
+    ConnectionType:
+      type: string
+      enum: [usb, network, local]
+    MetricPrecision:
+      type: string
+      enum: [exact, estimated, device_level, unavailable]
+    MetricAvailabilityStatus:
+      type: string
+      enum:
+        - available
+        - unavailable
+        - requires_tool
+        - requires_permission
+        - requires_xcode
+        - requires_developer_signing
+        - requires_manual_trace
+        - experimental
+    Device:
+      type: object
+      required: [id, platform, name, connectionType, capabilities]
+      properties:
+        id:
+          type: string
+        platform:
+          $ref: "#/components/schemas/Platform"
+        name:
+          type: string
+        osVersion:
+          type: string
+        connectionType:
+          $ref: "#/components/schemas/ConnectionType"
+        capabilities:
+          type: array
+          items:
+            $ref: "#/components/schemas/MetricAvailability"
+        tags:
+          type: object
+    Target:
+      type: object
+      required: [id, name, type, platform]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum: [app, process, game]
+        packageName:
+          type: string
+        bundleId:
+          type: string
+        pid:
+          type: integer
+        executablePath:
+          type: string
+        platform:
+          $ref: "#/components/schemas/Platform"
+        tags:
+          type: object
+    Session:
+      type: object
+      required: [id, name, deviceId, targetId, sampleIntervalMs, status]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        deviceId:
+          type: string
+        targetId:
+          type: string
+        startedAt:
+          type: integer
+        endedAt:
+          type: integer
+        sampleIntervalMs:
+          type: integer
+        status:
+          type: string
+          enum: [created, running, paused, stopped, failed]
+        notes:
+          type: array
+          items:
+            type: string
+        config:
+          type: object
+          description: Optional collector config. Android supports explicit lifecycle options and enableExperimentalFps. Windows PC supports explicit PresentMon capture options. Safe lifecycle/capture defaults are false.
+          properties:
+            profileName:
+              type: string
+            enableExperimentalFps:
+              type: boolean
+              default: false
+              description: Android-only experimental FPS probe toggle. If layer matching fails or is ambiguous, no FPS metric is emitted.
+            autoStartTarget:
+              type: boolean
+              default: false
+            allowMonkeyFallback:
+              type: boolean
+              default: false
+            stopTargetOnSessionStop:
+              type: boolean
+              default: false
+            launcherComponent:
+              type: string
+            processMissingPolicy:
+              type: string
+              enum:
+                - fail_session
+                - pause_process_metrics_keep_device_metrics
+                - wait_for_rebind
+            enablePresentMonCapture:
+              type: boolean
+              default: false
+              description: Windows PC-only explicit PresentMon CSV capture toggle. Missing/no-match/ambiguous capture emits no FPS metrics.
+            presentMonCaptureDurationMs:
+              type: integer
+              default: 10000
+              maximum: 120000
+            presentMonTargetMode:
+              type: string
+              enum:
+                - pid
+                - process_name
+              default: pid
+            keepPresentMonCsv:
+              type: boolean
+              default: false
+            presentMonRetentionMode:
+              type: string
+              enum:
+                - delete_after_parse
+                - keep_until_session_end
+                - keep_user_requested
+              default: delete_after_parse
+            presentMonGracePeriodMs:
+              type: integer
+              default: 5000
+    MetricEvent:
+      type: object
+      required:
+        - sessionId
+        - timestampMs
+        - deviceId
+        - targetId
+        - metricName
+        - value
+        - unit
+        - source
+        - precision
+      properties:
+        sessionId:
+          type: string
+        timestampMs:
+          type: integer
+        monotonicMs:
+          type: number
+        sequence:
+          type: integer
+        deviceId:
+          type: string
+        targetId:
+          type: string
+        metricName:
+          type: string
+        value:
+          type:
+            - number
+            - "null"
+        unit:
+          type: string
+        source:
+          type: string
+        precision:
+          $ref: "#/components/schemas/MetricPrecision"
+        confidence:
+          type: string
+          enum: [high, medium, low]
+        parserVersion:
+          type: string
+        tags:
+          type: object
+    DownsampledMetricBucket:
+      type: object
+      required: [sessionId, bucketStartMs, bucketEndMs, metricName, count]
+      description: Bucketed metric summary. Missing/null raw values are skipped and are not represented as zero.
+      properties:
+        sessionId:
+          type: string
+        bucketStartMs:
+          type: integer
+        bucketEndMs:
+          type: integer
+        metricName:
+          type: string
+        count:
+          type: integer
+          description: Number of numeric raw samples included in the bucket.
+        minValue:
+          type: number
+        maxValue:
+          type: number
+        avgValue:
+          type: number
+        p50Value:
+          type: number
+        p95Value:
+          type: number
+        source:
+          type: string
+          description: Source when all samples share one source, or mixed when sources differ.
+        precision:
+          $ref: "#/components/schemas/MetricPrecision"
+        tags:
+          type: object
+    MetricAvailability:
+      type: object
+      required: [metricName, platform, status]
+      properties:
+        metricName:
+          type: string
+        platform:
+          $ref: "#/components/schemas/Platform"
+        status:
+          $ref: "#/components/schemas/MetricAvailabilityStatus"
+        reason:
+          type: string
+        suggestedAction:
+          type: string
+        source:
+          type: string
+    EventMarker:
+      type: object
+      required: [id, sessionId, timestampMs, label]
+      properties:
+        id:
+          type: string
+        sessionId:
+          type: string
+        timestampMs:
+          type: integer
+        label:
+          type: string
+        description:
+          type: string
+        tags:
+          type: object
+    ReportSummary:
+      type: object
+      properties:
+        durationMs:
+          type: integer
+        avgFps:
+          type: number
+        minFps:
+          type: number
+        maxFps:
+          type: number
+        onePercentLowFps:
+          type: number
+        zeroPointOnePercentLowFps:
+          type: number
+        p50FrameTimeMs:
+          type: number
+        p90FrameTimeMs:
+          type: number
+        p95FrameTimeMs:
+          type: number
+        p99FrameTimeMs:
+          type: number
+        jankCount:
+          type: integer
+        severeJankCount:
+          type: integer
+        avgCpuPercent:
+          type: number
+        peakCpuPercent:
+          type: number
+        avgMemoryMb:
+          type: number
+        peakMemoryMb:
+          type: number
+        networkRxMb:
+          type: number
+        networkTxMb:
+          type: number
+        batteryDrainPercent:
+          type: number
+        thermalEvents:
+          type: integer
+    ToolStatus:
+      type: object
+      required: [toolName, status]
+      properties:
+        toolName:
+          type: string
+        status:
+          type: string
+          enum: [available, missing, unsupported, unknown]
+        version:
+          type: string
+        path:
+          type: string
+        reason:
+          type: string
+        suggestedAction:
+          type: string
+    DiagnosticRecord:
+      type: object
+      required: [id, timestampMs, level, category, message]
+      properties:
+        id:
+          type: string
+        timestampMs:
+          type: integer
+        level:
+          type: string
+          enum: [debug, info, warn, error]
+        category:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+        sessionId:
+          type: string
+        deviceId:
+          type: string
+    PresentMonCompatibility:
+      type: object
+      properties:
+        version:
+          type: string
+        supportsOutputFile:
+          type: boolean
+        supportsTimedCapture:
+          type: boolean
+        supportsProcessIdFilter:
+          type: boolean
+        supportsProcessNameFilter:
+          type: boolean
+        supportsTerminateAfterTimer:
+          type: boolean
+        recommendedArgsStyle:
+          type: string
+        unsupportedReason:
+          type: string
+        warnings:
+          type: array
+          items:
+            type: string
+    PcPresentMonStatus:
+      type: object
+      required: [toolStatus]
+      properties:
+        toolStatus:
+          $ref: "#/components/schemas/ToolStatus"
+        compatibility:
+          nullable: true
+          $ref: "#/components/schemas/PresentMonCompatibility"
+        limitations:
+          type: array
+          items:
+            type: string
+    PresentMonCaptureStatus:
+      type: object
+      required: [status, updatedAt, warnings, diagnostics]
+      properties:
+        status:
+          type: string
+          enum:
+            - idle
+            - tool_missing
+            - planning
+            - starting
+            - capturing
+            - parsing_csv
+            - matching_target
+            - mapping_metrics
+            - completed
+            - no_data
+            - permission_limited
+            - failed
+            - aborted
+        sessionId:
+          type: string
+        targetId:
+          type: string
+        pid:
+          type: integer
+        processName:
+          type: string
+        startedAt:
+          type: integer
+        updatedAt:
+          type: integer
+        elapsedMs:
+          type: integer
+        progressPercent:
+          type: number
+        captureDurationMs:
+          type: integer
+        outputFilePathSanitized:
+          type: string
+        rawRowCount:
+          type: integer
+        matchedRowCount:
+          type: integer
+        metricCount:
+          type: integer
+        reason:
+          type: string
+        warnings:
+          type: array
+          items:
+            type: string
+        diagnostics:
+          type: array
+          items:
+            type: object
+    PackagedStatus:
+      type: object
+      required: [packaged, host, port, authRequired, uptimeMs]
+      properties:
+        packaged:
+          type: boolean
+        host:
+          type: string
+          enum: [127.0.0.1]
+        port:
+          type: integer
+        artifactKind:
+          type: string
+          description: Sidecar artifact kind, for example dev-wrapper or self-contained.
+        sidecarManifest:
+          type: object
+          description: Sanitized sidecar manifest metadata. Does not include secrets. Self-contained drafts may include noticesFile, noticesSha256, thirdPartyNoticesFile, thirdPartyNoticesSha256, and licenseReviewStatus for packaging notice review.
+          properties:
+            artifactKind:
+              type: string
+            productionReady:
+              type: boolean
+            nodeRequired:
+              type: boolean
+            noticesFile:
+              type: string
+            noticesSha256:
+              type: string
+            thirdPartyNoticesFile:
+              type: string
+            thirdPartyNoticesSha256:
+              type: string
+            licenseReviewStatus:
+              type: string
+              enum: [draft_requires_review, complete]
+        auth:
+          type: object
+          properties:
+            required:
+              type: boolean
+            tokenPresent:
+              type: boolean
+              description: Indicates that a token is configured without revealing it.
+            tokenPreview:
+              type: string
+              description: Always redacted when present; never the real token.
+        dataDir:
+          type: string
+        logsDir:
+          type: string
+        dbPath:
+          type: string
+        reportsDir:
+          type: string
+        diagnosticsDir:
+          type: string
+        authRequired:
+          type: boolean
+        sidecarPid:
+          type: integer
+        uptimeMs:
+          type: integer
+        storage:
+          type: object
+          properties:
+            dbExists:
+              type: boolean
+            migrationStatus:
+              type: string
+              enum: [unknown, ok, pending, failed]
+            migrationVersions:
+              type: array
+              items:
+                type: string
+            lastMigrationAt:
+              type: integer
+            sessionsCount:
+              type: integer
+            reportsCount:
+              type: integer
+            writable:
+              type: boolean
+            dbSizeBytes:
+              type: integer
+            dbPathSanitized:
+              type: string
+            reportsDirExists:
+              type: boolean
+            diagnosticsDirExists:
+              type: boolean
+            reportsDirSanitized:
+              type: string
+            diagnosticsDirSanitized:
+              type: string
+            lastStorageErrorSanitized:
+              type: string
+        releaseReadiness:
+          type: object
+          description: Sanitized Windows packaging release-readiness summary. It records blocker codes and status booleans only; it does not include tokens, full local paths, raw logs, command lines, stack traces, or reviewer notes.
+          properties:
+            exists:
+              type: boolean
+            valid:
+              type: boolean
+            fileName:
+              type: string
+            releaseStatus:
+              type: string
+              enum: [blocked]
+            qaDraftStatus:
+              type: string
+              enum: [automated_ready_manual_pending, manual_result_present_release_blocked, missing_required_artifacts]
+            productionReady:
+              type: boolean
+            blockers:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  reason:
+                    type: string
+                  requiredForProduction:
+                    type: boolean
+            checks:
+              type: object
+        rcGate:
+          type: object
+          description: Sanitized Windows packaging release-candidate gate summary. Draft builds remain blocked until manual QA, sidecar production readiness, license notice review, code signing, updater policy, and release approval are complete. It does not include tokens, full local paths, raw logs, command lines, stack traces, or reviewer notes.
+          properties:
+            exists:
+              type: boolean
+            valid:
+              type: boolean
+            fileName:
+              type: string
+            status:
+              type: string
+              enum: [blocked]
+            rcCandidateReady:
+              type: boolean
+            productionReady:
+              type: boolean
+            blockers:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  reason:
+                    type: string
+                  requiredForRc:
+                    type: boolean
+            gates:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  status:
+                    type: string
+                  requiredForRc:
+                    type: boolean
+                  evidence:
+                    type: object
+        releasePolicy:
+          type: object
+          description: Sanitized Windows release policy template summary. It records draft-blocked code signing, updater, license review, and release approval policy inputs without secrets, full local paths, raw logs, command lines, stack traces, or reviewer notes.
+          properties:
+            exists:
+              type: boolean
+            valid:
+              type: boolean
+            fileName:
+              type: string
+            status:
+              type: string
+              enum: [draft_blocked]
+            rcCandidateReady:
+              type: boolean
+            productionReady:
+              type: boolean
+            unsignedDraft:
+              type: boolean
+            policy:
+              type: object
+            blockers:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  reason:
+                    type: string
+                  requiredForRc:
+                    type: boolean
+            securityBoundaries:
+              type: object
+            reason:
+              type: string
+        manualGuiQaHandoff:
+          type: object
+          description: Sanitized Windows manual GUI QA handoff summary. It records handoff status, file counts, excluded-file names, and security assertion booleans only; it does not include completed manual results, reviewer notes, tokens, full local paths, raw logs, command lines, or stack traces.
+          properties:
+            exists:
+              type: boolean
+            valid:
+              type: boolean
+            fileName:
+              type: string
+            status:
+              type: string
+              enum: [handoff_ready]
+            manualGuiQaStatus:
+              type: string
+              enum: [not_run]
+            productionReady:
+              type: boolean
+            unsignedDraft:
+              type: boolean
+            handoffDirectory:
+              type: string
+            fileCount:
+              type: integer
+            files:
+              type: array
+              items:
+                type: object
+                properties:
+                  role:
+                    type: string
+                  fileName:
+                    type: string
+                  sizeBytes:
+                    type: integer
+                  sha256:
+                    type: string
+            excludedFiles:
+              type: array
+              items:
+                type: string
+            securityAssertions:
+              type: object
+            limitations:
+              type: array
+              items:
+                type: string
+            reason:
+              type: string
+        manualGuiQaResult:
+          type: object
+          description: Sanitized Windows manual GUI QA result summary. It records validation status, overall result status, reviewer-field presence booleans, source checklist metadata, step counts, and security assertion booleans only; it does not include reviewer names, reviewer notes, evidence notes, tokens, full local paths, raw logs, command lines, or stack traces.
+          properties:
+            exists:
+              type: boolean
+            valid:
+              type: boolean
+            fileName:
+              type: string
+            evidenceKind:
+              type: string
+              enum: [windows-manual-gui-qa-result]
+            status:
+              type: string
+              enum: [passed, failed, blocked]
+            productionReady:
+              type: boolean
+            unsignedDraft:
+              type: boolean
+            sourceChecklist:
+              type: object
+              properties:
+                path:
+                  type: string
+                itemCount:
+                  type: integer
+            reviewer:
+              type: object
+              properties:
+                namePresent:
+                  type: boolean
+                completedAtPresent:
+                  type: boolean
+                environmentPresent:
+                  type: boolean
+            stepSummary:
+              type: object
+              properties:
+                total:
+                  type: integer
+                passed:
+                  type: integer
+                failed:
+                  type: integer
+                blocked:
+                  type: integer
+                pending:
+                  type: integer
+                unknown:
+                  type: integer
+            securityAssertions:
+              type: object
+            limitations:
+              type: array
+              items:
+                type: string
+            reason:
+              type: string
+        releaseGateResults:
+          type: object
+          description: Sanitized Windows release gate results intake. It records per-gate status, blocker code, stable file names, verifier command labels, hashes and sizes for present results, and count summaries only; it does not include verifier stdout/stderr, reviewer notes, evidence notes, raw logs, tokens, full local paths, command lines, or stack traces.
+          properties:
+            exists:
+              type: boolean
+            valid:
+              type: boolean
+            fileName:
+              type: string
+            evidenceKind:
+              type: string
+              enum: [windows-release-gate-results-intake]
+            status:
+              type: string
+              enum: [no_results, partial_results, all_results_valid, invalid_results]
+            rcCandidateReady:
+              type: boolean
+            productionReady:
+              type: boolean
+            unsignedDraft:
+              type: boolean
+            currentRcBlockers:
+              type: array
+              items:
+                type: string
+            resultSummary:
+              type: object
+              properties:
+                total:
+                  type: integer
+                valid:
+                  type: integer
+                invalid:
+                  type: integer
+                missing:
+                  type: integer
+            results:
+              type: array
+              items:
+                type: object
+                properties:
+                  gate:
+                    type: string
+                  blockerCode:
+                    type: string
+                  resultFile:
+                    type: string
+                  templateFile:
+                    type: string
+                  status:
+                    type: string
+                    enum: [missing_result, valid_result, invalid_result]
+                  canRemoveBlocker:
+                    type: boolean
+                  verifierCommand:
+                    type: string
+                  rcGateSmokeCommand:
+                    type: string
+                  sha256:
+                    type: string
+                  sizeBytes:
+                    type: integer
+                  verifierExitCode:
+                    type: integer
+                    nullable: true
+                  reason:
+                    type: string
+            nextCommands:
+              type: array
+              items:
+                type: string
+            securityAssertions:
+              type: object
+            limitations:
+              type: array
+              items:
+                type: string
+            reason:
+              type: string
+        releaseGateResultsImport:
+          type: object
+          description: Sanitized Windows release gate results import manifest. It records only import status, source directory kind, dry-run flag, valid/invalid/missing/copied counts, stable file names, verifier exit codes, and refreshed intake counts. It does not include the source directory path, verifier stdout/stderr, reviewer notes, evidence notes, raw logs, tokens, full local paths, command lines, or stack traces.
+          properties:
+            exists:
+              type: boolean
+            valid:
+              type: boolean
+            fileName:
+              type: string
+            evidenceKind:
+              type: string
+              enum: [windows-release-gate-results-import]
+            status:
+              type: string
+              enum:
+                - no_results_found
+                - valid_results_imported
+                - invalid_results_rejected
+                - mixed_results
+                - dry_run
+            sourceDirectoryKind:
+              type: string
+              enum: [workspace_results_dir, custom_results_dir, unknown]
+            dryRun:
+              type: boolean
+            rcCandidateReady:
+              type: boolean
+            productionReady:
+              type: boolean
+            unsignedDraft:
+              type: boolean
+            importSummary:
+              type: object
+              properties:
+                total:
+                  type: integer
+                valid:
+                  type: integer
+                invalid:
+                  type: integer
+                missing:
+                  type: integer
+                copied:
+                  type: integer
+            results:
+              type: array
+              items:
+                type: object
+                properties:
+                  gate:
+                    type: string
+                  blockerCode:
+                    type: string
+                  resultFile:
+                    type: string
+                  templateFile:
+                    type: string
+                  sourceFile:
+                    type: string
+                  status:
+                    type: string
+                    enum: [missing_source, valid_imported, valid_dry_run, invalid_rejected, unknown]
+                  copied:
+                    type: boolean
+                  verifierCommand:
+                    type: string
+                  rcGateSmokeCommand:
+                    type: string
+                  sha256:
+                    type: string
+                  sizeBytes:
+                    type: integer
+                  verifierExitCode:
+                    type: integer
+                    nullable: true
+                  reason:
+                    type: string
+            ignoredFiles:
+              type: array
+              items:
+                type: string
+            refreshedIntake:
+              type: object
+              properties:
+                fileName:
+                  type: string
+                status:
+                  type: string
+                validResults:
+                  type: integer
+                invalidResults:
+                  type: integer
+                missingResults:
+                  type: integer
+            nextCommands:
+              type: array
+              items:
+                type: string
+            securityAssertions:
+              type: object
+            limitations:
+              type: array
+              items:
+                type: string
+            reason:
+              type: string
+        releaseGateResultsSuite:
+          type: object
+          description: Sanitized Windows release gate results suite smoke manifest. It records only the no-results, partial-results, invalid-results, and all-results-valid synthetic intake case outcomes, restore confirmation, and safety assertions. It does not approve a release and does not include verifier stdout/stderr, reviewer notes, raw logs, tokens, full local paths, command lines, or stack traces.
+          properties:
+            exists:
+              type: boolean
+            valid:
+              type: boolean
+            fileName:
+              type: string
+            suiteKind:
+              type: string
+              enum: [windows-release-gate-results-suite]
+            status:
+              type: string
+              enum: [success, failed]
+            rcCandidateReady:
+              type: boolean
+            productionReady:
+              type: boolean
+            unsigned:
+              type: boolean
+            restoredPreviousFiles:
+              type: boolean
+            caseSummary:
+              type: object
+              properties:
+                total:
+                  type: integer
+                passed:
+                  type: integer
+                failed:
+                  type: integer
+                unknown:
+                  type: integer
+            cases:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    enum: [no_results, partial_results, invalid_results, all_results_valid]
+                  status:
+                    type: string
+                    enum: [passed, failed, unknown]
+                  expectedIntakeStatus:
+                    type: string
+            securityAssertions:
+              type: object
+            limitations:
+              type: array
+              items:
+                type: string
+            reason:
+              type: string
+        releaseResultWorkspace:
+          type: object
+          description: Sanitized Windows release result workspace summary. It records reviewer workspace status, current intake counts, gate actions, draft counts, tracked file counts, instructions, and safety assertions only. Drafts are not valid release results, cannot remove blockers, and keep productionReady false.
+          properties:
+            exists:
+              type: boolean
+            valid:
+              type: boolean
+            fileName:
+              type: string
+            evidenceKind:
+              type: string
+              enum: [windows-release-result-workspace]
+            status:
+              type: string
+              enum: [workspace_ready]
+            rcCandidateReady:
+              type: boolean
+            productionReady:
+              type: boolean
+            unsignedDraft:
+              type: boolean
+            workspaceDirectory:
+              type: string
+            currentIntake:
+              type: object
+              properties:
+                exists:
+                  type: boolean
+                status:
+                  type: string
+                validResults:
+                  type: integer
+                invalidResults:
+                  type: integer
+                missingResults:
+                  type: integer
+            gateSummary:
+              type: object
+              properties:
+                total:
+                  type: integer
+                requiresHumanReview:
+                  type: integer
+            draftSummary:
+              type: object
+              properties:
+                total:
+                  type: integer
+                cannotRemoveBlockers:
+                  type: integer
+            fileSummary:
+              type: object
+              properties:
+                total:
+                  type: integer
+                templates:
+                  type: integer
+                drafts:
+                  type: integer
+            gateActions:
+              type: array
+              items:
+                type: object
+            drafts:
+              type: array
+              items:
+                type: object
+            files:
+              type: array
+              items:
+                type: object
+            instructions:
+              type: array
+              items:
+                type: string
+            excludedFiles:
+              type: array
+              items:
+                type: string
+            securityAssertions:
+              type: object
+            limitations:
+              type: array
+              items:
+                type: string
+            reason:
+              type: string
+        windowsRcStatus:
+          type: object
+          description: Sanitized Windows release-candidate planning summary. It folds sidecar manifest readiness, release-readiness evidence, release policy blockers, RC gate outcomes, and manual GUI QA result status into gate counts, blocker codes, and next actions. It is not release approval and keeps productionReady false.
+          properties:
+            status:
+              type: string
+              enum: [missing_evidence, blocked, ready_for_rc_review]
+            rcCandidateReady:
+              type: boolean
+            productionReady:
+              type: boolean
+            evidence:
+              type: object
+            gateCounts:
+              type: object
+              properties:
+                total:
+                  type: integer
+                passed:
+                  type: integer
+                blocked:
+                  type: integer
+                missing:
+                  type: integer
+                unknown:
+                  type: integer
+            blockers:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  source:
+                    type: string
+                  reason:
+                    type: string
+                  requiredForRc:
+                    type: boolean
+            nextActions:
+              type: array
+              items:
+                type: string
+            warnings:
+              type: array
+              items:
+                type: string
+        sidecarCrashState:
+          type: object
+          description: Sanitized sidecar crash recovery state. Does not contain auth token, raw stderr/stdout, or full local paths.
+          properties:
+            status:
+              type: string
+              enum:
+                - starting
+                - running
+                - stopping
+                - stopped
+                - crashed
+                - restart_limited
+                - auth_failed
+                - port_conflict
+                - db_migration_failed
+                - shutdown_requested
+            pid:
+              type: integer
+            exitCode:
+              type: integer
+            restartCount:
+              type: integer
+            maxRestarts:
+              type: integer
+            restartCooldownMs:
+              type: integer
+            nextRestartAllowedAt:
+              type: integer
+            lastError:
+              type: string
+            lastCrashReason:
+              type: object
+              properties:
+                reasonCode:
+                  type: string
+                userMessage:
+                  type: string
+                suggestedAction:
+                  type: string
+                severity:
+                  type: string
+                sanitizedEvidence:
+                  type: string
+        logs:
+          type: object
+          properties:
+            logsDirSanitized:
+              type: string
+            logFiles:
+              type: array
+              items:
+                type: object
+            rotationPolicy:
+              type: object
+            lastRotationResult:
+              type: object
+        runtime:
+          type: object
+          properties:
+            runningSessions:
+              type: integer
+            uptimeMs:
+              type: integer
+        limitations:
+          type: object
+          properties:
+            productionReady:
+              type: boolean
+            codeSigningConfigured:
+              type: boolean
+            updaterConfigured:
+              type: boolean
+            windowsRcStatus:
+              type: string
+            rcStatus:
+              type: string
+            releasePolicyStatus:
+              type: string
+            manualGuiQaHandoffStatus:
+              type: string
+            manualGuiQaResultStatus:
+              type: string
+            manualGuiQaResultValid:
+              type: boolean
+            releaseGateResultsStatus:
+              type: string
+            releaseGateResultsValid:
+              type: boolean
+            releaseGateResultsImportStatus:
+              type: string
+            releaseGateResultsImportValid:
+              type: boolean
+            releaseGateResultsSuiteStatus:
+              type: string
+            releaseGateResultsSuiteValid:
+              type: boolean
+            releaseResultWorkspaceStatus:
+              type: string
+            releaseResultWorkspaceValid:
+              type: boolean
+        diagnosticsExportAvailable:
+          type: boolean
+        packagingDiagnosticsSummary:
+          type: object
+          properties:
+            sanitizerEnabled:
+              type: boolean
+            rawLogsIncluded:
+              type: boolean
+            warningCount:
+              type: integer
+        sanitizerEnabled:
+          type: boolean
+    PackagingDiagnosticsExport:
+      type: object
+      description: Sanitized JSON packaging diagnostics. It never contains auth tokens, raw logs, raw CSV, logcat, bugreport data, command lines, stack traces, or full local paths.
+      properties:
+        generatedAt:
+          type: string
+        appVersion:
+          type: string
+        platform:
+          type: string
+        arch:
+          type: string
+        toolchainStatus:
+          type: object
+        sidecarManifest:
+          type: object
+        sidecarStatus:
+          type: object
+        sidecarCrashState:
+          type: object
+        crashRecovery:
+          type: object
+        packagedStatus:
+          type: object
+        releaseReadiness:
+          type: object
+        releasePolicy:
+          type: object
+        manualGuiQaHandoff:
+          type: object
+        manualGuiQaResult:
+          type: object
+        releaseGateResults:
+          type: object
+        releaseGateResultsImport:
+          type: object
+        releaseGateResultsSuite:
+          type: object
+        releaseResultWorkspace:
+          type: object
+        windowsRcStatus:
+          type: object
+        rcGate:
+          type: object
+        artifactKind:
+          type: string
+        productionReady:
+          type: boolean
+        auth:
+          type: object
+          properties:
+            required:
+              type: boolean
+            tokenPresent:
+              type: boolean
+            tokenRedacted:
+              type: boolean
+        paths:
+          type: object
+        logs:
+          type: object
+        storage:
+          type: object
+        limitations:
+          type: object
+        collectors:
+          type: object
+        diagnosticsSummary:
+          type: object
+        warnings:
+          type: array
+          items:
+            type: string
+    CreateSessionRequest:
+      type: object
+      required: [deviceId, targetId]
+      properties:
+        name:
+          type: string
+        deviceId:
+          type: string
+        targetId:
+          type: string
+        sampleIntervalMs:
+          type: integer
+        config:
+          type: object
+          description: Optional collector config. Android supports explicit lifecycle options and enableExperimentalFps. Safe lifecycle defaults are false.
+          properties:
+            profileName:
+              type: string
+            enableExperimentalFps:
+              type: boolean
+              default: false
+              description: Android-only experimental FPS probe toggle. If layer matching fails or is ambiguous, no FPS metric is emitted.
+            autoStartTarget:
+              type: boolean
+              default: false
+            allowMonkeyFallback:
+              type: boolean
+              default: false
+            stopTargetOnSessionStop:
+              type: boolean
+              default: false
+            launcherComponent:
+              type: string
+            processMissingPolicy:
+              type: string
+              enum:
+                - fail_session
+                - pause_process_metrics_keep_device_metrics
+                - wait_for_rebind
+            enablePresentMonCapture:
+              type: boolean
+              default: false
+              description: Windows PC-only explicit PresentMon CSV capture toggle. Missing/no-match/ambiguous capture emits no FPS metrics.
+            presentMonCaptureDurationMs:
+              type: integer
+              default: 10000
+              maximum: 120000
+            presentMonTargetMode:
+              type: string
+              enum:
+                - pid
+                - process_name
+              default: pid
+            keepPresentMonCsv:
+              type: boolean
+              default: false
+            presentMonRetentionMode:
+              type: string
+              enum:
+                - delete_after_parse
+                - keep_until_session_end
+                - keep_user_requested
+              default: delete_after_parse
+    AndroidAppStartRequest:
+      type: object
+      properties:
+        launcherComponent:
+          type: string
+        allowMonkeyFallback:
+          type: boolean
+          default: false
+        waitForPid:
+          type: boolean
+          default: true
+        waitTimeoutMs:
+          type: integer
+        pollIntervalMs:
+          type: integer
+    AndroidAppStartResult:
+      type: object
+      required: [ok, method, durationMs, warnings, diagnostics]
+      properties:
+        ok:
+          type: boolean
+        method:
+          type: string
+          enum: [am_start, monkey, none]
+        launcherComponent:
+          type: string
+        pid:
+          type: integer
+        durationMs:
+          type: integer
+        warnings:
+          type: array
+          items:
+            type: string
+        diagnostics:
+          type: array
+          items:
+            type: string
+    AndroidAppStopRequest:
+      type: object
+      properties:
+        waitUntilStopped:
+          type: boolean
+          default: true
+        waitTimeoutMs:
+          type: integer
+        pollIntervalMs:
+          type: integer
+    AndroidAppStopResult:
+      type: object
+      required: [ok, method, durationMs, warnings, diagnostics]
+      properties:
+        ok:
+          type: boolean
+        method:
+          type: string
+          const: am_force_stop
+        durationMs:
+          type: integer
+        stopped:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        diagnostics:
+          type: array
+          items:
+            type: string
+    CreateMarkerRequest:
+      type: object
+      required: [label]
+      properties:
+        timestampMs:
+          type: integer
+        label:
+          type: string
+        description:
+          type: string
+        tags:
+          type: object
+    IosTraceImportRequest:
+      type: object
+      required: [csvText]
+      properties:
+        csvText:
+          type: string
+          description: User-provided xctrace CSV text. Raw CSV is not written to diagnostics.
+        target:
+          type: object
+          properties:
+            bundleId:
+              type: string
+            processName:
+              type: string
+            pid:
+              type: integer
+        traceStartedAtMs:
+          type: integer
+        captureId:
+          type: string
+    IosTraceImportResult:
+      type: object
+      required:
+        - status
+        - rawRowCount
+        - matchedRowCount
+        - metricCount
+        - matchStatus
+        - matchConfidence
+        - reason
+        - warnings
+        - diagnosticsId
+      properties:
+        status:
+          type: string
+          enum: [success, no_data]
+        rawRowCount:
+          type: integer
+        matchedRowCount:
+          type: integer
+        metricCount:
+          type: integer
+        matchStatus:
+          type: string
+          enum: [matched, no_match, ambiguous]
+        matchConfidence:
+          type: string
+          enum: [high, medium, low, none]
+        reason:
+          type: string
+        warnings:
+          type: array
+          items:
+            type: string
+        diagnosticsId:
+          type: string
+    IosTraceTarget:
+      type: object
+      properties:
+        bundleId:
+          type: string
+        processName:
+          type: string
+        pid:
+          type: integer
+    IosXctraceCaptureRequest:
+      type: object
+      properties:
+        target:
+          $ref: "#/components/schemas/IosTraceTarget"
+        durationMs:
+          type: integer
+          minimum: 1000
+          maximum: 120000
+          description: Timed capture duration. Values are clamped by the collector.
+        templateName:
+          type: string
+          description: xctrace template name. Defaults to the Xcode game trace template.
+        outputDir:
+          type: string
+          description: Optional output directory. Diagnostics sanitize this path.
+        exportXPath:
+          type: string
+          description: Optional xctrace export XPath for CSV-compatible metric rows.
+        keepTrace:
+          type: boolean
+          default: false
+        traceStartedAtMs:
+          type: integer
+        importedAtMs:
+          type: integer
+        captureId:
+          type: string
+    IosXctraceCaptureResult:
+      type: object
+      required:
+        - status
+        - rawRowCount
+        - matchedRowCount
+        - metricCount
+        - reason
+        - warnings
+        - diagnosticsId
+      properties:
+        status:
+          type: string
+          enum: [success, trace_recorded, no_data, failed, unsupported, aborted]
+        rawRowCount:
+          type: integer
+        matchedRowCount:
+          type: integer
+        metricCount:
+          type: integer
+        matchStatus:
+          type: string
+          enum: [matched, no_match, ambiguous]
+        matchConfidence:
+          type: string
+          enum: [high, medium, low, none]
+        reason:
+          type: string
+        warnings:
+          type: array
+          items:
+            type: string
+        diagnosticsId:
+          type: string

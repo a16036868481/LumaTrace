@@ -1,0 +1,4 @@
+Time (s),Process,Bundle Identifier,PID,FPS,Frame Time (ms),CPU %,Memory (MB)
+0.000,ExampleGame,com.example.game,421,60,16.67,12.5,240.25
+0.016,ExampleGame,com.example.game,421,58.8,17.01,14.1,241.50
+0.033,OtherApp,com.example.other,900,30,33.33,2.0,80

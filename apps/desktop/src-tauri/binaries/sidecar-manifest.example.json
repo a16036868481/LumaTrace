@@ -1,0 +1,25 @@
+{
+  "name": "lumatrace-local-server",
+  "version": "0.0.0",
+  "artifactKind": "dev-wrapper",
+  "platform": "win32",
+  "arch": "x64",
+  "targetTriple": "x86_64-pc-windows-msvc",
+  "fileName": "lumatrace-local-server-x86_64-pc-windows-msvc.cmd",
+  "sizeBytes": 0,
+  "sha256": "<sha256>",
+  "buildTime": "2026-04-28T00:00:00.000Z",
+  "sourcePackageVersion": "0.0.0",
+  "nodeRequired": true,
+  "productionReady": false,
+  "noticesFile": "packaging-notices.json",
+  "noticesSha256": "<sha256>",
+  "thirdPartyNoticesFile": "THIRD-PARTY-NOTICES.md",
+  "thirdPartyNoticesSha256": "<sha256>",
+  "licenseReviewStatus": "draft_requires_review",
+  "limitations": [
+    "Example only.",
+    "Development wrapper is not a production self-contained sidecar."
+  ],
+  "tauriExternalBin": "lumatrace-local-server-dev.cmd"
+}

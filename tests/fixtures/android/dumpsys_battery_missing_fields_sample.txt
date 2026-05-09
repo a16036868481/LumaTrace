@@ -1,0 +1,6 @@
+Current Battery Service state:
+  present: true
+  level: 42
+  scale: 0
+  status: 3
+

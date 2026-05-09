@@ -1,0 +1,8 @@
+** MEMINFO in pid 22222 [com.example.legacy] **
+                   Pss  Private  Private
+                 Total    Dirty    Clean
+  Native Heap    20480    20000        0
+  Dalvik Heap    10240     9000        0
+        TOTAL    65536    50000        0
+ TOTAL PSS:      65536
+

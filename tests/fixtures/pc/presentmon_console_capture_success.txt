@@ -1,0 +1,2 @@
+PresentMon Console capture completed.
+Wrote 3 rows to output CSV.

@@ -1,0 +1,7 @@
+Display 0:
+  mActiveMode=DisplayModeRecord{mMode={id=1, width=1080, height=2400, fps=120.0}}
+  supportedModes=[
+    DisplayModeRecord{mMode={id=1, width=1080, height=2400, fps=60.0}},
+    DisplayModeRecord{mMode={id=2, width=1080, height=2400, fps=90.0}},
+    DisplayModeRecord{mMode={id=3, width=1080, height=2400, fps=120.0}}
+  ]

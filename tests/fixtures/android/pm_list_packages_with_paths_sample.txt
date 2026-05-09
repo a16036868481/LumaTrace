@@ -1,0 +1,3 @@
+package:/data/app/~~abc/base.apk=com.example.app
+package:/data/app/~~def/base.apk=com.example.game
+

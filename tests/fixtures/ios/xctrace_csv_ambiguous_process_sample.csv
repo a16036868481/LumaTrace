@@ -1,0 +1,3 @@
+Time (s),Process,Bundle Identifier,PID,FPS,Frame Time (ms)
+0.000,ExampleGame,com.example.game,421,60,16.67
+0.016,ExampleGame,com.example.clone,422,58,17.20

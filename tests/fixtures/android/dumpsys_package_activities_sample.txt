@@ -1,0 +1,14 @@
+Package [com.example.app] (123456):
+  Activity Resolver Table:
+    Full MIME Types:
+  Activities:
+    Activity #0:
+      com.example.app/.MainActivity filter 123abc
+        Action: "android.intent.action.MAIN"
+        Category: "android.intent.category.LAUNCHER"
+        AutoVerify=false
+    Activity #1:
+      com.example.app/.SettingsActivity filter 456def
+        Action: "android.intent.action.VIEW"
+  PackageInfo:
+    enabled=true

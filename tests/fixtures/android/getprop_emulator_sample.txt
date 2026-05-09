@@ -1,0 +1,6 @@
+[ro.product.model]: [sdk_gphone64_x86_64]
+[ro.product.device]: [emu64x]
+[ro.product.manufacturer]: [Google]
+[ro.build.version.release]: [15]
+[ro.build.version.sdk]: [35]
+

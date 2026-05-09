@@ -1,0 +1,6 @@
+PresentMon Console
+  --output_file <path>
+  --timed <seconds>
+  --process_id <pid>
+  --process_name <name>
+  --stop_existing_session

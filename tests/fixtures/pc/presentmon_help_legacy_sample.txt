@@ -1,0 +1,1 @@
+Usage: PresentMon.exe -output_file capture.csv -timed 10 -process_name Game.exe

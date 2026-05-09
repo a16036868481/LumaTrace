@@ -1,0 +1,1 @@
+pid= attempts=40 durationMs=10000 reason=timeout

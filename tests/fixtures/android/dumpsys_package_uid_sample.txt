@@ -1,0 +1,5 @@
+Packages:
+  Package [com.example.app] (123abc):
+    userId=10123
+    pkg=Package{abc com.example.app}
+

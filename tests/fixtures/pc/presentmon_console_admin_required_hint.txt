@@ -1,0 +1,1 @@
+Administrator privileges may be required to capture ETW events for this process.

@@ -1,0 +1,23 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 123456 Realtime: 123456
+
+** MEMINFO in pid 12345 [com.example.app] **
+                   Pss  Private  Private  SwapPss
+                 Total    Dirty    Clean    Dirty
+  Native Heap    51200    50000        0     1024
+  Dalvik Heap    30720    28000        0      512
+        TOTAL   123456   100000        0     2048
+
+ App Summary
+                       Pss(KB)
+                        ------
+           Java Heap:    40960
+         Native Heap:    51200
+                Code:    10240
+               Stack:     2048
+            Graphics:     4096
+       Private Other:    12800
+              System:     2112
+               TOTAL:   123456
+            TOTAL PSS:   123456
+

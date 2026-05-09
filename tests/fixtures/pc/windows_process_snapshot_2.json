@@ -1,0 +1,9 @@
+{
+  "pid": 4321,
+  "name": "Game.exe",
+  "workingSetBytes": 110100480,
+  "privateBytes": 75497472,
+  "kernelTimeMs": 1100,
+  "userTimeMs": 3400,
+  "startTimeMs": 1777359600000
+}

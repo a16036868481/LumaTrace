@@ -1,0 +1,9 @@
+Layer name: StatusBar
+Average FPS: 60
+Total frames: 240
+16ms=240
+
+Layer name: NavigationBar
+Average FPS: 60
+Total frames: 240
+16ms=240

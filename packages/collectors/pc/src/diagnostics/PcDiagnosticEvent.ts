@@ -1,0 +1,83 @@
+export type PcDiagnosticLevel = "debug" | "info" | "warn" | "error";
+
+export type PcDiagnosticCategory =
+  | "platform"
+  | "process"
+  | "cpu"
+  | "memory"
+  | "presentmon"
+  | "report";
+
+export type PcDiagnosticCode =
+  | "PC_PLATFORM_UNSUPPORTED"
+  | "PROCESS_LIST_FAILED"
+  | "PROCESS_NOT_FOUND"
+  | "PROCESS_EXITED"
+  | "PID_REUSED"
+  | "CPU_BASELINE_ONLY"
+  | "CPU_SAMPLE_FAILED"
+  | "MEMORY_SAMPLE_FAILED"
+  | "PRESENTMON_MISSING"
+  | "PRESENTMON_UNSUPPORTED"
+  | "PRESENTMON_VERSION_DETECTED"
+  | "PRESENTMON_PERMISSION_LIMITED"
+  | "PRESENTMON_LOG_ACCESS_USERS_HINT"
+  | "PRESENTMON_ADMIN_HINT"
+  | "PRESENTMON_CAPTURE_PLANNED"
+  | "PRESENTMON_CAPTURE_STARTED"
+  | "PRESENTMON_CAPTURE_PROGRESS"
+  | "PRESENTMON_CAPTURE_COMPLETED"
+  | "PRESENTMON_CAPTURE_FAILED"
+  | "PRESENTMON_CAPTURE_ABORTED"
+  | "PRESENTMON_CSV_MISSING"
+  | "PRESENTMON_CSV_EMPTY"
+  | "PRESENTMON_CSV_RETAINED"
+  | "PRESENTMON_CSV_DELETED"
+  | "PRESENTMON_CSV_PARSE_WARNING"
+  | "PRESENTMON_TARGET_NO_MATCH"
+  | "PRESENTMON_TARGET_AMBIGUOUS"
+  | "PRESENTMON_PROCESS_EXITED_DURING_CAPTURE"
+  | "PRESENTMON_PID_REUSED_DURING_CAPTURE"
+  | "PRESENTMON_METRIC_MAPPED";
+
+export interface PcDiagnosticEvent {
+  id: string;
+  timestampMs: number;
+  sessionId?: string;
+  deviceId?: string;
+  targetId?: string;
+  pid?: number;
+  level: PcDiagnosticLevel;
+  category: PcDiagnosticCategory;
+  code: PcDiagnosticCode;
+  message: string;
+  sourceCommand?: string;
+  durationMs?: number;
+  details?: Record<string, unknown>;
+  tags?: Record<string, string | number | boolean>;
+}
+
+export interface PcDiagnosticCreateInput extends Omit<PcDiagnosticEvent, "id" | "timestampMs"> {
+  id?: string;
+  timestampMs?: number;
+}
+
+export interface PcDiagnosticsListOptions {
+  sessionId?: string;
+  deviceId?: string;
+  targetId?: string;
+  level?: PcDiagnosticLevel;
+  category?: PcDiagnosticCategory;
+  code?: PcDiagnosticCode;
+  limit?: number;
+}
+
+export interface PcDiagnosticsSummary {
+  total: number;
+  byLevel: Record<string, number>;
+  byCategory: Record<string, number>;
+  byCode: Record<string, number>;
+  warnings: number;
+  errors: number;
+  importantEvents: PcDiagnosticEvent[];
+}

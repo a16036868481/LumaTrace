@@ -1,0 +1,3 @@
+Application,ProcessID,SwapChainAddress,Runtime,MsBetweenPresents,MsInPresentAPI,FPS-Presents
+Game.exe,4321,0xabc,D3D11,16.6,0.2,60.2
+Game.exe,4321,0xabc,D3D11,17.0,0.3,58.8

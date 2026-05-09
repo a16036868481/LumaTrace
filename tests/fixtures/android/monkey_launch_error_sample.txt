@@ -1,0 +1,2 @@
+** No activities found to run, monkey aborted.
+Events injected: 0
