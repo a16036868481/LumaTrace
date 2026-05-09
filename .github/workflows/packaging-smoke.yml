@@ -1,0 +1,67 @@
+name: Packaging Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/packaging-smoke.yml"
+      - "apps/desktop/src-tauri/**"
+      - "apps/local-server/**"
+      - "scripts/smoke-*"
+      - "scripts/verify-*"
+      - "package.json"
+      - "pnpm-lock.yaml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: packaging-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  packaging-smoke:
+    name: Packaged-mode smoke tests
+    runs-on: windows-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build sidecar draft
+        run: pnpm build:sidecar
+
+      - name: Build self-contained sidecar draft
+        run: pnpm build:self-contained-sidecar
+
+      - name: Verify sidecar artifacts
+        run: pnpm verify:sidecar-artifacts
+
+      - name: Tauri foundation smoke
+        run: pnpm smoke:tauri-foundation
+
+      - name: Packaging diagnostics smoke
+        run: pnpm smoke:packaging-diagnostics
+
+      - name: Packaged storage smoke
+        run: pnpm smoke:packaged-storage
+
+      - name: Sidecar crash recovery smoke
+        run: pnpm smoke:sidecar-crash-recovery

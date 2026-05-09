@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Typecheck, lint, test, build
+    runs-on: windows-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build desktop web UI
+        run: pnpm build:desktop
+
+      - name: Android collector tests
+        run: pnpm test:android-collector
+
+      - name: Android beta verification
+        run: pnpm verify:android-beta
+
+      - name: PC collector tests
+        run: pnpm test:pc-collector
+
+      - name: PC foundation verification
+        run: pnpm verify:pc-foundation
+
+      - name: PresentMon adapter verification
+        run: pnpm verify:presentmon-adapter
+
+      - name: PC beta verification
+        run: pnpm verify:pc-beta
+
+      - name: Tauri foundation verification
+        run: pnpm verify:tauri-foundation
+
+      - name: Packaging hardening verification
+        run: pnpm verify:packaging-hardening
+
+      - name: Detect Tauri toolchain
+        run: pnpm detect:tauri-toolchain
