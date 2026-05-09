@@ -47,7 +47,7 @@ function writeWindowsExeDevWrapper(): boolean {
     return false;
   }
 
-  const vsDevCmd = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\VsDevCmd.bat";
+  const vsDevCmd = findVisualStudioDevCmd();
   if (!existsSync(vsDevCmd)) {
     return false;
   }
@@ -144,6 +144,40 @@ fn main() {
   rmSync(wrapperPath.replace(/\.exe$/i, ".pdb"), { force: true });
   rmSync(tempDir, { recursive: true, force: true });
   return compiled;
+}
+
+function findVisualStudioDevCmd(): string {
+  const candidates = [
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\VsDevCmd.bat",
+    "C:\\Program Files\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\VsDevCmd.bat",
+    "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\Common7\\Tools\\VsDevCmd.bat",
+    "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\Common7\\Tools\\VsDevCmd.bat",
+    "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat"
+  ];
+  const vswhere = "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\vswhere.exe";
+  if (existsSync(vswhere)) {
+    const result = spawnSync(
+      vswhere,
+      [
+        "-latest",
+        "-products",
+        "*",
+        "-requires",
+        "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
+        "-property",
+        "installationPath"
+      ],
+      {
+        encoding: "utf8",
+        windowsHide: true
+      }
+    );
+    const installPath = result.stdout.trim().split(/\r?\n/).find(Boolean);
+    if (installPath !== undefined) {
+      candidates.unshift(resolve(installPath, "Common7/Tools/VsDevCmd.bat"));
+    }
+  }
+  return candidates.find((candidate) => existsSync(candidate)) ?? candidates[0];
 }
 
 if (process.platform === "win32") {

@@ -144,7 +144,7 @@ exec "$NODE" --import "file://$APP/scripts/register-esm-loader.mjs" "$APP/dist/s
     return;
   }
 
-  const vsDevCmd = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\VsDevCmd.bat";
+  const vsDevCmd = findVisualStudioDevCmd();
   if (!existsSync(vsDevCmd)) {
     throw new Error("Visual C++ Build Tools are required to compile the Windows sidecar wrapper.");
   }
@@ -270,6 +270,40 @@ fn main() {
       console.warn(`Warning: could not remove temporary wrapper build directory: ${(error as Error).message}`);
     }
   }
+}
+
+function findVisualStudioDevCmd(): string {
+  const candidates = [
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\VsDevCmd.bat",
+    "C:\\Program Files\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\VsDevCmd.bat",
+    "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\Common7\\Tools\\VsDevCmd.bat",
+    "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\Common7\\Tools\\VsDevCmd.bat",
+    "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat"
+  ];
+  const vswhere = "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\vswhere.exe";
+  if (existsSync(vswhere)) {
+    const result = spawnSync(
+      vswhere,
+      [
+        "-latest",
+        "-products",
+        "*",
+        "-requires",
+        "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
+        "-property",
+        "installationPath"
+      ],
+      {
+        encoding: "utf8",
+        windowsHide: true
+      }
+    );
+    const installPath = result.stdout.trim().split(/\r?\n/).find(Boolean);
+    if (installPath !== undefined) {
+      candidates.unshift(resolve(installPath, "Common7/Tools/VsDevCmd.bat"));
+    }
+  }
+  return candidates.find((candidate) => existsSync(candidate)) ?? candidates[0];
 }
 
 mkdirSync(binariesDir, { recursive: true });
