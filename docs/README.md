@@ -1,5 +1,7 @@
 # LumaTrace Documentation
 
+English is the primary documentation language. Chinese readers can start with [../README.zh-CN.md](../README.zh-CN.md), while the detailed docs in this directory remain English-first unless a document explicitly says otherwise.
+
 LumaTrace is a clean-room, local-first device metrics testing toolkit. MVP-A focuses on a reliable backend loop, MVP-B adds the first desktop web UI, Android Beta adds non-root Android metrics and diagnostics, PC Beta adds Windows process metrics plus explicit PresentMon CSV capture, Tauri packaging hardening adds sidecar/security checks, and iOS Beta adds Xcode/xcrun discovery plus explicit manual xctrace CSV import.
 
 ## Project Goals

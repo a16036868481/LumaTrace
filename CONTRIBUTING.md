@@ -4,6 +4,11 @@ Thanks for helping improve LumaTrace. This project is a clean-room,
 local-first performance testing tool. Contributions should keep the app honest,
 safe, and understandable for ordinary users.
 
+English is the primary language for issues, pull requests, code comments, and
+technical documentation. Chinese is welcome for user-facing explanations,
+bug reports, and companion documentation when it helps users understand the
+project.
+
 ## Development Setup
 
 ```bash
@@ -42,4 +47,3 @@ pnpm dev:tauri
 - [ ] `pnpm typecheck` passes.
 - [ ] `pnpm lint` passes.
 - [ ] Generated artifacts, logs, local databases, and secrets are not committed.
-

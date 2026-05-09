@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/a16036868481/LumaTrace/actions/workflows/ci.yml/badge.svg)](https://github.com/a16036868481/LumaTrace/actions/workflows/ci.yml)
 
+English is the primary documentation language for this repository. A Chinese overview is available in [README.zh-CN.md](README.zh-CN.md).
+
 LumaTrace is a clean-room, local-first device metrics testing toolkit. Milestone 1A backend and Milestone 1B web UI are complete. Milestone 2F closes Android Beta with non-root CPU, memory, battery, network, explicit app lifecycle, process rebind, experimental FPS probe paths, sanitized diagnostics, and report diagnostics. Milestone 3C closes PC Beta with Windows local process CPU/memory sampling plus explicit, experimental PresentMon CSV capture, capture status, compatibility checks, CSV retention, permission hints, and sanitized report diagnostics. Milestone 4B hardens the Tauri packaging foundation with toolchain detection, sidecar manifest validation, crash recovery, log rotation metadata, packaged storage smoke, and installer/signing draft docs without changing collector metrics. Milestone 5A starts iOS Foundation with Xcode/xcrun discovery and simulator target parsing; Milestone 5B adds manual xctrace CSV import parsing and target-matched MetricEvent mapping; Milestone 5C adds explicit macOS/Xcode xctrace record/export capture foundation.
 
 ## Clean-Room Statement
