@@ -1,6 +1,6 @@
 # Third-Party Notices
 
-Generated: 2026-05-09T18:07:10.347Z
+Generated: 2026-05-09T18:18:15.798Z
 
 This draft notice file is generated from the bundled sidecar runtime. It is intended for packaging QA and release review. It is not a claim that production packaging, code signing, updater support, or store distribution is complete.
 
