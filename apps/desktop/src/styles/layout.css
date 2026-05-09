@@ -210,6 +210,14 @@
   background: #f8fafc;
 }
 
+.support-panel {
+  background: #fbfdff;
+}
+
+.support-panel .status-pill {
+  overflow-wrap: anywhere;
+}
+
 .test-wizard {
   background: #fbfdff;
 }

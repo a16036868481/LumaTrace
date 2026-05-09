@@ -51,6 +51,10 @@ describe("basic desktop rendering", () => {
     render(<AppShell />);
 
     expect(screen.getByRole("heading", { name: "Dashboard" })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Found a bug?" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Open GitHub Issues" }).getAttribute("href")).toBe(
+      "https://github.com/a16036868481/LumaTrace/issues"
+    );
     expect(await screen.findByText("Local PC")).toBeTruthy();
   });
 

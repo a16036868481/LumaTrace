@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { ApiErrorView } from "../../components/ApiErrorView";
 import { BeginnerGuidePanel } from "../../components/BeginnerGuidePanel";
+import { BugReportPanel } from "../../components/BugReportPanel";
 import { DeviceCard } from "../../components/DeviceCard";
 import { EmptyState } from "../../components/EmptyState";
 import { LoadingState } from "../../components/LoadingState";
@@ -57,6 +58,7 @@ export function DashboardPage() {
       {healthState.error !== null ? <ApiErrorView error={healthState.error} /> : null}
 
       <BeginnerGuidePanel />
+      <BugReportPanel />
 
       <section className="panel">
         <h2>{t("dashboard.localServer")}</h2>

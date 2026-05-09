@@ -11,6 +11,7 @@ import { AndroidBetaChecklist } from "../../components/AndroidBetaChecklist";
 import { AndroidCommandStatusTable } from "../../components/AndroidCommandStatusTable";
 import { DiagnosticsTimeline } from "../../components/DiagnosticsTimeline";
 import { ApiErrorView } from "../../components/ApiErrorView";
+import { BugReportPanel } from "../../components/BugReportPanel";
 import { EmptyState } from "../../components/EmptyState";
 import { LoadingState } from "../../components/LoadingState";
 import { LocalServerStatusPanel } from "../../components/LocalServerStatusPanel";
@@ -104,6 +105,8 @@ export function ToolsDiagnosticsPage() {
           </table>
         </div>
       </section>
+
+      <BugReportPanel />
 
       <LocalServerStatusPanel
         packagedStatus={packagedState.data}
