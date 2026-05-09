@@ -15,6 +15,7 @@ Milestone 4A adds the desktop host foundation. Milestone 4B hardens packaging di
 - Unsigned portable release-directory verification is available through `pnpm verify:windows-bundle-draft`.
 - Unsigned NSIS installer draft probing is available through `pnpm verify:windows-installer-draft`; it uses a temporary config override and remains QA-only.
 - Temporary installer install/uninstall smoke is available through `pnpm smoke:windows-installer-draft`.
+- A GitHub prerelease preview can be produced with `pnpm release:windows-preview -- --tag v0.1.0-preview.N --publish`; it is still unsigned and `productionReady=false`.
 - Temporary installed app launch smoke is available through `pnpm smoke:windows-installed-app-launch`.
 - Temporary installed sidecar health smoke is available through `pnpm smoke:windows-installed-sidecar-health`.
 - Windows packaging smoke suite verification is available through `pnpm verify:windows-packaging-smoke-suite`; it includes the Tauri sidecar auth transport smoke manifest, portable bundle draft, installer draft, install/uninstall smoke, installed app launch smoke, and installed sidecar health smoke.

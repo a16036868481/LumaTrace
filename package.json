@@ -1,6 +1,6 @@
 {
   "name": "lumatrace",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "Clean-room cross-platform device metrics testing toolkit.",
   "license": "MIT",
@@ -47,6 +47,8 @@
     "smoke:windows-installer-draft": "pnpm verify:windows-installer-draft && node --experimental-strip-types scripts/smoke-windows-installer-draft.ts",
     "smoke:windows-installed-app-launch": "pnpm verify:windows-installer-draft && node --experimental-strip-types scripts/smoke-windows-installed-app-launch.ts",
     "smoke:windows-installed-sidecar-health": "pnpm verify:windows-installer-draft && node --experimental-strip-types scripts/smoke-windows-installed-sidecar-health.ts",
+    "release:windows-preview": "node --experimental-strip-types scripts/publish-windows-preview-release.ts",
+    "verify:windows-preview-release": "node --experimental-strip-types scripts/verify-windows-preview-release.ts",
     "verify:windows-packaging-smoke-suite": "node --experimental-strip-types scripts/verify-windows-packaging-smoke-suite.ts",
     "export:windows-packaging-qa-evidence": "node --experimental-strip-types scripts/export-windows-packaging-qa-evidence.ts",
     "verify:windows-packaging-qa-evidence": "pnpm export:windows-packaging-qa-evidence && node --experimental-strip-types scripts/verify-windows-packaging-qa-evidence.ts",

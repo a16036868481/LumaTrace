@@ -9,6 +9,7 @@ const requiredFiles = [
   "docs/packaging-hardening.md",
   "docs/windows-tool-bootstrap.md",
   "docs/windows-installer-draft.md",
+  "docs/windows-preview-release.md",
   "docs/windows-packaging-manual-gui-checklist.md",
   "docs/windows-release-result-workspace.md",
   "docs/macos-bundle-signing-draft.md",
@@ -25,6 +26,8 @@ const requiredFiles = [
   "scripts/smoke-windows-installer-draft.ts",
   "scripts/smoke-windows-installed-app-launch.ts",
   "scripts/smoke-windows-installed-sidecar-health.ts",
+  "scripts/publish-windows-preview-release.ts",
+  "scripts/verify-windows-preview-release.ts",
   "scripts/verify-windows-packaging-smoke-suite.ts",
   "scripts/export-windows-packaging-qa-evidence.ts",
   "scripts/verify-windows-packaging-qa-evidence.ts",
@@ -85,6 +88,7 @@ const requiredFiles = [
   "scripts/export-windows-release-result-workspace.ts",
   "scripts/verify-windows-release-result-workspace.ts",
   "docs/windows-packaging-rc-gate.md",
+  "docs/windows-preview-release.md",
   "docs/windows-release-policy-template.md",
   "docs/windows-sidecar-production-readiness-template.md",
   "docs/windows-sidecar-production-readiness-result.md",
@@ -172,6 +176,8 @@ for (const scriptName of [
   "smoke:windows-installer-draft",
   "smoke:windows-installed-app-launch",
   "smoke:windows-installed-sidecar-health",
+  "release:windows-preview",
+  "verify:windows-preview-release",
   "verify:windows-packaging-smoke-suite",
   "export:windows-packaging-qa-evidence",
   "verify:windows-packaging-qa-evidence",
@@ -332,6 +338,14 @@ check(
 check(
   "docs mention installed sidecar health smoke",
   /installed sidecar health smoke|sidecar.*loopback/i.test(docs)
+);
+check(
+  "docs mention one-click Windows preview release",
+  /one-click Windows preview release|release:windows-preview/i.test(docs)
+);
+check(
+  "docs mention GitHub prerelease publishing",
+  /GitHub.*prerelease|prerelease.*GitHub/i.test(docs)
 );
 check(
   "docs mention Windows packaging smoke suite",
