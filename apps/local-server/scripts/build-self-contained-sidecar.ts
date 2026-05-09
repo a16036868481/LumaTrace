@@ -310,7 +310,9 @@ mkdirSync(binariesDir, { recursive: true });
 rmSync(runtimeDir, { recursive: true, force: true });
 mkdirSync(runtimeDir, { recursive: true });
 
-const deployRoot = mkdtempSync(join(tmpdir(), "lumatrace-runtime-deploy-"));
+const workspaceTempDir = resolve(root, ".tmp");
+mkdirSync(workspaceTempDir, { recursive: true });
+const deployRoot = mkdtempSync(join(workspaceTempDir, "lumatrace-runtime-deploy-"));
 const deployAppDir = resolve(deployRoot, "app");
 try {
   runPnpm([
