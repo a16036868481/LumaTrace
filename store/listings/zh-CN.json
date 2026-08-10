@@ -1,0 +1,42 @@
+{
+  "locale": "zh-CN",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "ready_for_review",
+  "shortDescription": "在本机测试 Windows 进程和 Android 应用，查看实时性能曲线并导出清晰报告。",
+  "description": "LumaTrace Performance Lab 是一款本地优先的 Windows 与 Android 性能测试桌面工具。\n\n选择本机 Windows 进程，或选择已通过 ADB 授权连接的 Android 应用，即可开始测试并查看当前目标能够提供的性能指标。测试结束后，可以查看清晰的结果摘要，并导出 HTML、JSON 和 CSV 报告。\n\nLumaTrace 默认将测试数据保存在你的电脑中，不要求注册云端账号，也不会把性能数据上传到 LumaTrace 云服务。会话日志导出默认关闭，只有你为某次测试主动勾选后，才会在报告目录中保存经过大小限制和脱敏的日志。\n\n指标是否可采集取决于平台、设备、驱动、本机工具和系统权限。LumaTrace 会如实标注指标来源与可用状态；无法采集的指标会保持 N/A，不会使用虚构数值代替。",
+  "features": [
+    "选择并测试本机 Windows 进程",
+    "通过用户授权的 ADB 连接测试 Android 应用",
+    "查看当前可采集指标的实时曲线",
+    "在平台支持时查看 FPS、CPU、GPU、内存、功耗、温度和网络数据",
+    "每次测试独立导出 HTML、JSON 和 CSV 报告文件夹",
+    "将可选的脱敏会话日志保存在用户选择的报告目录",
+    "查看指标来源、精度、可信度和可用状态",
+    "单独或批量删除已完成的本地测试结果"
+  ],
+  "keywords": [
+    "性能测试",
+    "FPS监控",
+    "CPU监控",
+    "内存监控",
+    "安卓诊断",
+    "Windows性能",
+    "测试报告"
+  ],
+  "releaseNotes": "",
+  "releaseNotesReason": "首次提交 Microsoft Store 时保持为空。",
+  "categoryProposal": "开发人员工具",
+  "pricingProposal": "免费",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.zh-CN.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE",
+  "certificationNotes": [
+    "基础 Windows 测试以当前用户身份运行，不要求管理员权限。",
+    "Windows 冒烟测试步骤：打开“开始测试”，选择 Windows，选择一个可见进程，开始测试，等待可用数据出现，然后结束测试。",
+    "Android 测试是可选功能，需要 Android 设备开启开发者选项和 USB 调试、用户授权此电脑，并且本机 ADB 可用。",
+    "FPS 与硬件遥测取决于测试目标、本机受支持工具、驱动和权限。不可用指标会显示为 N/A；如果 CPU 或内存来源仍可用，不会因其他指标不可用而阻止测试。",
+    "桌面应用与配套服务仅通过同一台电脑的环回地址通信。",
+    "会话日志导出默认关闭。勾选后，Android 会导出经过目标过滤、大小限制和脱敏的 ADB logcat；Windows 会在所选报告目录中导出经过脱敏的 LumaTrace 会话事件。",
+    "报告写入用户选择的报告目录，不需要 LumaTrace 云端账号或云端上传。"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "locale": "en-US",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "ready_for_review",
+  "shortDescription": "Measure Windows processes and Android apps locally with live performance charts and clear, exportable reports.",
+  "description": "LumaTrace Performance Lab is a local-first desktop performance testing tool for Windows and Android workflows.\n\nChoose a Windows process or an Android app on an authorized ADB device, start a test, and follow the measurements that are available for that target. Finish the test to review a clear summary and export HTML, JSON, and CSV reports.\n\nLumaTrace keeps test data on your computer by default. It does not require a cloud account and does not upload your measurements to a LumaTrace cloud service. Optional session-log export is disabled by default and writes bounded, sanitized logs only when you select it for a test.\n\nMetric availability depends on the platform, device, drivers, local tools, and permissions. LumaTrace labels every measurement with its source and availability. Missing measurements remain N/A and are never replaced with invented values.",
+  "features": [
+    "Select and measure a Windows process on the local computer",
+    "Test an Android app through an ADB connection authorized by the user",
+    "View live charts for measurements that are available",
+    "Review FPS, CPU, GPU, memory, power, temperature, and network data when supported",
+    "Export a separate HTML, JSON, and CSV report folder for each test",
+    "Keep optional sanitized session logs in the user-selected report directory",
+    "Inspect measurement source, precision, confidence, and availability",
+    "Delete completed local test results individually or in bulk"
+  ],
+  "keywords": [
+    "performance testing",
+    "FPS monitor",
+    "CPU monitor",
+    "memory monitor",
+    "Android diagnostics",
+    "Windows performance",
+    "test report"
+  ],
+  "releaseNotes": "",
+  "releaseNotesReason": "Leave blank for the first Store submission.",
+  "categoryProposal": "Developer tools",
+  "pricingProposal": "Free",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE",
+  "certificationNotes": [
+    "Base Windows testing runs as the current user and does not require administrator privileges.",
+    "For a Windows smoke test, open Run Test, choose Windows, select a visible process, start the test, wait for available data, and stop the test.",
+    "Android testing is optional and requires an Android device with developer options and USB debugging enabled, user authorization for this computer, and a working local ADB installation.",
+    "FPS and hardware telemetry depend on the selected target, supported local tools, drivers, and permissions. Unavailable measurements are shown as N/A and do not prevent CPU or memory testing when those sources remain available.",
+    "The desktop application communicates with its companion service only through a loopback address on the same computer.",
+    "Optional session-log export is off by default. When selected, Android produces bounded and sanitized target-filtered ADB logcat, while Windows produces sanitized LumaTrace session events in the selected report directory.",
+    "Reports are written to the user-selected report directory. No LumaTrace cloud account or cloud upload is required."
+  ]
+}

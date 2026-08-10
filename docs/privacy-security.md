@@ -4,9 +4,15 @@
 
 LumaTrace MVP-A is local-first. It stores data in local SQLite and does not upload metrics, reports, diagnostics, or logs to a cloud service.
 
-## Logs
+## Optional Session Logs
 
-MVP-A does not collect real logcat or syslog. Future log features must be explicitly enabled and must pass through sanitization before diagnostics or exports.
+Session log export is off by default. It runs only when the user explicitly selects **Export logs to the report directory** for a test.
+
+- Android export requests target-filtered ADB logcat for the selected test period. The output is bounded, sanitized, and written as `android-logcat.log` inside that test's report folder.
+- Windows export writes timestamped, sanitized LumaTrace session events as `windows-session.log` inside that test's report folder.
+- LumaTrace does not collect bugreport, device-wide syslog, root-only logs, account credentials, tokens, or cookies through this option.
+
+The exported log stays in the report directory selected by the user. LumaTrace does not upload it. Users should review it before sharing and can delete it by deleting the corresponding local test folder.
 
 ## Reports
 
@@ -26,7 +32,7 @@ Config values with sensitive key names such as token, password, secret, or cooki
 
 ## Network Surface
 
-MVP-A local-server is intended for local development. Future sidecar packaging must bind to `127.0.0.1`, generate a one-time auth token, and require desktop API calls to include that token.
+The packaged desktop app supervises a companion service bound to `127.0.0.1`. Packaged API and WebSocket calls require a one-time local auth token generated at startup. The token remains in memory and is not written to reports, logs, URLs, or browser storage.
 
 ## Permissions
 
@@ -34,7 +40,7 @@ LumaTrace does not bypass system permissions. It does not require root or jailbr
 
 ## Storage
 
-SQLite is local. Test and smoke paths can use `:memory:` or temporary files. Delete the configured database file to clear local MVP-A data.
+SQLite data, generated reports, and optional session logs stay on the local device. Test results can be deleted individually or in bulk from the app. Running tests and previously exported report folders are intentionally not removed by bulk deletion. Users can delete exported folders from their selected report directory and can remove remaining application data from the Windows application-data location after closing or uninstalling LumaTrace.
 
 ## Android Beta Diagnostics
 
@@ -55,7 +61,3 @@ Milestone 4A packaged mode runs local-server as a Tauri-supervised sidecar bound
 Milestone 4B adds sidecar manifest verification, log rotation metadata, sidecar crash recovery status, packaged storage smoke, and sanitized packaging diagnostics export in small batches. Diagnostics export is JSON and may include short sanitized excerpts, sidecar crash state, restart cooldown/limit metadata, and storage migration status, but it must not include raw logs, raw CSV files, Android logcat, bugreport, command lines, full local paths, tokens, emails, Android full serials, or stack traces.
 
 Windows optional tool bootstrap detects and can install ADB and PresentMon through fixed winget package IDs for installer/first-run setup. It does not handle LumaTrace local auth tokens, does not write tokens to logs/reports/diagnostics, and exposes only sanitized path labels in status output. LumaTrace does not bundle unclear-license tool binaries into production artifacts until license review, third-party notices, signing, and release approval are complete.
-
-## iOS Beta Privacy
-
-iOS Beta does not collect syslog, app logs, crash logs, or Instruments traces by default. Device UDIDs are hashed for internal device IDs and masked before UI/report-style display. Simulator app parsing keeps bundle IDs and display names but does not expose full simulator bundle paths. Manual xctrace CSV import must be explicit, target-matched, and sanitized before report or diagnostics export; raw CSV is not written to diagnostics or reports.
