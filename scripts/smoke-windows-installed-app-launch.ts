@@ -1,9 +1,11 @@
 import { createHash, randomBytes } from "node:crypto";
 import {
   existsSync,
+  lstatSync,
   mkdirSync,
   readFileSync,
   readdirSync,
+  realpathSync,
   rmSync,
   statSync,
   writeFileSync
@@ -81,8 +83,24 @@ const root = process.cwd();
 const releaseDir = resolve(root, "apps/desktop/src-tauri/target/release");
 const installerDraftManifestPath = resolve(releaseDir, "lumatrace-installer-draft-manifest.json");
 const installedLaunchManifestPath = resolve(releaseDir, "lumatrace-installed-app-launch-smoke-manifest.json");
-const smokeRoot = resolve(tmpdir(), `lumatrace-installed-launch-smoke-${process.pid}-${randomBytes(3).toString("hex")}`);
+const smokeTempRoot = realpathSync(tmpdir());
+const smokeRoot = resolve(smokeTempRoot, `lumatrace-installed-launch-smoke-${process.pid}-${randomBytes(3).toString("hex")}`);
 const installDir = resolve(smokeRoot, "install");
+
+function removeSmokeRoot(): void {
+  const target = resolve(smokeRoot);
+  const child = relative(smokeTempRoot, target);
+  if (!new RegExp(`^lumatrace-installed-launch-smoke-${process.pid}-[0-9a-f]{6}$`, "u").test(child)) {
+    throw new Error("Refusing to remove a path outside the expected installed launch smoke temporary directory.");
+  }
+  if (existsSync(target)) {
+    const entry = lstatSync(target);
+    if (!entry.isDirectory() || entry.isSymbolicLink() || relative(smokeTempRoot, realpathSync(target)) !== child) {
+      throw new Error("Refusing to remove a redirected installed launch smoke temporary directory.");
+    }
+  }
+  rmSync(target, { recursive: true, force: true });
+}
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
@@ -262,7 +280,7 @@ if (!existsSync(installerPath) || sha256(installerPath) !== artifact.sha256 || s
   process.exit(1);
 }
 
-rmSync(smokeRoot, { recursive: true, force: true });
+removeSmokeRoot();
 mkdirSync(installDir, { recursive: true });
 
 const warnings: string[] = [];
@@ -423,7 +441,7 @@ try {
   };
   writeManifest(smokeManifest);
   assertCleanManifest(installedLaunchManifestPath);
-  rmSync(smokeRoot, { recursive: true, force: true });
+  removeSmokeRoot();
   if (smokeManifest.status !== "success") {
     console.error(`Windows installed app launch smoke failed. Manifest written to ${installedLaunchManifestPath}`);
     process.exit(1);

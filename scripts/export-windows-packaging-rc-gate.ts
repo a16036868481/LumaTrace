@@ -445,7 +445,7 @@ const manifest: RcGateManifest = {
   },
   limitations: [
     "This RC gate summarizes packaging readiness blockers for unsigned Windows QA drafts.",
-    "It is not a production release approval and does not configure signing, updater, store distribution, notarization, or iOS.",
+    "It is not a production release approval and does not configure signing, updater, store distribution, or notarization.",
     "The manifest includes artifact names, hashes, sizes, statuses, and blocker codes only.",
     "It must not include auth tokens, full local paths, raw logs, command lines, raw CSV, Android serials, or stack traces.",
     "productionReady remains false."

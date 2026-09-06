@@ -8,9 +8,10 @@ type TauriCommand = "check" | "dev" | "build";
 
 const command = process.argv[2] as TauriCommand | undefined;
 if (command !== "check" && command !== "dev" && command !== "build") {
-  console.error("Usage: node --experimental-strip-types scripts/run-tauri.ts <check|dev|build>");
+  console.error("Usage: node --experimental-strip-types scripts/run-tauri.ts <check|dev|build> [tauri arguments]");
   process.exit(1);
 }
+const tauriArguments = process.argv.slice(3);
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const desktopDir = resolve(root, "apps/desktop");
@@ -56,6 +57,7 @@ const commandEnv = withWindowsBuildEnv(env);
 const cargoCommand = process.platform === "win32" && cargoBin !== undefined ? resolve(cargoBin, "cargo.exe") : "cargo";
 const pnpmCommand = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
 const tauriDevConfig = "src-tauri/tauri.dev.conf.json";
+const effectiveTauriArguments = command === "dev" ? ["--config", tauriDevConfig, ...tauriArguments] : tauriArguments;
 
 if (command === "dev") {
   const coreBuild =
@@ -104,13 +106,13 @@ const child =
         windowsHide: false
       })
     : process.platform === "win32"
-      ? spawn("cmd.exe", ["/d", "/c", `pnpm exec tauri ${command}${command === "dev" ? ` --config ${tauriDevConfig}` : ""}`], {
+      ? spawn("cmd.exe", ["/d", "/c", ["pnpm", "exec", "tauri", command, ...effectiveTauriArguments].join(" ")], {
           cwd: desktopDir,
           env: commandEnv,
           stdio: "inherit",
           windowsHide: false
         })
-      : spawn("pnpm", ["exec", "tauri", command, ...(command === "dev" ? ["--config", tauriDevConfig] : [])], {
+      : spawn("pnpm", ["exec", "tauri", command, ...effectiveTauriArguments], {
           cwd: desktopDir,
           env: commandEnv,
           stdio: "inherit"

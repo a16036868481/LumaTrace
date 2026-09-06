@@ -8,6 +8,8 @@ build/
 coverage/
 .turbo/
 .tmp/
+LumaTraceBuildTools/
+LumaTraceTemp/
 *.tsbuildinfo
 
 # Tauri / Rust outputs
@@ -41,6 +43,9 @@ apps/local-server/*.sqlite-wal
 /tests/screenshots/
 /test-results/
 /playwright-report/
+/.playwright-cli/
+/output/
+apps/desktop/src-tauri/binaries/.lumatrace-runtime-obsolete*/
 apps/local-server/logs/
 apps/local-server/reports/
 apps/local-server/runtime-diagnostics/
@@ -60,6 +65,7 @@ id_ed25519*
 .DS_Store
 Thumbs.db
 desktop.ini
+*.lnk
 .idea/
 .vscode/*
 !.vscode/extensions.json

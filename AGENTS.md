@@ -18,10 +18,10 @@
 ## 指标真实性
 
 - 所有指标必须标记 `source`、`precision`、`confidence` 和 availability。
-- 不可采集的指标必须显示 `unavailable`、`requires_tool`、`requires_permission`、`requires_xcode`、`requires_developer_signing`、`requires_manual_trace` 或 `experimental`，不得伪造。
+- 不可采集的指标必须显示 `unavailable`、`requires_tool`、`requires_permission` 或 `experimental`，不得伪造。
 - Mock 数据必须明确标记为 mock source，不得伪装成真实平台采集。
 - 设备级指标不得伪装为 App 或进程级指标。
-- Android、iOS、PC 采集器必须实现统一 `MetricCollector` 接口。
+- Android、PC 采集器必须实现统一 `MetricCollector` 接口。
 
 ## 外部命令
 

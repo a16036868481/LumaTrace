@@ -1,9 +1,14 @@
 {
   "name": "@lumatrace/desktop",
-  "version": "0.1.0",
+  "version": "1.0.3",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
+    "prebuild": "pnpm validate:translations",
+    "pretest": "pnpm validate:translations",
+    "normalize:translations": "node scripts/normalize-translations.mjs",
+    "validate:translations": "node scripts/validate-translations.mjs",
     "dev": "pnpm --filter @lumatrace/core build && vite --host 127.0.0.1 --port 5173",
     "dev:tauri-frontend": "vite --host 127.0.0.1 --port 5173",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.node.json && vite build",

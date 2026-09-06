@@ -6,7 +6,7 @@ interface TauriConfig {
   bundle?: {
     active?: boolean;
     externalBin?: string[];
-    resources?: string[];
+    resources?: string[] | Record<string, string>;
   };
 }
 
@@ -149,10 +149,12 @@ const unaccountedInstallerArtifacts = findUnaccountedInstallerArtifacts();
 
 check("bundle.active remains false for draft-only installer work", tauriConfig.bundle?.active === false);
 check("Tauri externalBin uses fixed local-server sidecar", tauriConfig.bundle?.externalBin?.includes("binaries/lumatrace-local-server") === true);
-check("Tauri resources include sidecar manifest", tauriConfig.bundle?.resources?.includes("binaries/sidecar-manifest.json") === true);
-check("Tauri resources include packaging notices", tauriConfig.bundle?.resources?.includes("binaries/packaging-notices.json") === true);
-check("Tauri resources include third-party notices", tauriConfig.bundle?.resources?.includes("binaries/THIRD-PARTY-NOTICES.md") === true);
-check("Tauri resources include sidecar runtime", tauriConfig.bundle?.resources?.includes("binaries/lumatrace-local-server-runtime") === true);
+const configuredResources = tauriConfig.bundle?.resources ?? [];
+const resourceNames = Array.isArray(configuredResources) ? configuredResources : Object.keys(configuredResources);
+check("Tauri resources include sidecar manifest", resourceNames.includes("binaries/sidecar-manifest.json"));
+check("Tauri resources include packaging notices", resourceNames.includes("binaries/packaging-notices.json"));
+check("Tauri resources include third-party notices", resourceNames.includes("binaries/THIRD-PARTY-NOTICES.md"));
+check("Tauri resources include sidecar runtime", resourceNames.includes("binaries/lumatrace-local-server-runtime"));
 check("sidecar is self-contained", sidecarManifest.artifactKind === "self-contained");
 check("sidecar does not require system Node", sidecarManifest.nodeRequired === false);
 check("sidecar keeps productionReady=false", sidecarManifest.productionReady === false);

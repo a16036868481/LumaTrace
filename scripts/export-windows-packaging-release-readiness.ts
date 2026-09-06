@@ -189,7 +189,7 @@ const readiness: WindowsPackagingReleaseReadiness = {
     "This is a Windows packaging release-readiness gate for unsigned QA drafts, not release approval.",
     "productionReady remains false until signing, updater policy, manual GUI QA, license review, installer QA, and release approval are complete.",
     "The manifest records artifact file names, hashes, sizes, booleans, and blocker codes only; it does not include tokens, local paths, raw logs, command lines, or stack traces.",
-    "No iOS, cloud upload, updater, store distribution, notarization, or new metrics are added by this gate."
+    "No cloud upload, updater, store distribution, notarization, or new metrics are added by this gate."
   ]
 };
 

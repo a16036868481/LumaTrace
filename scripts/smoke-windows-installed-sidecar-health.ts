@@ -1,9 +1,11 @@
 import { createHash, randomBytes } from "node:crypto";
 import {
   existsSync,
+  lstatSync,
   mkdirSync,
   readFileSync,
   readdirSync,
+  realpathSync,
   rmSync,
   statSync,
   writeFileSync
@@ -94,8 +96,24 @@ const root = process.cwd();
 const releaseDir = resolve(root, "apps/desktop/src-tauri/target/release");
 const installerDraftManifestPath = resolve(releaseDir, "lumatrace-installer-draft-manifest.json");
 const healthManifestPath = resolve(releaseDir, "lumatrace-installed-sidecar-health-smoke-manifest.json");
-const smokeRoot = resolve(tmpdir(), `lumatrace-installed-sidecar-health-${process.pid}-${randomBytes(3).toString("hex")}`);
+const smokeTempRoot = realpathSync(tmpdir());
+const smokeRoot = resolve(smokeTempRoot, `lumatrace-installed-sidecar-health-${process.pid}-${randomBytes(3).toString("hex")}`);
 const installDir = resolve(smokeRoot, "install");
+
+function removeSmokeRoot(): void {
+  const target = resolve(smokeRoot);
+  const child = relative(smokeTempRoot, target);
+  if (!new RegExp(`^lumatrace-installed-sidecar-health-${process.pid}-[0-9a-f]{6}$`, "u").test(child)) {
+    throw new Error("Refusing to remove a path outside the expected sidecar health smoke temporary directory.");
+  }
+  if (existsSync(target)) {
+    const entry = lstatSync(target);
+    if (!entry.isDirectory() || entry.isSymbolicLink() || relative(smokeTempRoot, realpathSync(target)) !== child) {
+      throw new Error("Refusing to remove a redirected sidecar health smoke temporary directory.");
+    }
+  }
+  rmSync(target, { recursive: true, force: true });
+}
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
@@ -304,7 +322,7 @@ if (!existsSync(installerPath) || sha256(installerPath) !== artifact.sha256 || s
   process.exit(1);
 }
 
-rmSync(smokeRoot, { recursive: true, force: true });
+removeSmokeRoot();
 mkdirSync(installDir, { recursive: true });
 
 const warnings: string[] = [];
@@ -347,7 +365,7 @@ try {
   const launchedAt = Date.now();
   const appProcess = spawn(appExe, [], {
     cwd: dirname(appExe),
-    windowsHide: false
+    windowsHide: true
   });
   appStarted = true;
   appProcessPid = appProcess.pid;
@@ -499,7 +517,7 @@ try {
   };
   writeManifest(manifest);
   assertCleanManifest(healthManifestPath);
-  rmSync(smokeRoot, { recursive: true, force: true });
+  removeSmokeRoot();
   if (manifest.status !== "success") {
     console.error(`Windows installed sidecar health smoke failed. Manifest written to ${healthManifestPath}`);
     process.exit(1);

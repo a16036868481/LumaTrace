@@ -563,7 +563,6 @@ check(
   /not.*code signing complete|code signing.*not complete|not a signed release/i.test(docs)
 );
 check("docs do not claim updater complete", /no updater|updater.*not/i.test(docs));
-check("docs do not claim iOS", /no iOS|not.*iOS/i.test(docs));
 check("docs do not claim new metrics", /no new metrics|does not add metrics/i.test(docs));
 
 const manifestText = existsSync(resolve("apps/desktop/src-tauri/binaries/sidecar-manifest.json"))

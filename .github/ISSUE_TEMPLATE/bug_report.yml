@@ -24,7 +24,6 @@ body:
       options:
         - Windows
         - Android
-        - iOS
         - Desktop packaging
         - Report/export
         - Other
@@ -34,7 +33,7 @@ body:
     id: environment
     attributes:
       label: Environment / 环境
-      description: OS version, device model, emulator name, adb/PresentMon/Xcode status if relevant. / 系统版本、设备型号、模拟器名称，以及相关的 adb/PresentMon/Xcode 状态。
+      description: OS version, device model, emulator name, and adb/PresentMon status if relevant. / 系统版本、设备型号、模拟器名称，以及相关的 adb/PresentMon 状态。
       placeholder: Windows 11 24H2, Android 14, MuMu emulator, LumaTrace preview build
   - type: textarea
     id: summary

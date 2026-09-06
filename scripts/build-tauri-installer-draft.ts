@@ -153,7 +153,7 @@ async function runTauriInstallerDraft(): Promise<{ exitCode: number | null; stdo
         ? spawn("cmd.exe", ["/d", "/c", windowsCommand], {
             cwd: desktopDir,
             env: windowsBuildEnv(process.env),
-            windowsHide: false
+            windowsHide: true
           })
         : spawn("pnpm", args, {
             cwd: desktopDir,

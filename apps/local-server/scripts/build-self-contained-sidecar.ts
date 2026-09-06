@@ -1,17 +1,19 @@
 ﻿import {
   copyFileSync,
-  cpSync,
   existsSync,
   mkdirSync,
   mkdtempSync,
   readdirSync,
+  readFileSync,
   renameSync,
   rmSync,
+  rmdirSync,
   statSync,
+  symlinkSync,
   writeFileSync
 } from "node:fs";
 import { arch, homedir, platform, tmpdir } from "node:os";
-import { basename, join, resolve } from "node:path";
+import { basename, join, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import {
@@ -19,7 +21,8 @@ import {
   getDevWrapperSidecarFileName,
   getSidecarTargetTriple,
   hashFile,
-  renderThirdPartyNoticesMarkdown
+  renderThirdPartyNoticesMarkdown,
+  stagePinnedLicenseAssetsForRuntime
 } from "../dist/src/diagnostics/packagedDiagnostics.js";
 
 interface SidecarManifest {
@@ -41,6 +44,8 @@ interface SidecarManifest {
   runtimeDirectory?: string;
   runtimeSizeBytes?: number;
   runtimeFileCount?: number;
+  runtimePrunedFileCount?: number;
+  runtimePrunedSizeBytes?: number;
   bundledNodeVersion?: string;
   noticesFile?: string;
   noticesSha256?: string;
@@ -63,6 +68,128 @@ const noticesFileName = "packaging-notices.json";
 const noticesPath = resolve(binariesDir, noticesFileName);
 const thirdPartyNoticesFileName = "THIRD-PARTY-NOTICES.md";
 const thirdPartyNoticesPath = resolve(binariesDir, thirdPartyNoticesFileName);
+const bundledNodeOverride = process.env.LUMATRACE_BUNDLED_NODE_PATH?.trim();
+const bundledNodeSourcePath =
+  bundledNodeOverride === undefined || bundledNodeOverride.length === 0
+    ? process.execPath
+    : resolve(bundledNodeOverride);
+const buildTempRoot = (() => {
+  const configured = process.env.LUMATRACE_BUILD_TEMP_DIR?.trim();
+  const candidate =
+    configured !== undefined && configured.length > 0
+      ? resolve(configured)
+      : process.platform === "win32"
+        ? resolve(root, "LumaTraceTemp")
+        : tmpdir();
+  mkdirSync(candidate, { recursive: true });
+  return candidate;
+})();
+const bundledNodePath = (() => {
+  const sourceKey = bundledNodeSourcePath.toLowerCase();
+  const runtimeKey = `${runtimeDir.toLowerCase()}${sep}`;
+  if (!sourceKey.startsWith(runtimeKey)) {
+    return bundledNodeSourcePath;
+  }
+  const stagedDirectory = mkdtempSync(join(buildTempRoot, "lumatrace-bundled-node-"));
+  const stagedNodePath = resolve(stagedDirectory, runtimeNodeName);
+  copyFileSync(bundledNodeSourcePath, stagedNodePath);
+  console.log(`Staged bundled Node outside the runtime output before replacement: ${stagedNodePath}`);
+  return stagedNodePath;
+})();
+
+const removableRuntimeDirectoryNames = new Set([
+  ".bin",
+  ".cache",
+  ".circleci",
+  ".claude",
+  ".github",
+  ".gitlab",
+  ".nyc_output",
+  ".pi",
+  ".pnpm",
+  ".turbo",
+  "bench",
+  "benchmark",
+  "benchmarks",
+  "coverage",
+  "doc",
+  "docs",
+  "example",
+  "examples",
+  "fixture",
+  "fixtures",
+  "spec",
+  "specs",
+  "test",
+  "tests",
+  "__tests__"
+]);
+const licenseOrNoticeFilePattern = /^(?:licen[cs]e|notice|copying|copyright)(?:\..*)?$/iu;
+const removableRuntimeFileNamePattern =
+  /^(?:\.editorconfig|\.eslint.*|\.gitattributes|\.gitignore|\.markdownlint-cli2\.ya?ml|\.modules\.yaml|\.nojekyll|\.npmignore|\.nycrc|\.prettier.*|\.taprc|\.travis\.yml|appveyor\.yml|makefile|package-lock\.json|pnpm-lock\.yaml|tsconfig(?:\..*)?\.json|yarn\.lock)$/iu;
+const removableRuntimeSourceFilePattern =
+  /(?:\.d\.ts(?:\.map)?|\.[cm]?ts|\.(?:[cm]?js|css)\.map|\.(?:cache|pdb))$/iu;
+const removableRuntimeStandaloneDevelopmentFilePattern =
+  /^(?:eslint\.config(?:[-_.].*)?|(?:test|tests|bench|benchmark|example|examples|fixture|fixtures|coverage|lint|build)(?:[-_.].*)?|.*\.(?:spec|test|bench|benchmark|example|fixture)(?:\.[^.]+)+)$/iu;
+const removedPlatformRuntimeArtifactPattern =
+  /(?:^|[^a-z0-9])(?:ios|xctrace|xcrun|idevice[a-z0-9_-]*|simctl)(?=$|[^a-z0-9])/iu;
+const removedFirstPartyPlatformTextPattern =
+  /(?:^|[^a-z0-9])(?:ios|xctrace|xcrun|idevice[a-z0-9_-]*|simctl)(?=$|[^a-z0-9])|(?:Ios|IOS|iOS|Xctrace|Xcrun|Idevice|Simctl)/u;
+const firstPartyRuntimeTextPathPattern = /^(?:dist\/src|node_modules\/@lumatrace\/[^/]+\/dist\/src)\//u;
+const runtimeTextFilePattern = /\.(?:cjs|js|json|mjs)$/iu;
+const removablePackageArtifactPaths = new Set([
+  "node_modules/ajv/.runkit_example.js",
+  "node_modules/avvio/.borp.yaml",
+  "node_modules/@pinojs/redact/scripts",
+  "node_modules/fastify/.borp.yaml",
+  "node_modules/fastify/build",
+  "node_modules/fastify/integration",
+  "node_modules/fastify/scripts",
+  "node_modules/fast-json-stringify/build",
+  "node_modules/light-my-request/build",
+  "node_modules/pino-abstract-transport/.husky",
+  "node_modules/pino/build",
+  "node_modules/pino/CNAME",
+  "node_modules/pino/favicon.ico",
+  "node_modules/pino/inc-version.sh",
+  "node_modules/pino/index.html",
+  "node_modules/secure-json-parse/.airtap.yml",
+  "node_modules/semver/range.bnf"
+]);
+
+interface RuntimePruneSummary {
+  before: { fileCount: number; sizeBytes: number };
+  after: { fileCount: number; sizeBytes: number };
+  removedFileCount: number;
+  removedSizeBytes: number;
+}
+
+const deferredRuntimeCleanup: string[] = [];
+
+function clearRuntimeOutputPath(targetPath: string): void {
+  try {
+    rmSync(targetPath, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+  } catch (error) {
+    if (!existsSync(targetPath)) {
+      return;
+    }
+    console.warn(
+      `Warning: direct runtime cleanup failed; quarantining the old output instead: ${(error as Error).message}`
+    );
+  }
+  if (!existsSync(targetPath)) {
+    return;
+  }
+  const quarantinePath = resolve(
+    binariesDir,
+    `.lumatrace-runtime-obsolete-${process.pid}-${Date.now()}-${basename(targetPath)}`
+  );
+  renameSync(targetPath, quarantinePath);
+  deferredRuntimeCleanup.push(quarantinePath);
+  if (existsSync(targetPath)) {
+    throw new Error(`Could not clear previous runtime output: ${targetPath}`);
+  }
+}
 
 function run(command: string, args: string[], cwd = root): void {
   const result = spawnSync(command, args, {
@@ -83,12 +210,162 @@ function runPnpm(args: string[], cwd = root): void {
   const pnpmExec =
     process.env.npm_execpath ??
     resolve(process.env.APPDATA ?? resolve(homedir(), "AppData/Roaming"), "npm/node_modules/pnpm/bin/pnpm.cjs");
-  run(process.execPath, [pnpmExec, ...args], cwd);
+  run(bundledNodePath, [pnpmExec, ...args], cwd);
 }
 
 function removeDevelopmentOnlyFiles(appDir: string): void {
-  for (const relativePath of [".turbo", "src", "test", "tsconfig.json", "apps"]) {
-    rmSync(resolve(appDir, relativePath), { recursive: true, force: true });
+  for (const relativePath of [
+    ".tmp",
+    ".turbo",
+    "dist/scripts",
+    "src",
+    "test",
+    "tsconfig.json",
+    "apps",
+    "lumatrace.sqlite",
+    "lumatrace.sqlite-shm",
+    "lumatrace.sqlite-wal"
+  ]) {
+    const targetPath = resolve(appDir, relativePath);
+    rmSync(targetPath, { recursive: true, force: true });
+    if (existsSync(targetPath)) {
+      const quarantineDir = mkdtempSync(join(buildTempRoot, "lumatrace-runtime-discard-"));
+      const quarantinePath = resolve(quarantineDir, basename(targetPath));
+      renameSync(targetPath, quarantinePath);
+      try {
+        rmSync(quarantineDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+      } catch (error) {
+        console.warn(`Warning: could not remove quarantined development artifact: ${(error as Error).message}`);
+      }
+    }
+    if (existsSync(targetPath)) {
+      throw new Error(`Could not exclude development-only artifact: ${targetPath}`);
+    }
+  }
+}
+
+function runtimeRelativePath(rootDir: string, path: string): string {
+  return path.slice(rootDir.length + 1).replace(/\\/gu, "/");
+}
+
+function isWorkspaceSourceDirectory(appDir: string, path: string, name: string): boolean {
+  return name === "src" && /^node_modules\/@lumatrace\/[^/]+\/src$/u.test(runtimeRelativePath(appDir, path));
+}
+
+function isNativeBuildSourceDirectory(appDir: string, path: string, name: string): boolean {
+  return (
+    (name === "src" || name === "deps") &&
+    new RegExp(`^node_modules/better-sqlite3/${name}$`, "u").test(runtimeRelativePath(appDir, path))
+  );
+}
+
+function isPackageSpecificNonRuntimeArtifact(appDir: string, path: string): boolean {
+  return removablePackageArtifactPaths.has(runtimeRelativePath(appDir, path));
+}
+
+function shouldRemoveRuntimeFile(appDir: string, path: string, name: string): boolean {
+  if (licenseOrNoticeFilePattern.test(name) || name === "package.json" || name.endsWith(".node")) {
+    return false;
+  }
+  const relative = runtimeRelativePath(appDir, path);
+  if (relative === "scripts/register-esm-loader.mjs") {
+    return false;
+  }
+  if (relative === "node_modules/better-sqlite3/binding.gyp") {
+    return true;
+  }
+  if (isPackageSpecificNonRuntimeArtifact(appDir, path)) {
+    return true;
+  }
+  return (
+    removableRuntimeFileNamePattern.test(name) ||
+    removableRuntimeSourceFilePattern.test(name) ||
+    removableRuntimeStandaloneDevelopmentFilePattern.test(name) ||
+    (/\.(?:md|markdown)$/iu.test(name) && !licenseOrNoticeFilePattern.test(name))
+  );
+}
+
+function pruneProductionRuntime(appDir: string): RuntimePruneSummary {
+  const before = directoryStats(appDir);
+  const visit = (directory: string): void => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = resolve(directory, entry.name);
+      if (entry.isDirectory()) {
+        if (
+          removableRuntimeDirectoryNames.has(entry.name.toLowerCase()) ||
+          isWorkspaceSourceDirectory(appDir, path, entry.name) ||
+          isNativeBuildSourceDirectory(appDir, path, entry.name) ||
+          isPackageSpecificNonRuntimeArtifact(appDir, path)
+        ) {
+          rmSync(path, { recursive: true, force: true });
+          continue;
+        }
+        visit(path);
+      } else if (entry.isFile() && shouldRemoveRuntimeFile(appDir, path, entry.name)) {
+        rmSync(path, { force: true });
+      }
+    }
+  };
+  visit(appDir);
+  const after = directoryStats(appDir);
+  return {
+    before,
+    after,
+    removedFileCount: before.fileCount - after.fileCount,
+    removedSizeBytes: before.sizeBytes - after.sizeBytes
+  };
+}
+
+function verifyProductionRuntime(appDir: string): void {
+  const forbidden: string[] = [];
+  const visit = (directory: string): void => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = resolve(directory, entry.name);
+      if (entry.isDirectory()) {
+        if (
+          removableRuntimeDirectoryNames.has(entry.name.toLowerCase()) ||
+          isWorkspaceSourceDirectory(appDir, path, entry.name) ||
+          isNativeBuildSourceDirectory(appDir, path, entry.name) ||
+          isPackageSpecificNonRuntimeArtifact(appDir, path)
+        ) {
+          forbidden.push(runtimeRelativePath(appDir, path));
+          continue;
+        }
+        visit(path);
+      } else if (entry.isFile()) {
+        const relative = runtimeRelativePath(appDir, path);
+        if (
+          shouldRemoveRuntimeFile(appDir, path, entry.name) ||
+          removedPlatformRuntimeArtifactPattern.test(relative) ||
+          (firstPartyRuntimeTextPathPattern.test(relative) &&
+            runtimeTextFilePattern.test(entry.name) &&
+            removedFirstPartyPlatformTextPattern.test(readFileSync(path, "utf8")))
+        ) {
+          forbidden.push(relative);
+        }
+      }
+    }
+  };
+  visit(appDir);
+  if (forbidden.length > 0) {
+    throw new Error(`Production runtime still contains non-runtime files: ${forbidden.slice(0, 10).join(", ")}`);
+  }
+  for (const required of [
+    "package.json",
+    "scripts/register-esm-loader.mjs",
+    "dist/src/index.js",
+    "node_modules/better-sqlite3/build/Release/better_sqlite3.node",
+    "node_modules/better-sqlite3/package.json",
+    "node_modules/prebuild-install/help.txt",
+    "node_modules/tar-fs/index.js",
+    "node_modules/tar-fs/package.json"
+  ]) {
+    if (!existsSync(resolve(appDir, required))) {
+      throw new Error(`Production runtime is missing required file after pruning: ${required}`);
+    }
+  }
+  if (existsSync(resolve(appDir, "node_modules/tar-fs/test/fixtures/invalid.tar"))) {
+    throw new Error("Production runtime still contains tar-fs/test/fixtures/invalid.tar.");
   }
 }
 
@@ -126,6 +403,21 @@ function directoryStats(directory: string): { fileCount: number; sizeBytes: numb
   return { fileCount, sizeBytes };
 }
 
+function copyRuntimeDirectory(source: string, destination: string): void {
+  mkdirSync(destination, { recursive: true });
+  for (const entry of readdirSync(source, { withFileTypes: true })) {
+    const sourcePath = resolve(source, entry.name);
+    const destinationPath = resolve(destination, entry.name);
+    if (entry.isDirectory()) {
+      copyRuntimeDirectory(sourcePath, destinationPath);
+    } else if (entry.isFile()) {
+      copyFileSync(sourcePath, destinationPath);
+    } else {
+      throw new Error(`Production runtime staging contains unsupported link or special file: ${sourcePath}`);
+    }
+  }
+}
+
 function compileWrapper(): void {
   if (process.platform !== "win32") {
     const shellWrapper = `#!/usr/bin/env sh
@@ -149,7 +441,7 @@ exec "$NODE" --import "file://$APP/scripts/register-esm-loader.mjs" "$APP/dist/s
     throw new Error("Visual C++ Build Tools are required to compile the Windows sidecar wrapper.");
   }
 
-  const tempDir = mkdtempSync(join(tmpdir(), "lumatrace-self-contained-sidecar-"));
+  const tempDir = mkdtempSync(join(buildTempRoot, "lumatrace-self-contained-sidecar-"));
   const sourcePath = resolve(tempDir, "lumatrace-local-server-wrapper.rs");
   const compileScriptPath = resolve(tempDir, "compile.cmd");
   const source = String.raw`
@@ -313,13 +605,35 @@ function findVisualStudioDevCmd(): string {
 }
 
 mkdirSync(binariesDir, { recursive: true });
-rmSync(runtimeDir, { recursive: true, force: true });
+if (!existsSync(bundledNodePath)) {
+  throw new Error(`Bundled Node.js executable does not exist: ${bundledNodePath}`);
+}
+const requestedNodeVersion = spawnSync(bundledNodePath, ["--version"], {
+  encoding: "utf8",
+  windowsHide: true
+}).stdout.trim();
+if (!/^v24\./u.test(requestedNodeVersion)) {
+  throw new Error(
+    `LumaTrace packaging requires Node.js 24.x so native sidecar modules match the bundled runtime; received ${
+      requestedNodeVersion || "unknown"
+    }. Set LUMATRACE_BUNDLED_NODE_PATH to a Node.js 24 executable.`
+  );
+}
+clearRuntimeOutputPath(runtimeDir);
 mkdirSync(runtimeDir, { recursive: true });
 
-const workspaceTempDir = resolve(root, ".tmp");
-mkdirSync(workspaceTempDir, { recursive: true });
-const deployRoot = mkdtempSync(join(workspaceTempDir, "lumatrace-runtime-deploy-"));
+const deployRoot = mkdtempSync(join(buildTempRoot, "lumatrace-runtime-deploy-"));
 const deployAppDir = resolve(deployRoot, "app");
+const deployLinkRoot =
+  process.platform === "win32" && deployRoot.slice(0, 2).toLowerCase() !== root.slice(0, 2).toLowerCase()
+    ? resolve(root, ".tmp", `lumatrace-runtime-deploy-link-${process.pid}-${Date.now()}`)
+    : undefined;
+if (deployLinkRoot !== undefined) {
+  mkdirSync(resolve(root, ".tmp"), { recursive: true });
+  symlinkSync(deployRoot, deployLinkRoot, "junction");
+}
+const deployTargetAppDir = resolve(deployLinkRoot ?? deployRoot, "app");
+let runtimePrune: RuntimePruneSummary | undefined;
 try {
   runPnpm([
     "--filter",
@@ -328,35 +642,48 @@ try {
     "--prod",
     "--config.node-linker=hoisted",
     "--config.package-import-method=copy",
-    deployAppDir
+    deployTargetAppDir
   ]);
   removeDevelopmentOnlyFiles(deployAppDir);
   breakHardlinkedFiles(deployAppDir);
-  try {
-    renameSync(deployAppDir, runtimeAppDir);
-  } catch {
-    cpSync(deployAppDir, runtimeAppDir, { recursive: true });
-  }
+  runtimePrune = pruneProductionRuntime(deployAppDir);
+  verifyProductionRuntime(deployAppDir);
+  clearRuntimeOutputPath(runtimeAppDir);
+  copyRuntimeDirectory(deployAppDir, runtimeAppDir);
+  removeDevelopmentOnlyFiles(runtimeAppDir);
+  verifyProductionRuntime(runtimeAppDir);
 } finally {
+  if (deployLinkRoot !== undefined && existsSync(deployLinkRoot)) {
+    rmdirSync(deployLinkRoot);
+  }
   rmSync(deployRoot, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
 }
-copyFileSync(process.execPath, runtimeNodePath);
+copyFileSync(bundledNodePath, runtimeNodePath);
 compileWrapper();
+removeDevelopmentOnlyFiles(runtimeAppDir);
+verifyProductionRuntime(runtimeAppDir);
 
 const wrapperStat = statSync(wrapperPath);
-const runtime = directoryStats(runtimeDir);
 const nodeVersion = spawnSync(runtimeNodePath, ["--version"], {
   encoding: "utf8",
   windowsHide: true
 }).stdout.trim();
+stagePinnedLicenseAssetsForRuntime({
+  repositoryRoot: root,
+  runtimeDir,
+  bundledNodeVersion: nodeVersion
+});
 const noticeManifest = buildPackagingNoticeManifest({
   runtimeAppDir,
+  runtimeDir,
   bundledNodeVersion: nodeVersion,
   artifactKind: "self-contained",
   productionReady: false
 });
 writeFileSync(noticesPath, `${JSON.stringify(noticeManifest, null, 2)}\n`, "utf8");
 writeFileSync(thirdPartyNoticesPath, renderThirdPartyNoticesMarkdown(noticeManifest), "utf8");
+removeDevelopmentOnlyFiles(runtimeAppDir);
+const runtime = directoryStats(runtimeDir);
 const manifest: SidecarManifest = {
   name: "lumatrace-local-server",
   version: "0.0.0",
@@ -374,6 +701,12 @@ const manifest: SidecarManifest = {
   runtimeDirectory: runtimeDirName,
   runtimeSizeBytes: runtime.sizeBytes,
   runtimeFileCount: runtime.fileCount,
+  ...(runtimePrune === undefined
+    ? {}
+    : {
+        runtimePrunedFileCount: runtimePrune.removedFileCount,
+        runtimePrunedSizeBytes: runtimePrune.removedSizeBytes
+      }),
   bundledNodeVersion: nodeVersion,
   noticesFile: noticesFileName,
   noticesSha256: hashFile(noticesPath),
@@ -392,9 +725,32 @@ const manifest: SidecarManifest = {
 
 writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
 
+for (const forbiddenPath of [resolve(runtimeAppDir, ".tmp"), resolve(runtimeAppDir, "lumatrace.sqlite")]) {
+  if (existsSync(forbiddenPath)) {
+    throw new Error(`Self-contained runtime contains development-only artifact: ${forbiddenPath}`);
+  }
+}
+
 console.log(`Self-contained sidecar wrapper written to ${wrapperPath}`);
 console.log(`Bundled runtime written to ${runtimeDir}`);
 console.log(`Packaging notices written to ${noticesPath}`);
 console.log(`Third-party notices written to ${thirdPartyNoticesPath}`);
 console.log(`Sidecar manifest written to ${manifestPath}`);
+if (runtimePrune !== undefined) {
+  console.log(
+    `Production runtime pruned ${runtimePrune.removedFileCount} files and ${runtimePrune.removedSizeBytes} bytes ` +
+      `(${runtimePrune.before.fileCount} files/${runtimePrune.before.sizeBytes} bytes -> ` +
+      `${runtimePrune.after.fileCount} files/${runtimePrune.after.sizeBytes} bytes).`
+  );
+}
+for (const obsoletePath of deferredRuntimeCleanup) {
+  try {
+    rmSync(obsoletePath, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+    if (existsSync(obsoletePath)) {
+      console.warn(`Warning: obsolete runtime output remains outside the packaged runtime: ${obsoletePath}`);
+    }
+  } catch (error) {
+    console.warn(`Warning: could not remove obsolete runtime output: ${(error as Error).message}`);
+  }
+}
 console.log("productionReady=false remains intentional.");
