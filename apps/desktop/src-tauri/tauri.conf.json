@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "LumaTrace",
-  "version": "0.1.0",
+  "productName": "LumaTrace Performance Lab",
+  "version": "1.0.3",
   "identifier": "dev.lumatrace.desktop",
   "build": {
     "beforeDevCommand": "pnpm dev:tauri-frontend",
@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "LumaTrace",
+        "title": "LumaTrace Performance Lab",
         "width": 1280,
         "height": 820
       }
@@ -28,11 +28,17 @@
     "externalBin": [
       "binaries/lumatrace-local-server"
     ],
-    "resources": [
-      "binaries/sidecar-manifest.json",
-      "binaries/packaging-notices.json",
-      "binaries/THIRD-PARTY-NOTICES.md",
-      "binaries/lumatrace-local-server-runtime"
-    ]
+    "resources": {
+      "binaries/sidecar-manifest.json": "binaries/sidecar-manifest.json",
+      "binaries/packaging-notices.json": "binaries/packaging-notices.json",
+      "binaries/THIRD-PARTY-NOTICES.md": "binaries/THIRD-PARTY-NOTICES.md",
+      "binaries/lumatrace-local-server-runtime": "binaries/lumatrace-local-server-runtime",
+      "../../../LICENSE": "LICENSE",
+      "../../../legal/desktop-third-party-notices.md": "legal/desktop-third-party-notices.md",
+      "../../../README.md": "README.md",
+      "../../../README.zh-CN.md": "README.zh-CN.md",
+      "../../../docs/user-guide.md": "docs/user-guide.md",
+      "../../../docs/user-guide.zh-CN.md": "docs/user-guide.zh-CN.md"
+    }
   }
 }

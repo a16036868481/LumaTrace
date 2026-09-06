@@ -13,6 +13,7 @@ mod sidecar_manifest;
 mod state;
 mod storage_migration;
 mod toolchain;
+mod windows_fps_access;
 
 use std::sync::Mutex;
 
@@ -21,6 +22,10 @@ use tauri::Manager;
 use state::{AppState, SidecarStatus};
 
 fn main() {
+    if let Some(exit_code) = windows_fps_access::try_run_elevated_helper() {
+        std::process::exit(exit_code);
+    }
+
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
@@ -69,11 +74,14 @@ fn main() {
             commands::clear_sidecar_crash_state,
             commands::open_logs_directory,
             commands::open_reports_directory,
+            commands::open_bug_report_page,
             commands::choose_report_output_directory,
             commands::export_packaging_diagnostics,
             commands::get_app_paths,
             commands::get_tauri_toolchain_status,
-            commands::get_sidecar_manifest
+            commands::get_sidecar_manifest,
+            commands::get_windows_fps_access_status,
+            commands::enable_windows_fps_access
         ])
         .on_window_event(|window, event| {
             if let tauri::WindowEvent::CloseRequested { .. } = event {

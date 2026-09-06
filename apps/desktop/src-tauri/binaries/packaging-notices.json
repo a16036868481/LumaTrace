@@ -1,34 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-09T18:18:15.798Z",
+  "generatedAt": "2026-09-06T18:01:02.661Z",
   "artifactKind": "self-contained",
   "productionReady": false,
   "licenseReviewStatus": "draft_requires_review",
   "bundledRuntime": {
     "name": "Node.js",
-    "version": "v24.14.1",
+    "version": "v24.14.0",
     "license": "MIT",
-    "reviewStatus": "draft_requires_review"
+    "reviewStatus": "recorded"
   },
   "entries": [
     {
       "name": "Node.js",
-      "version": "v24.14.1",
+      "version": "v24.14.0",
       "componentType": "node-runtime",
       "license": "MIT",
       "licenseSource": "known_runtime",
-      "noticeFileNames": [],
+      "noticeFileNames": [
+        "NODE-LICENSE.txt"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "NODE-LICENSE.txt",
+          "distributionPath": "lumatrace-local-server-runtime/NODE-LICENSE.txt",
+          "sha256": "4573185d56580da2b890ba34a85a409257640f1c5632eade4300137266194d18",
+          "sizeBytes": 156926,
+          "source": "pinned-license-asset"
+        }
+      ],
       "packagePath": "lumatrace-local-server-runtime/node",
-      "reviewStatus": "draft_requires_review"
+      "reviewStatus": "recorded"
     },
     {
       "name": "@fastify/ajv-compiler",
-      "version": "4.0.5",
+      "version": "4.0.6",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/@fastify/ajv-compiler/LICENSE",
+          "sha256": "e2d09f74a77005e85e9f9bd501e3b7599ccae19d918538461196dde42f7f1b97",
+          "sizeBytes": 1123,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/@fastify/ajv-compiler",
       "reviewStatus": "recorded"
@@ -42,29 +62,56 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/@fastify/error/LICENSE",
+          "sha256": "ec99456b6f97f7e559790df166a17a2418dbdbf595d63502792a5ce661f1346c",
+          "sizeBytes": 1064,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/@fastify/error",
       "reviewStatus": "recorded"
     },
     {
       "name": "@fastify/fast-json-stringify-compiler",
-      "version": "5.0.3",
+      "version": "5.1.0",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/@fastify/fast-json-stringify-compiler/LICENSE",
+          "sha256": "e2d09f74a77005e85e9f9bd501e3b7599ccae19d918538461196dde42f7f1b97",
+          "sizeBytes": 1123,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/@fastify/fast-json-stringify-compiler",
       "reviewStatus": "recorded"
     },
     {
       "name": "@fastify/forwarded",
-      "version": "3.0.1",
+      "version": "3.0.2",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/@fastify/forwarded/LICENSE",
+          "sha256": "9276503e39bdcaad7d26993fae17b1e82d7ef65cf0fe0ae54c361bbc6cbc33da",
+          "sizeBytes": 1174,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/@fastify/forwarded",
       "reviewStatus": "recorded"
@@ -78,6 +125,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/@fastify/merge-json-schemas/LICENSE",
+          "sha256": "a5b84e79d71db5b8baef48e7c04143ca70117ee0a0b637133c02ab63a79fa6c7",
+          "sizeBytes": 1064,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/@fastify/merge-json-schemas",
       "reviewStatus": "recorded"
     },
@@ -90,17 +146,35 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/@fastify/proxy-addr/LICENSE",
+          "sha256": "2b78f11c8624f013751e54a34d87e8b5be5dd525dff65c7cda86f5439ed8bf8e",
+          "sizeBytes": 1213,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/@fastify/proxy-addr",
       "reviewStatus": "recorded"
     },
     {
       "name": "@fastify/websocket",
-      "version": "11.2.0",
+      "version": "11.3.0",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/@fastify/websocket/LICENSE",
+          "sha256": "ba9677e5a34c2738c26b36bb478f95e0369cac48fbe68a01a91fd5c7972f2043",
+          "sizeBytes": 1123,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/@fastify/websocket",
       "reviewStatus": "recorded"
@@ -109,78 +183,73 @@
       "name": "@lumatrace/collectors-android",
       "version": "0.0.0",
       "componentType": "npm-package",
-      "license": "UNKNOWN",
-      "licenseSource": "missing",
+      "license": "MIT",
+      "licenseSource": "package_json",
       "noticeFileNames": [],
+      "noticeFiles": [],
       "packagePath": "node_modules/@lumatrace/collectors-android",
       "private": true,
-      "reviewStatus": "missing_license"
-    },
-    {
-      "name": "@lumatrace/collectors-ios",
-      "version": "0.0.0",
-      "componentType": "npm-package",
-      "license": "UNKNOWN",
-      "licenseSource": "missing",
-      "noticeFileNames": [],
-      "packagePath": "node_modules/@lumatrace/collectors-ios",
-      "private": true,
-      "reviewStatus": "missing_license"
+      "reviewStatus": "recorded"
     },
     {
       "name": "@lumatrace/collectors-mock",
       "version": "0.0.0",
       "componentType": "npm-package",
-      "license": "UNKNOWN",
-      "licenseSource": "missing",
+      "license": "MIT",
+      "licenseSource": "package_json",
       "noticeFileNames": [],
+      "noticeFiles": [],
       "packagePath": "node_modules/@lumatrace/collectors-mock",
       "private": true,
-      "reviewStatus": "missing_license"
+      "reviewStatus": "recorded"
     },
     {
       "name": "@lumatrace/collectors-pc",
       "version": "0.0.0",
       "componentType": "npm-package",
-      "license": "UNKNOWN",
-      "licenseSource": "missing",
+      "license": "MIT",
+      "licenseSource": "package_json",
       "noticeFileNames": [],
+      "noticeFiles": [],
       "packagePath": "node_modules/@lumatrace/collectors-pc",
       "private": true,
-      "reviewStatus": "missing_license"
+      "reviewStatus": "recorded"
     },
     {
       "name": "@lumatrace/core",
       "version": "0.0.0",
       "componentType": "npm-package",
-      "license": "UNKNOWN",
-      "licenseSource": "missing",
+      "license": "MIT",
+      "licenseSource": "package_json",
       "noticeFileNames": [],
+      "noticeFiles": [],
       "packagePath": "node_modules/@lumatrace/core",
       "private": true,
-      "reviewStatus": "missing_license"
+      "reviewStatus": "recorded"
     },
     {
       "name": "@lumatrace/report",
       "version": "0.0.0",
       "componentType": "npm-package",
-      "license": "UNKNOWN",
-      "licenseSource": "missing",
+      "license": "MIT",
+      "licenseSource": "package_json",
       "noticeFileNames": [],
+      "noticeFiles": [],
       "packagePath": "node_modules/@lumatrace/report",
       "private": true,
-      "reviewStatus": "missing_license"
+      "reviewStatus": "recorded"
     },
     {
       "name": "@lumatrace/storage",
       "version": "0.0.0",
       "componentType": "npm-package",
-      "license": "UNKNOWN",
-      "licenseSource": "missing",
+      "license": "MIT",
+      "licenseSource": "package_json",
       "noticeFileNames": [],
+      "noticeFiles": [],
       "packagePath": "node_modules/@lumatrace/storage",
       "private": true,
-      "reviewStatus": "missing_license"
+      "reviewStatus": "recorded"
     },
     {
       "name": "@pinojs/redact",
@@ -191,6 +260,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/@pinojs/redact/LICENSE",
+          "sha256": "58d4023bfbed5fb530c5bb8d44641299eac62c850267415ec939cc42dea87e4f",
+          "sizeBytes": 1076,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/@pinojs/redact",
       "reviewStatus": "recorded"
     },
@@ -200,7 +278,18 @@
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
-      "noticeFileNames": [],
+      "noticeFileNames": [
+        "abstract-logging-2.0.1-LICENSE.txt"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "abstract-logging-2.0.1-LICENSE.txt",
+          "distributionPath": "lumatrace-local-server-runtime/THIRD-PARTY-LICENSES/abstract-logging-2.0.1-LICENSE.txt",
+          "sha256": "51d42d5384ab02fd8210ae3547fc0a8af7a385d2ac8f12685a6d3146fc2adafe",
+          "sizeBytes": 1087,
+          "source": "pinned-license-asset"
+        }
+      ],
       "packagePath": "node_modules/abstract-logging",
       "reviewStatus": "recorded"
     },
@@ -212,6 +301,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/ajv/LICENSE",
+          "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
+          "sizeBytes": 1090,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/ajv",
       "reviewStatus": "recorded"
@@ -225,6 +323,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/ajv-formats/LICENSE",
+          "sha256": "9df3bb69929a3b650ed73b3bfa1756725aaff0ac296461605753547004eafeaf",
+          "sizeBytes": 1074,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/ajv-formats",
       "reviewStatus": "recorded"
     },
@@ -237,17 +344,35 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/atomic-sleep/LICENSE",
+          "sha256": "8d58741278b289a7f4b6dde2d6273fca7711b9849452c477933d1cccd03db1e7",
+          "sizeBytes": 1087,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/atomic-sleep",
       "reviewStatus": "recorded"
     },
     {
       "name": "avvio",
-      "version": "9.2.0",
+      "version": "9.3.0",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/avvio/LICENSE",
+          "sha256": "0dae13c0bb4d8c6dc73d7d49ddecdba7f56075975ffb2ee17050c63f3f3666f0",
+          "sizeBytes": 1162,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/avvio",
       "reviewStatus": "recorded"
@@ -261,17 +386,35 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/base64-js/LICENSE",
+          "sha256": "5b37224c080cdcc97c871ada971c224e9926370fe74f11b539aa1cf9f3b1aca1",
+          "sizeBytes": 1081,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/base64-js",
       "reviewStatus": "recorded"
     },
     {
       "name": "better-sqlite3",
-      "version": "12.9.0",
+      "version": "12.11.1",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/better-sqlite3/LICENSE",
+          "sha256": "09856b52897c91ab67e7456ef43067019f31dfd3b87fda72e655736b1ebdee55",
+          "sizeBytes": 1078,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/better-sqlite3",
       "reviewStatus": "recorded"
@@ -285,6 +428,15 @@
       "noticeFileNames": [
         "LICENSE.md"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE.md",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/bindings/LICENSE.md",
+          "sha256": "85fde19744c84cfacb04aed732c0392ba221231b26090d3271d2ed865bfc0792",
+          "sizeBytes": 1108,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/bindings",
       "reviewStatus": "recorded"
     },
@@ -296,6 +448,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE.md"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE.md",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/bl/LICENSE.md",
+          "sha256": "9377db95383c8befacf05c6e465d969d756edf178487ca1344fdf3ba147c596f",
+          "sizeBytes": 1216,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/bl",
       "reviewStatus": "recorded"
@@ -309,6 +470,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/buffer/LICENSE",
+          "sha256": "06bafa45fdad2579ba0e43b0c9b2c6290287c99c4203c300254a462b38a307f6",
+          "sizeBytes": 1106,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/buffer",
       "reviewStatus": "recorded"
     },
@@ -320,6 +490,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/chownr/LICENSE",
+          "sha256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b",
+          "sizeBytes": 765,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/chownr",
       "reviewStatus": "recorded"
@@ -333,6 +512,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/cookie/LICENSE",
+          "sha256": "c02110eedc16c7114f1a9bdc026c65626ce1d9c7e27fd51a8e0feee8a48a6858",
+          "sizeBytes": 1175,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/cookie",
       "reviewStatus": "recorded"
     },
@@ -344,6 +532,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "license"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "license",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/decompress-response/license",
+          "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+          "sizeBytes": 1117,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/decompress-response",
       "reviewStatus": "recorded"
@@ -357,6 +554,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/deep-extend/LICENSE",
+          "sha256": "e17120ad3deff741c2ca5cbe511971ca33971a1ba6e49694c6498309bb2680b9",
+          "sizeBytes": 1093,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/deep-extend",
       "reviewStatus": "recorded"
     },
@@ -368,6 +574,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "license"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "license",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/dequal/license",
+          "sha256": "306fa513e39b23a6e8747520de761809d206b99800ef41907b530226574c59ae",
+          "sizeBytes": 1114,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/dequal",
       "reviewStatus": "recorded"
@@ -381,6 +596,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/detect-libc/LICENSE",
+          "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+          "sizeBytes": 11357,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/detect-libc",
       "reviewStatus": "recorded"
     },
@@ -392,6 +616,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/duplexify/LICENSE",
+          "sha256": "3fe8d55a98dbf260eace67c00cf9bc53edb46234e840098a0b93df3096b97fb6",
+          "sizeBytes": 1078,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/duplexify",
       "reviewStatus": "recorded"
@@ -405,6 +638,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/end-of-stream/LICENSE",
+          "sha256": "3fe8d55a98dbf260eace67c00cf9bc53edb46234e840098a0b93df3096b97fb6",
+          "sizeBytes": 1078,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/end-of-stream",
       "reviewStatus": "recorded"
     },
@@ -416,6 +658,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/expand-template/LICENSE",
+          "sha256": "0967624813244bf47da346449804af853437433cbdeb8c977f1e0d4bd14e0a3b",
+          "sizeBytes": 1082,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/expand-template",
       "reviewStatus": "recorded"
@@ -429,6 +680,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/fast-decode-uri-component/LICENSE",
+          "sha256": "27384b39baee4b476fb876670a75f282286fa55658bf0db14639621dd3801c9a",
+          "sizeBytes": 1174,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/fast-decode-uri-component",
       "reviewStatus": "recorded"
     },
@@ -441,17 +701,35 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/fast-deep-equal/LICENSE",
+          "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+          "sizeBytes": 1074,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/fast-deep-equal",
       "reviewStatus": "recorded"
     },
     {
       "name": "fast-json-stringify",
-      "version": "6.4.0",
+      "version": "7.0.1",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/fast-json-stringify/LICENSE",
+          "sha256": "b08de5bb7b21f44a8358edf74febe50c75ef2a1e5470e06c8919eb934cba067c",
+          "sizeBytes": 1165,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/fast-json-stringify",
       "reviewStatus": "recorded"
@@ -465,53 +743,119 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/fast-querystring/LICENSE",
+          "sha256": "4f8cf48502224399442f7eadd8620d96ef18125f9beb4949c53084ab3b05a4d4",
+          "sizeBytes": 1057,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/fast-querystring",
       "reviewStatus": "recorded"
     },
     {
       "name": "fast-uri",
-      "version": "3.1.2",
+      "version": "3.1.7",
       "componentType": "npm-package",
       "license": "BSD-3-Clause",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/ajv/node_modules/fast-uri/LICENSE",
+          "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786",
+          "sizeBytes": 1813,
+          "source": "bundled-package"
+        }
+      ],
+      "packagePath": "node_modules/ajv/node_modules/fast-uri",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "fast-uri",
+      "version": "4.1.4",
+      "componentType": "npm-package",
+      "license": "BSD-3-Clause",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/fast-uri/LICENSE",
+          "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786",
+          "sizeBytes": 1813,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/fast-uri",
       "reviewStatus": "recorded"
     },
     {
       "name": "fastify",
-      "version": "5.8.5",
+      "version": "5.12.3",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/fastify/LICENSE",
+          "sha256": "23c91863859171455a536380991b4160fee4e19e2d8dc353ecf7143cc4e53ca2",
+          "sizeBytes": 1123,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/fastify",
       "reviewStatus": "recorded"
     },
     {
       "name": "fastify-plugin",
-      "version": "5.1.0",
+      "version": "6.0.0",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/fastify-plugin/LICENSE",
+          "sha256": "ba9677e5a34c2738c26b36bb478f95e0369cac48fbe68a01a91fd5c7972f2043",
+          "sizeBytes": 1123,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/fastify-plugin",
       "reviewStatus": "recorded"
     },
     {
       "name": "fastq",
-      "version": "1.20.1",
+      "version": "1.20.3",
       "componentType": "npm-package",
       "license": "ISC",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/fastq/LICENSE",
+          "sha256": "c3367f6d01a79d368fc4fbb41b3615fcd92f243d6597ab96742f6f976f9325af",
+          "sizeBytes": 765,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/fastq",
       "reviewStatus": "recorded"
@@ -525,17 +869,35 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/file-uri-to-path/LICENSE",
+          "sha256": "75070206e4ee2a749be52444cecc05101ca8d314c9d6d335ff914046cbf086a0",
+          "sizeBytes": 1083,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/file-uri-to-path",
       "reviewStatus": "recorded"
     },
     {
       "name": "find-my-way",
-      "version": "9.6.0",
+      "version": "9.9.0",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/find-my-way/LICENSE",
+          "sha256": "693f9539655acc1847add1ccd364312ba570bf8ce84706b6059e7e0b5ceb90e6",
+          "sizeBytes": 1080,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/find-my-way",
       "reviewStatus": "recorded"
@@ -549,6 +911,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/fs-constants/LICENSE",
+          "sha256": "2281f2db407bdbb54f069eec38128b2dee2c0c952f52b786ef1faecb81767b3c",
+          "sizeBytes": 1079,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/fs-constants",
       "reviewStatus": "recorded"
     },
@@ -560,6 +931,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/github-from-package/LICENSE",
+          "sha256": "435a6722c786b0a56fbe7387028f1d9d3f3a2d0fb615bb8fee118727c3f59b7b",
+          "sizeBytes": 1073,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/github-from-package",
       "reviewStatus": "recorded"
@@ -573,6 +953,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/ieee754/LICENSE",
+          "sha256": "18d45466ba3253deae04667e267a91ea8de8548f18c1125264d1c9db28194cc1",
+          "sizeBytes": 1465,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/ieee754",
       "reviewStatus": "recorded"
     },
@@ -584,6 +973,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/inherits/LICENSE",
+          "sha256": "5ffe28e7ade7d8f10d85d5337a73fd793dac5c462fb9a28fbf8c5046c7fbca3b",
+          "sizeBytes": 749,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/inherits",
       "reviewStatus": "recorded"
@@ -597,17 +995,35 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/ini/LICENSE",
+          "sha256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b",
+          "sizeBytes": 765,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/ini",
       "reviewStatus": "recorded"
     },
     {
       "name": "ipaddr.js",
-      "version": "2.4.0",
+      "version": "2.5.0",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/ipaddr.js/LICENSE",
+          "sha256": "62568a2d1337b77171ecca9db10579163446de1ba6151678e81f06cdc199971b",
+          "sizeBytes": 1087,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/ipaddr.js",
       "reviewStatus": "recorded"
@@ -621,6 +1037,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/json-schema-ref-resolver/LICENSE",
+          "sha256": "0943b637252a9c6f1a062c77063aa58213ae93a18d5445f2fb77d1de7c60dc12",
+          "sizeBytes": 1064,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/json-schema-ref-resolver",
       "reviewStatus": "recorded"
     },
@@ -632,6 +1057,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/json-schema-traverse/LICENSE",
+          "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+          "sizeBytes": 1074,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/json-schema-traverse",
       "reviewStatus": "recorded"
@@ -645,6 +1079,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/light-my-request/LICENSE",
+          "sha256": "c59ffead4ccbc72ddc3258c23d608bc6f10cea5241038ca8d39cdd7d7e7667c9",
+          "sizeBytes": 1778,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/light-my-request",
       "reviewStatus": "recorded"
     },
@@ -656,6 +1099,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "license"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "license",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/mimic-response/license",
+          "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+          "sizeBytes": 1117,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/mimic-response",
       "reviewStatus": "recorded"
@@ -669,6 +1121,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/minimist/LICENSE",
+          "sha256": "435a6722c786b0a56fbe7387028f1d9d3f3a2d0fb615bb8fee118727c3f59b7b",
+          "sizeBytes": 1073,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/minimist",
       "reviewStatus": "recorded"
     },
@@ -680,6 +1141,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/mkdirp-classic/LICENSE",
+          "sha256": "a255b85c1a510ecfe660c4d442ecdbc1e9d07f4b4d3d7f90443f7e5570591e0a",
+          "sizeBytes": 1118,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/mkdirp-classic",
       "reviewStatus": "recorded"
@@ -693,17 +1163,35 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/napi-build-utils/LICENSE",
+          "sha256": "9c6a91d2847bd9bfd493c1ca87b9c3f96302cfd069667e6dd4a6278e69a33a31",
+          "sizeBytes": 1069,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/napi-build-utils",
       "reviewStatus": "recorded"
     },
     {
       "name": "node-abi",
-      "version": "3.92.0",
+      "version": "3.96.0",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/node-abi/LICENSE",
+          "sha256": "9a508cd4122f2dc1cc39f8ab0b6950efbc49fb087a581c7177a4b8c9d5d0d6a1",
+          "sizeBytes": 1069,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/node-abi",
       "reviewStatus": "recorded"
@@ -717,6 +1205,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/on-exit-leak-free/LICENSE",
+          "sha256": "47404ffc18f1267832bc0623857871de5a3a93ebb19693f5e1b963af91fab54b",
+          "sizeBytes": 1071,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/on-exit-leak-free",
       "reviewStatus": "recorded"
     },
@@ -728,6 +1225,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/once/LICENSE",
+          "sha256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b",
+          "sizeBytes": 765,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/once",
       "reviewStatus": "recorded"
@@ -741,6 +1247,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/pino/LICENSE",
+          "sha256": "d4eb00c3ef2fa54cdf05d167b15e994bc67226a7998e090e22a0bc8b16223a6c",
+          "sizeBytes": 1209,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/pino",
       "reviewStatus": "recorded"
     },
@@ -752,6 +1267,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/pino-abstract-transport/LICENSE",
+          "sha256": "31f005ecff86a12a1351f4c2cb1133267c0b152546b08cd6fa4bdeb1943e00cd",
+          "sizeBytes": 1061,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/pino-abstract-transport",
       "reviewStatus": "recorded"
@@ -765,6 +1289,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/pino-std-serializers/LICENSE",
+          "sha256": "6206673d24786f09656f7a480b7c50af289e9690963aaa135af5b626de5250df",
+          "sizeBytes": 1084,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/pino-std-serializers",
       "reviewStatus": "recorded"
     },
@@ -777,17 +1310,56 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/prebuild-install/LICENSE",
+          "sha256": "0aa9add6a9158efad3e6649e3affd607c7e2629f6677af19f9988c8fbb0757b0",
+          "sizeBytes": 1079,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/prebuild-install",
       "reviewStatus": "recorded"
     },
     {
       "name": "process-warning",
-      "version": "5.0.0",
+      "version": "4.0.1",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/light-my-request/node_modules/process-warning/LICENSE",
+          "sha256": "d9726abc9eff9496f3ecb5302e70756f310db24a01c7ddd20f541143bf5576ad",
+          "sizeBytes": 1059,
+          "source": "bundled-package"
+        }
+      ],
+      "packagePath": "node_modules/light-my-request/node_modules/process-warning",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "process-warning",
+      "version": "5.1.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/process-warning/LICENSE",
+          "sha256": "8d3c1dd501e056405ab56f4ad87b987070d55d1fe814616584ec2360045f9017",
+          "sizeBytes": 1123,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/process-warning",
       "reviewStatus": "recorded"
@@ -801,6 +1373,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/pump/LICENSE",
+          "sha256": "3fe8d55a98dbf260eace67c00cf9bc53edb46234e840098a0b93df3096b97fb6",
+          "sizeBytes": 1078,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/pump",
       "reviewStatus": "recorded"
     },
@@ -812,6 +1393,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/quick-format-unescaped/LICENSE",
+          "sha256": "5ac141bfc70bec8f40838502436bfcb85e3f4c24377e41b9ddef07bdd6aa51bc",
+          "sizeBytes": 1091,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/quick-format-unescaped",
       "reviewStatus": "recorded"
@@ -827,6 +1417,29 @@
         "LICENSE.BSD",
         "LICENSE.MIT"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE.APACHE2",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/rc/LICENSE.APACHE2",
+          "sha256": "e8734448285a2dd773d40136ed5d5e8163a70701dd540cdc796cfca232f67d55",
+          "sizeBytes": 586,
+          "source": "bundled-package"
+        },
+        {
+          "fileName": "LICENSE.BSD",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/rc/LICENSE.BSD",
+          "sha256": "65e7e4d223688c601f42959defde380f8c4aa677fa4706da3b4a53f129bd78a3",
+          "sizeBytes": 1516,
+          "source": "bundled-package"
+        },
+        {
+          "fileName": "LICENSE.MIT",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/rc/LICENSE.MIT",
+          "sha256": "d72dea1a8cdf3f4dfa2f594253d0c5b37baefc76e806f5ecb0e426393edcd505",
+          "sizeBytes": 1088,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/rc",
       "reviewStatus": "recorded"
     },
@@ -838,6 +1451,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/readable-stream/LICENSE",
+          "sha256": "ec62dc96da0099b87f4511736c87309335527fb7031639493e06c95728dc8c54",
+          "sizeBytes": 2337,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/readable-stream",
       "reviewStatus": "recorded"
@@ -851,7 +1473,37 @@
       "noticeFileNames": [
         "LICENSE.md"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE.md",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/real-require/LICENSE.md",
+          "sha256": "cbf263504e800cf09f99962cce8497b76eef79c3526bca434b90c3ef4c17220d",
+          "sizeBytes": 1114,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/real-require",
+      "reviewStatus": "recorded"
+    },
+    {
+      "name": "real-require",
+      "version": "1.0.0",
+      "componentType": "npm-package",
+      "license": "MIT",
+      "licenseSource": "package_json",
+      "noticeFileNames": [
+        "LICENSE.md"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE.md",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/thread-stream/node_modules/real-require/LICENSE.md",
+          "sha256": "cbf263504e800cf09f99962cce8497b76eef79c3526bca434b90c3ef4c17220d",
+          "sizeBytes": 1114,
+          "source": "bundled-package"
+        }
+      ],
+      "packagePath": "node_modules/thread-stream/node_modules/real-require",
       "reviewStatus": "recorded"
     },
     {
@@ -862,6 +1514,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "license"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "license",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/require-from-string/license",
+          "sha256": "6ee0feb1f6ef996ff5a68600f8cf98909cf412d39ef3cdceaefd87d636fa1b7f",
+          "sizeBytes": 1128,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/require-from-string",
       "reviewStatus": "recorded"
@@ -875,6 +1536,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/ret/LICENSE",
+          "sha256": "bfc2c678db20d806b3787956f607a1509da5fca45b4d40a97c671cbee737159d",
+          "sizeBytes": 1065,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/ret",
       "reviewStatus": "recorded"
     },
@@ -886,6 +1556,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/reusify/LICENSE",
+          "sha256": "93a1506953b08ad4874e1cc0971a1d2ac387ca510da91e4d05e460a6c4966fa3",
+          "sizeBytes": 1087,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/reusify",
       "reviewStatus": "recorded"
@@ -899,6 +1578,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/rfdc/LICENSE",
+          "sha256": "1ce941682a96c7b898ecd125d0f2e22319758ea6f3adbf498a65d649b0f3f7dd",
+          "sizeBytes": 1101,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/rfdc",
       "reviewStatus": "recorded"
     },
@@ -910,6 +1598,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/safe-buffer/LICENSE",
+          "sha256": "c7cc929b57080f4b9d0c6cf57669f0463fc5b39906344dfc8d3bc43426b30eac",
+          "sizeBytes": 1081,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/safe-buffer",
       "reviewStatus": "recorded"
@@ -923,6 +1620,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/safe-regex2/LICENSE",
+          "sha256": "3871c31d0cc373951d836b8bb97275a2227f8af7464df7c51bc3f98769b87653",
+          "sizeBytes": 1123,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/safe-regex2",
       "reviewStatus": "recorded"
     },
@@ -934,6 +1640,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/safe-stable-stringify/LICENSE",
+          "sha256": "3a6d6de49d284a36c5d271ef0e62eca1838cc460dd7630e3f2c347c8f5b2232a",
+          "sizeBytes": 1079,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/safe-stable-stringify",
       "reviewStatus": "recorded"
@@ -947,17 +1662,35 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/secure-json-parse/LICENSE",
+          "sha256": "d490035c46547ddc88330bc0b42fcd89eabfd66435c4291352d1b9b68d62c729",
+          "sizeBytes": 1807,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/secure-json-parse",
       "reviewStatus": "recorded"
     },
     {
       "name": "semver",
-      "version": "7.8.0",
+      "version": "7.8.5",
       "componentType": "npm-package",
       "license": "ISC",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/semver/LICENSE",
+          "sha256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b",
+          "sizeBytes": 765,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/semver",
       "reviewStatus": "recorded"
@@ -971,6 +1704,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/set-cookie-parser/LICENSE",
+          "sha256": "c5c6c5183a789d122f267c405f685037efb87e27fcde28ab1dd7378a2d2f5962",
+          "sizeBytes": 1126,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/set-cookie-parser",
       "reviewStatus": "recorded"
     },
@@ -982,6 +1724,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/simple-concat/LICENSE",
+          "sha256": "d4c2065e2b936e62a4eb400efb4576edec9ca1388a9f78aa288e147275e7bc8b",
+          "sizeBytes": 1081,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/simple-concat",
       "reviewStatus": "recorded"
@@ -995,6 +1746,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/simple-get/LICENSE",
+          "sha256": "d4c2065e2b936e62a4eb400efb4576edec9ca1388a9f78aa288e147275e7bc8b",
+          "sizeBytes": 1081,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/simple-get",
       "reviewStatus": "recorded"
     },
@@ -1006,6 +1766,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/sonic-boom/LICENSE",
+          "sha256": "db5c3795cb080810fed0380bf4d6adef3f81579e8ae3a867d3c2abab2329db9d",
+          "sizeBytes": 1071,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/sonic-boom",
       "reviewStatus": "recorded"
@@ -1019,6 +1788,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/split2/LICENSE",
+          "sha256": "c372ef2fa1dfcb124ed807609751e75e3a009f108c5724916b489288fcb88a0c",
+          "sizeBytes": 764,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/split2",
       "reviewStatus": "recorded"
     },
@@ -1030,6 +1808,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/stream-shift/LICENSE",
+          "sha256": "6a134e51aa31496c15a741592fc5d782b2dbf8d8b6b8524e15c8520ae0cd6374",
+          "sizeBytes": 1079,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/stream-shift",
       "reviewStatus": "recorded"
@@ -1043,6 +1830,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/string_decoder/LICENSE",
+          "sha256": "11f2aafb37d06b3ee5bdaf06e9811141d0da05263c316f3d627f45c20d43261b",
+          "sizeBytes": 2338,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/string_decoder",
       "reviewStatus": "recorded"
     },
@@ -1055,17 +1851,35 @@
       "noticeFileNames": [
         "license"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "license",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/strip-json-comments/license",
+          "sha256": "6fb9754611c20f6649f68805e8c990e83261f29316e29de9e6cedae607b8634c",
+          "sizeBytes": 1119,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/strip-json-comments",
       "reviewStatus": "recorded"
     },
     {
       "name": "tar-fs",
-      "version": "2.1.4",
+      "version": "2.1.5",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/tar-fs/LICENSE",
+          "sha256": "3fe8d55a98dbf260eace67c00cf9bc53edb46234e840098a0b93df3096b97fb6",
+          "sizeBytes": 1078,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/tar-fs",
       "reviewStatus": "recorded"
@@ -1079,29 +1893,56 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/tar-stream/LICENSE",
+          "sha256": "3fe8d55a98dbf260eace67c00cf9bc53edb46234e840098a0b93df3096b97fb6",
+          "sizeBytes": 1078,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/tar-stream",
       "reviewStatus": "recorded"
     },
     {
       "name": "thread-stream",
-      "version": "4.0.0",
+      "version": "4.2.0",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/thread-stream/LICENSE",
+          "sha256": "47404ffc18f1267832bc0623857871de5a3a93ebb19693f5e1b963af91fab54b",
+          "sizeBytes": 1071,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/thread-stream",
       "reviewStatus": "recorded"
     },
     {
       "name": "toad-cache",
-      "version": "3.7.0",
+      "version": "3.7.4",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/toad-cache/LICENSE",
+          "sha256": "644304c533dee96438937c0bdcbb49897d80fd8df3be4573f3c57b9c2ca22587",
+          "sizeBytes": 1067,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/toad-cache",
       "reviewStatus": "recorded"
@@ -1115,6 +1956,15 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/tunnel-agent/LICENSE",
+          "sha256": "d446a8c73d7bbe4872d6524b15ae206f9a2d7eb53f8c9cb6e6c893a43acc5276",
+          "sizeBytes": 9140,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/tunnel-agent",
       "reviewStatus": "recorded"
     },
@@ -1126,6 +1976,15 @@
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
+      ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/util-deprecate/LICENSE",
+          "sha256": "0154425673db15cdfa80ecba2c9b1f1a867f7197a006764712849bfc3a93cbb7",
+          "sizeBytes": 1102,
+          "source": "bundled-package"
+        }
       ],
       "packagePath": "node_modules/util-deprecate",
       "reviewStatus": "recorded"
@@ -1139,33 +1998,53 @@
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/wrappy/LICENSE",
+          "sha256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b",
+          "sizeBytes": 765,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/wrappy",
       "reviewStatus": "recorded"
     },
     {
       "name": "ws",
-      "version": "8.20.0",
+      "version": "8.21.3",
       "componentType": "npm-package",
       "license": "MIT",
       "licenseSource": "package_json",
       "noticeFileNames": [
         "LICENSE"
       ],
+      "noticeFiles": [
+        {
+          "fileName": "LICENSE",
+          "distributionPath": "lumatrace-local-server-runtime/app/node_modules/ws/LICENSE",
+          "sha256": "2b29dcfe0d6471f7e8c92c5fb38c9f93edee10330937055440192f1832b1ecef",
+          "sizeBytes": 1183,
+          "source": "bundled-package"
+        }
+      ],
       "packagePath": "node_modules/ws",
       "reviewStatus": "recorded"
     }
   ],
   "summary": {
-    "totalComponents": 96,
-    "packageCount": 95,
+    "totalComponents": 98,
+    "packageCount": 97,
     "runtimeCount": 1,
-    "missingLicenseCount": 7,
-    "privatePackageCount": 7,
+    "missingLicenseCount": 0,
+    "missingNoticeFileCount": 0,
+    "privatePackageCount": 6,
     "draftReviewRequired": true
   },
   "limitations": [
     "This notice manifest is generated for packaging review and is not a substitute for release counsel review.",
-    "Node.js is bundled as a runtime in the self-contained sidecar draft and requires final release notice review.",
+    "Every noticeFiles entry binds a redistributed license file by relative distribution path, byte size, and SHA-256 hash.",
+    "The exact Node.js version license must be staged beside the bundled runtime before Store packaging.",
     "Private LumaTrace workspace packages are listed as bundled components but are not third-party dependencies.",
     "productionReady remains false until license notice review, signing, installer QA, and release checks are complete."
   ]

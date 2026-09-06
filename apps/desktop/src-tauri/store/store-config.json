@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "productId": "9P3KNQZMFBM8",
+  "displayName": "LumaTrace Performance Lab",
+  "description": "Local-first performance testing for Windows and Android applications.",
+  "applicationId": "LumaTracePerformanceLab",
+  "executable": "lumatrace-desktop.exe",
+  "identity": {
+    "name": "eirros.LumaTracePerformanceLab",
+    "publisher": "CN=B85377A1-202B-480D-9F05-881E4B75B24B",
+    "publisherDisplayName": "eirros",
+    "version": "1.0.3.0",
+    "processorArchitecture": "x64"
+  },
+  "targetDeviceFamily": {
+    "name": "Windows.Desktop",
+    "minVersion": "10.0.22000.0",
+    "maxVersionTested": "10.0.26100.0"
+  },
+  "packageResourceLanguages": ["en-US"],
+  "packageFileName": "LumaTracePerformanceLab_1.0.3.0_x64.msix"
+}

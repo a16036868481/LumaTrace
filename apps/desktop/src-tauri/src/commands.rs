@@ -12,6 +12,7 @@ use crate::{
     sidecar_manifest::{read_sidecar_manifest, SidecarManifest},
     state::{AppState, SidecarStatus},
     toolchain::{detect_toolchain, ToolchainStatus},
+    windows_fps_access::{self, WindowsFpsAccessStatus},
 };
 
 #[derive(serde::Serialize)]
@@ -113,6 +114,15 @@ pub fn open_reports_directory(state: State<AppState>) -> Result<(), String> {
 }
 
 #[tauri::command]
+pub fn open_bug_report_page() -> Result<(), String> {
+    tauri_plugin_opener::open_url(
+        "https://github.com/a16036868481/LumaTrace/issues/new?template=bug_report.yml",
+        None::<&str>,
+    )
+    .map_err(|error| error.to_string())
+}
+
+#[tauri::command]
 pub fn choose_report_output_directory(
     app: AppHandle,
 ) -> Result<ChooseReportOutputDirectoryResult, String> {
@@ -169,4 +179,14 @@ pub fn get_tauri_toolchain_status() -> ToolchainStatus {
 #[tauri::command]
 pub fn get_sidecar_manifest(app: AppHandle) -> Option<SidecarManifest> {
     read_sidecar_manifest(&app)
+}
+
+#[tauri::command]
+pub fn get_windows_fps_access_status() -> WindowsFpsAccessStatus {
+    windows_fps_access::get_status()
+}
+
+#[tauri::command]
+pub async fn enable_windows_fps_access() -> Result<WindowsFpsAccessStatus, String> {
+    windows_fps_access::enable_for_current_user().await
 }

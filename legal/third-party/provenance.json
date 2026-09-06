@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Pinned third-party license assets used to produce distributable LumaTrace notices.",
+  "assets": [
+    {
+      "component": "Node.js",
+      "version": "v24.14.0",
+      "repository": "https://github.com/nodejs/node",
+      "tag": "v24.14.0",
+      "tagObject": "a3d5b4bca68d85dcb67d527b05409795f69c66e7",
+      "commit": "f657bb8ed86365ff3fdbe32e27563e778b41486a",
+      "sourceUrl": "https://raw.githubusercontent.com/nodejs/node/f657bb8ed86365ff3fdbe32e27563e778b41486a/LICENSE",
+      "repositoryPath": "legal/third-party/node/v24.14.0/LICENSE",
+      "sha256": "4573185d56580da2b890ba34a85a409257640f1c5632eade4300137266194d18",
+      "transformation": "none; byte-for-byte copy of the commit-pinned upstream LICENSE"
+    },
+    {
+      "component": "abstract-logging",
+      "version": "2.0.1",
+      "repository": "https://github.com/jsumners/abstract-logging",
+      "tag": "v2.0.1",
+      "commit": "80dfaef91ee87008f4ed2b6e78921d383bccd406",
+      "packageJsonUrl": "https://raw.githubusercontent.com/jsumners/abstract-logging/80dfaef91ee87008f4ed2b6e78921d383bccd406/package.json",
+      "packageJsonSha256": "33f6c3a8ec869b76fba4173cd688d1865ae74d746cc3f3b5d85abf9f40ab4038",
+      "readmeUrl": "https://raw.githubusercontent.com/jsumners/abstract-logging/80dfaef91ee87008f4ed2b6e78921d383bccd406/Readme.md",
+      "readmeSha256": "e1a86711fb5055c0e66901276b7d2c843554bf5f1dab218c069c8b9d17148e81",
+      "linkedLicenseUrl": "https://jsumners.mit-license.org/",
+      "archivedLicenseSnapshot": "https://web.archive.org/web/20200922004843id_/https://jsumners.mit-license.org/",
+      "archivedLicenseSnapshotSha256": "67c78a54cc76bf8aae907d1d0a80ba28825e08e724d4f4d9be65729e3a34ea5e",
+      "copyrightRegistryRepository": "https://github.com/remy/mit-license",
+      "copyrightRegistryCommit": "73ebb8ca1e2280883e92498e18fcdb1c633c226c",
+      "copyrightRegistryPath": "users/jsumners.json",
+      "copyrightRegistrySha256": "15932b5c544d31afb72ca38c331ea0f11b24f5eb12c850923392c18dd8641b75",
+      "licenseTemplatePath": "licenses/MIT.ejs",
+      "licenseTemplateSha256": "75bd0d442091ebfb2ab8f7e3a1d507686fc7c9e87a1579558e2537e7b2b447a4",
+      "repositoryPath": "legal/third-party/abstract-logging/2.0.1/LICENSE",
+      "sha256": "51d42d5384ab02fd8210ae3547fc0a8af7a385d2ac8f12685a6d3146fc2adafe",
+      "transformation": "Plain-text rendering of the archived upstream-linked MIT page. HTML markup and contact link were omitted; the copyright holder, year, permission, conditions, and disclaimer were preserved without inferred text."
+    }
+  ],
+  "reviewLimitations": [
+    "This file records engineering provenance and integrity evidence, not legal advice.",
+    "A release build must verify these hashes before copying or rendering the assets.",
+    "The Node.js LICENSE must be copied beside the bundled node executable, and the abstract-logging notice must be included in the distributable third-party notice set."
+  ]
+}
