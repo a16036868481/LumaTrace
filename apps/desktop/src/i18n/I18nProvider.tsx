@@ -1,8 +1,28 @@
-﻿import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { locales, translations, type Locale, type TranslationKey } from "./translations";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode
+} from "react";
+import {
+  defaultTranslations,
+  getCachedTranslations,
+  loadTranslations,
+  locales,
+  rtlLocales,
+  type Locale,
+  type TranslationDictionary,
+  type TranslationKey
+} from "./translations";
 
 interface I18nContextValue {
   locale: Locale;
+  localeLoadError: Locale | null;
+  loadingLocale: Locale | null;
   setLocale: (locale: Locale) => void;
   t: (key: TranslationKey, values?: Record<string, string | number>) => string;
 }
@@ -15,25 +35,48 @@ function isLocale(value: string | null | undefined): value is Locale {
   return locales.some((locale) => locale === value);
 }
 
+function readStoredLocale(): string | null {
+  try {
+    return typeof window.localStorage?.getItem === "function"
+      ? window.localStorage.getItem(localeStorageKey)
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function storeLocale(locale: Locale): void {
+  try {
+    if (typeof window.localStorage?.setItem === "function") {
+      window.localStorage.setItem(localeStorageKey, locale);
+    }
+  } catch {
+    // Locale selection still works when persistent browser storage is unavailable.
+  }
+}
+
+function clearStoredLocale(locale: Locale): void {
+  try {
+    if (
+      typeof window.localStorage?.removeItem === "function" &&
+      window.localStorage.getItem(localeStorageKey) === locale
+    ) {
+      window.localStorage.removeItem(localeStorageKey);
+    }
+  } catch {
+    // A failed local chunk still falls back to the active language when storage is unavailable.
+  }
+}
+
 function detectInitialLocale(): Locale {
   if (typeof window === "undefined") {
-    return "zh-CN";
+    return "en-US";
   }
-  const stored = window.localStorage.getItem(localeStorageKey);
+  const stored = readStoredLocale();
   if (isLocale(stored)) {
     return stored;
   }
-  const preferred = window.navigator.languages?.[0] ?? window.navigator.language;
-  if (preferred.startsWith("ja")) {
-    return "ja-JP";
-  }
-  if (preferred.startsWith("ko")) {
-    return "ko-KR";
-  }
-  if (preferred.startsWith("en")) {
-    return "en-US";
-  }
-  return "zh-CN";
+  return "en-US";
 }
 
 function formatTemplate(template: string, values?: Record<string, string | number>): string {
@@ -47,20 +90,65 @@ function formatTemplate(template: string, values?: Record<string, string | numbe
 }
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(() => detectInitialLocale());
+  const initialLocale = useRef(detectInitialLocale()).current;
+  const requestId = useRef(0);
+  const [active, setActive] = useState<{
+    locale: Locale;
+    dictionary: TranslationDictionary;
+  }>({ locale: "en-US", dictionary: defaultTranslations });
+  const [loadingLocale, setLoadingLocale] = useState<Locale | null>(
+    initialLocale === "en-US" ? null : initialLocale
+  );
+  const [localeLoadError, setLocaleLoadError] = useState<Locale | null>(null);
+
+  const activateLocale = useCallback((nextLocale: Locale) => {
+    const nextRequestId = requestId.current + 1;
+    requestId.current = nextRequestId;
+    setLocaleLoadError(null);
+    const cached = getCachedTranslations(nextLocale);
+    if (cached !== undefined) {
+      setActive({ locale: nextLocale, dictionary: cached });
+      setLoadingLocale(null);
+      storeLocale(nextLocale);
+      return;
+    }
+    setLoadingLocale(nextLocale);
+    void loadTranslations(nextLocale)
+      .then((dictionary) => {
+        if (requestId.current !== nextRequestId) {
+          return;
+        }
+        setActive({ locale: nextLocale, dictionary });
+        setLoadingLocale(null);
+        storeLocale(nextLocale);
+      })
+      .catch(() => {
+        if (requestId.current === nextRequestId) {
+          setLoadingLocale(null);
+          setLocaleLoadError(nextLocale);
+          clearStoredLocale(nextLocale);
+        }
+      });
+  }, []);
 
   useEffect(() => {
-    document.documentElement.lang = locale;
-    window.localStorage.setItem(localeStorageKey, locale);
-  }, [locale]);
+    activateLocale(initialLocale);
+  }, [activateLocale, initialLocale]);
+
+  useEffect(() => {
+    document.documentElement.lang = active.locale;
+    document.documentElement.dir = rtlLocales.has(active.locale) ? "rtl" : "ltr";
+  }, [active.locale]);
 
   const value = useMemo<I18nContextValue>(
     () => ({
-      locale,
-      setLocale: setLocaleState,
-      t: (key, values) => formatTemplate(translations[locale][key] ?? translations["en-US"][key], values)
+      locale: active.locale,
+      localeLoadError,
+      loadingLocale,
+      setLocale: activateLocale,
+      t: (key, values) => formatTemplate(active.dictionary[key] ?? defaultTranslations[key], values)
     }),
-    [locale]
+    [active, activateLocale, loadingLocale, localeLoadError]
   );
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
@@ -71,8 +159,10 @@ export function useI18n(): I18nContextValue {
   if (value === null) {
     return {
       locale: "en-US",
+      localeLoadError: null,
+      loadingLocale: null,
       setLocale: () => undefined,
-      t: (key, values) => formatTemplate(translations["en-US"][key], values)
+      t: (key, values) => formatTemplate(defaultTranslations[key], values)
     };
   }
   return value;
