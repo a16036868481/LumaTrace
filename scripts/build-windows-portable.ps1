@@ -185,7 +185,20 @@ $checksumLines = @($inventory | ForEach-Object { "$($_.sha256)  $($_.path)" })
 Write-NewUtf8File -Path (Join-Path $stageRoot 'SHA256SUMS.txt') -Content (($checksumLines -join "`n") + "`n")
 
 Add-Type -AssemblyName System.IO.Compression.FileSystem
-[IO.Compression.ZipFile]::CreateFromDirectory($stageRoot, $zipPath, [IO.Compression.CompressionLevel]::Optimal, $true)
+Add-Type -AssemblyName System.IO.Compression
+# .NET Framework's CreateFromDirectory may emit backslashes on Windows.
+# Write explicit ZIP-standard forward-slash entry names on every PowerShell version.
+$zipStream = [IO.File]::Open($zipPath, [IO.FileMode]::CreateNew, [IO.FileAccess]::ReadWrite, [IO.FileShare]::None)
+$zipWriter = New-Object IO.Compression.ZipArchive($zipStream, [IO.Compression.ZipArchiveMode]::Create, $false)
+try {
+    foreach ($file in @(Get-RegularTreeFiles -Directory $stageRoot)) {
+        $entryName = "$packageName/" + (Get-ContainedRelativePath -Root $stageRoot -Path $file.FullName).Replace('\', '/')
+        [void][IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zipWriter, $file.FullName, $entryName, [IO.Compression.CompressionLevel]::Optimal)
+    }
+} finally {
+    $zipWriter.Dispose()
+    $zipStream.Dispose()
+}
 $expectedEntries = @{}
 foreach ($file in @(Get-RegularTreeFiles -Directory $stageRoot)) {
     $relativePath = (Get-ContainedRelativePath -Root $stageRoot -Path $file.FullName).Replace('\', '/')
