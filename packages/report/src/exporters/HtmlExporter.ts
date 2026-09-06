@@ -1,9 +1,10 @@
-import type { ReportDocument } from "../types";
+import type { ReportDocument, ReportLocalization } from "../types";
 import { renderReportHtml } from "../templates/reportHtml";
 
 export interface HtmlExportOptions {
   includeRawMetricsInHtml?: boolean;
   maxHtmlMetricRows?: number;
+  localization?: ReportLocalization;
 }
 
 export class HtmlExporter {
@@ -17,6 +18,6 @@ export class HtmlExporter {
           metrics: []
         };
 
-    return renderReportHtml(htmlDocument, maxHtmlMetricRows);
+    return renderReportHtml(htmlDocument, maxHtmlMetricRows, options.localization);
   }
 }

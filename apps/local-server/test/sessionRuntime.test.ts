@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { CollectorError } from "@lumatrace/core";
 import { MockCollector } from "@lumatrace/collectors-mock";
 import type {
   Device,
@@ -154,6 +155,7 @@ describe("SessionRuntime", () => {
         }
       })
     };
+    const messages: Array<{ type: string; data?: unknown; error?: { code: string; message: string } }> = [];
     const runtime = new SessionRuntime({
       session,
       collector: badCollector,
@@ -165,12 +167,73 @@ describe("SessionRuntime", () => {
     });
 
     try {
+      runtime.subscribe({ send: (message) => messages.push(message) });
       await runtime.start();
       await waitUntil(() => diagnosticRepository.list({ level: "error" }).length > 0);
       expect(sessionRepository.getById("bad-session")?.status).toBe("failed");
+      expect(sessionRepository.getById("bad-session")?.endedAt).toEqual(expect.any(Number));
+      expect(messages).toContainEqual(
+        expect.objectContaining({ type: "session_status", data: expect.objectContaining({ status: "failed" }) })
+      );
+      expect(messages).toContainEqual(
+        expect.objectContaining({ type: "error", error: expect.objectContaining({ code: "INTERNAL_ERROR" }) })
+      );
     } finally {
       await runtime.stop();
+      expect(sessionRepository.getById("bad-session")?.status).toBe("failed");
       database.close();
+    }
+  });
+
+  it("stops cleanly and notifies clients when the target process ends", async () => {
+    const setupResult = await setup();
+    const diagnosticService = new DiagnosticService(setupResult.diagnosticRepository);
+    const collector: MetricCollector = {
+      id: setupResult.collector.id,
+      platform: setupResult.collector.platform,
+      discoverDevices: () => setupResult.collector.discoverDevices(),
+      listTargets: (deviceId) => setupResult.collector.listTargets(deviceId),
+      getCapabilities: (deviceId) => setupResult.collector.getCapabilities(deviceId),
+      startSession: (config) => setupResult.collector.startSession(config),
+      pauseSession: (sessionId) => setupResult.collector.pauseSession(sessionId),
+      stopSession: (sessionId) => setupResult.collector.stopSession(sessionId),
+      streamMetrics: () => ({
+        [Symbol.asyncIterator](): AsyncIterator<MetricEvent> {
+          return {
+            next: async () => {
+              throw new CollectorError("Target process exited.", "TARGET_PROCESS_ENDED", {
+                collectorId: "target-end-test",
+                sessionId: setupResult.session.id
+              });
+            }
+          };
+        }
+      })
+    };
+    const messages: Array<{ type: string; data?: unknown; error?: { code: string; message: string } }> = [];
+    const runtime = new SessionRuntime({
+      session: setupResult.session,
+      collector,
+      metricRepository: setupResult.metricRepository,
+      sessionRepository: setupResult.sessionRepository,
+      diagnosticService,
+      ringBuffer: setupResult.ringBuffer
+    });
+
+    try {
+      runtime.subscribe({ send: (message) => messages.push(message) });
+      await runtime.start();
+      await waitUntil(() => setupResult.sessionRepository.getById(setupResult.session.id)?.status === "stopped");
+
+      expect(setupResult.sessionRepository.getById(setupResult.session.id)?.endedAt).toEqual(expect.any(Number));
+      expect(messages).toContainEqual(
+        expect.objectContaining({ type: "session_status", data: expect.objectContaining({ status: "stopped" }) })
+      );
+      expect(messages.some((message) => message.type === "error")).toBe(false);
+      expect(messages.some((message) => message.type === "session_stopped")).toBe(true);
+    } finally {
+      await runtime.stop();
+      setupResult.database.close();
     }
   });
 

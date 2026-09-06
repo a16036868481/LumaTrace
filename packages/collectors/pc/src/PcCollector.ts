@@ -26,6 +26,12 @@ import { WindowsProcessList } from "./windows/WindowsProcessList";
 import { WindowsProcessSampler } from "./windows/WindowsProcessSampler";
 import { WindowsProcessWatcher } from "./windows/WindowsProcessWatcher";
 import {
+  WindowsHardwareTelemetryProvider,
+  type WindowsHardwareTelemetryProbe,
+  type WindowsHardwareTelemetryProviderLike,
+  type WindowsHardwareTelemetryWarning
+} from "./windows/WindowsHardwareTelemetryProvider";
+import {
   processRuntimeId,
   processToTarget,
   type PcCollectorOptions,
@@ -76,6 +82,8 @@ interface PcRuntimeOptions {
   presentMonGracePeriodMs?: number;
   presentMonRealtime?: boolean;
   presentMonRealtimeChunkMs?: number;
+  hardwareTelemetryProvider?: WindowsHardwareTelemetryProviderLike;
+  requestedMetrics?: readonly string[];
 }
 
 class PcSessionRuntime {
@@ -93,6 +101,8 @@ class PcSessionRuntime {
   private readonly presentMonMetricQueue: MetricEvent[] = [];
   private readonly presentMonRealtime: boolean;
   private readonly presentMonRealtimeChunkMs: number;
+  private readonly hardwareTelemetryProvider: WindowsHardwareTelemetryProviderLike | undefined;
+  private readonly requestedMetrics: readonly string[] | undefined;
 
   constructor(options: PcRuntimeOptions) {
     this.session = { ...options.session };
@@ -100,6 +110,8 @@ class PcSessionRuntime {
     this.adapter = options.adapter;
     this.processorCount = options.processorCount;
     this.diagnostics = options.diagnostics;
+    this.hardwareTelemetryProvider = options.hardwareTelemetryProvider;
+    this.requestedMetrics = options.requestedMetrics;
     this.sampler = this.createSampler(options.process);
     this.presentMonRuntime = options.presentMonRuntime;
     this.presentMonRealtime = options.presentMonRealtime === true;
@@ -219,12 +231,22 @@ class PcSessionRuntime {
             status: state.status
           }
         });
-        this.status = "failed";
-        this.session.status = "failed";
-        throw new CollectorError(state.reason ?? "PC target process exited.", "PROCESS_EXITED", {
-          collectorId: "pc-local",
-          sessionId: this.session.id
-        });
+        if (state.status === "exited") {
+          this.status = "stopped";
+          this.session.status = "stopped";
+          this.session.endedAt = Date.now();
+        } else {
+          this.status = "failed";
+          this.session.status = "failed";
+        }
+        throw new CollectorError(
+          state.reason ?? "PC target process exited.",
+          state.status === "exited" ? "TARGET_PROCESS_ENDED" : "PID_REUSED",
+          {
+            collectorId: "pc-local",
+            sessionId: this.session.id
+          }
+        );
       }
       if (state.status === "rebound") {
         const rebound = await this.adapter.getProcess(state.pid);
@@ -280,7 +302,27 @@ class PcSessionRuntime {
       deviceId: this.session.deviceId,
       targetId: this.session.targetId,
       process,
-      processorCount: this.processorCount
+      processorCount: this.processorCount,
+      ...(this.hardwareTelemetryProvider === undefined
+        ? {}
+        : { hardwareTelemetryProvider: this.hardwareTelemetryProvider }),
+      ...(this.requestedMetrics === undefined
+        ? {}
+        : { requestedMetrics: this.requestedMetrics }),
+      onHardwareTelemetryWarning: (warning) => this.recordHardwareTelemetryWarning(warning)
+    });
+  }
+
+  private recordHardwareTelemetryWarning(warning: WindowsHardwareTelemetryWarning): void {
+    this.diagnostics.add({
+      level: "warn",
+      category: warning.category,
+      code: warning.code,
+      message: warning.message,
+      sessionId: this.session.id,
+      deviceId: this.session.deviceId,
+      targetId: this.session.targetId,
+      pid: this.watcher.getCurrentPid()
     });
   }
 
@@ -334,7 +376,7 @@ class PcSessionRuntime {
         if (result.status === "aborted" || this.isStopped()) {
           break;
         }
-        if (result.status === "failed") {
+        if (result.status === "failed" || result.status === "permission_limited") {
           break;
         }
       } catch (error) {
@@ -373,6 +415,7 @@ export class PcCollector implements MetricCollector {
   private readonly diagnostics: PcDiagnosticsTimeline;
   private readonly processorCount: number;
   private readonly presentMonTool: PresentMonTool;
+  private readonly hardwareTelemetryProvider: WindowsHardwareTelemetryProviderLike;
   private readonly presentMonRuntimeFactory: PresentMonCaptureRuntimeFactory;
   private readonly presentMonTempDir: string | undefined;
   private readonly targetsByDeviceId = new Map<string, Target[]>();
@@ -391,6 +434,12 @@ export class PcCollector implements MetricCollector {
       platform: this.platformName,
       ...(options.presentMonPath === undefined ? {} : { presentMonPath: options.presentMonPath })
     });
+    this.hardwareTelemetryProvider =
+      options.hardwareTelemetryProvider ??
+      new WindowsHardwareTelemetryProvider({
+        commandRunner: this.commandRunner,
+        platform: this.platformName
+      });
     this.presentMonRuntimeFactory =
       options.presentMonRuntimeFactory ??
       ((factoryOptions) =>
@@ -498,10 +547,32 @@ export class PcCollector implements MetricCollector {
 
   async getCapabilities(): Promise<MetricAvailability[]> {
     const presentMon = await this.presentMonTool.findPresentMon();
+    const hardware: WindowsHardwareTelemetryProbe = await this.hardwareTelemetryProvider
+      .probe()
+      .catch(
+        (): WindowsHardwareTelemetryProbe => ({
+          processGpuAvailable: false,
+          powerAvailable: false,
+          cpuTemperatureAvailable: false,
+          gpuTemperatureAvailable: false
+        })
+      );
     const pcPlatform = this.platform === "macos" ? "macos" : this.platform === "linux" ? "linux" : "windows";
     return getPcCapabilities({
       platform: pcPlatform,
-      presentMonAvailable: presentMon.toolStatus.status === "available"
+      presentMonAvailable: presentMon.toolStatus.status === "available",
+      processGpuAvailable: hardware.processGpuAvailable,
+      ...(hardware.processGpuSource === undefined ? {} : { processGpuSource: hardware.processGpuSource }),
+      powerAvailable: hardware.powerAvailable,
+      ...(hardware.powerSource === undefined ? {} : { powerSource: hardware.powerSource }),
+      cpuTemperatureAvailable: hardware.cpuTemperatureAvailable,
+      ...(hardware.cpuTemperatureSource === undefined
+        ? {}
+        : { cpuTemperatureSource: hardware.cpuTemperatureSource }),
+      gpuTemperatureAvailable: hardware.gpuTemperatureAvailable,
+      ...(hardware.gpuTemperatureSource === undefined
+        ? {}
+        : { gpuTemperatureSource: hardware.gpuTemperatureSource })
     });
   }
 
@@ -539,8 +610,20 @@ export class PcCollector implements MetricCollector {
         sessionId
       });
     }
-    const enablePresentMonCapture = config.options?.enablePresentMonCapture === true;
-    const enablePresentMonRealtime = config.options?.enablePresentMonRealtime === true;
+    const requestedMetrics = Array.isArray(config.options?.requestedMetrics)
+      ? config.options.requestedMetrics.filter(
+          (metricName): metricName is string =>
+            typeof metricName === "string" && metricName.length > 0
+        )
+      : undefined;
+    const fpsRequested =
+      requestedMetrics === undefined ||
+      requestedMetrics.includes("fps") ||
+      requestedMetrics.includes("frame_time_ms");
+    const enablePresentMonCapture =
+      fpsRequested && config.options?.enablePresentMonCapture === true;
+    const enablePresentMonRealtime =
+      fpsRequested && config.options?.enablePresentMonRealtime === true;
     const session: Session = {
       id: sessionId,
       name: config.name,
@@ -589,6 +672,8 @@ export class PcCollector implements MetricCollector {
         process,
         processorCount: this.processorCount,
         diagnostics: this.diagnostics,
+        hardwareTelemetryProvider: this.hardwareTelemetryProvider,
+        ...(requestedMetrics === undefined ? {} : { requestedMetrics }),
         allowProcessRebindByName: config.options?.allowProcessRebindByName === true,
         ...(presentMonRuntime === undefined ? {} : { presentMonRuntime }),
         ...(typeof config.options?.presentMonCaptureDurationMs === "number"

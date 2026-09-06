@@ -1,7 +1,0 @@
-{
-  "com.example.bad": "not an object",
-  "not a bundle id !": {
-    "ApplicationType": "User",
-    "CFBundleIdentifier": "not a bundle id !"
-  }
-}

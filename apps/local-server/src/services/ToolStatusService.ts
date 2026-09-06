@@ -9,24 +9,6 @@ const DEFAULT_TOOL_STATUS: readonly ToolStatus[] = [
     suggestedAction: "Tool detection starts in later milestones."
   },
   {
-    toolName: "xcrun",
-    status: "unknown",
-    reason: "MVP-A does not run real tool detection.",
-    suggestedAction: "Xcode-based detection starts in later milestones."
-  },
-  {
-    toolName: "xctrace",
-    status: "unknown",
-    reason: "MVP-A does not run real tool detection.",
-    suggestedAction: "Xcode-based detection starts in later milestones."
-  },
-  {
-    toolName: "ideviceinfo",
-    status: "unknown",
-    reason: "MVP-A does not run real tool detection.",
-    suggestedAction: "libimobiledevice detection starts in later milestones."
-  },
-  {
     toolName: "PresentMon",
     status: "unknown",
     reason: "MVP-A does not run real tool detection.",

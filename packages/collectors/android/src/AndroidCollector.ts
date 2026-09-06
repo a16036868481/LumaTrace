@@ -39,11 +39,28 @@ import type {
 } from "./lifecycle/AndroidLifecycleTypes";
 import { getAndroidDeviceInfoFromProps } from "./parsers/parseGetProp";
 import { AndroidSessionRuntime } from "./sampling/AndroidSessionRuntime";
-import { packageToTarget, type AndroidAdbClientLike, type AndroidAdbDevice, type AndroidCollectorOptions } from "./types";
+import {
+  packageToTarget,
+  type AndroidAdbClientLike,
+  type AndroidAdbDevice,
+  type AndroidCollectorOptions,
+  type AndroidSessionLogCapture
+} from "./types";
 
 interface ResolvedAdb {
   client: AndroidAdbClientLike | null;
   toolStatus: ToolStatus;
+}
+
+interface AndroidSessionLogContext {
+  client: AndroidAdbClientLike;
+  serial: string;
+  startedAtMs: number;
+  deviceId: string;
+  targetId: string;
+  packageName: string;
+  pid: number;
+  uid: number | null;
 }
 
 function hashSerial(serial: string): string {
@@ -159,6 +176,8 @@ export class AndroidCollector implements MetricCollector {
   private readonly targetsByDeviceId = new Map<string, Target[]>();
   private readonly runtimes = new Map<string, AndroidSessionRuntime>();
   private readonly finalMetrics = new Map<string, MetricEvent[]>();
+  private readonly sessionLogContexts = new Map<string, AndroidSessionLogContext>();
+  private readonly finalSessionLogs = new Map<string, AndroidSessionLogCapture>();
 
   constructor(options: AndroidCollectorOptions = {}) {
     this.adbPath = options.adbPath;
@@ -571,6 +590,8 @@ export class AndroidCollector implements MetricCollector {
         sessionId
       });
     }
+    this.finalSessionLogs.delete(sessionId);
+    this.sessionLogContexts.delete(sessionId);
 
     const resolved = await this.ensureAdb();
     if (resolved.client === null) {
@@ -761,6 +782,18 @@ export class AndroidCollector implements MetricCollector {
       ...runtimeOptions
     });
     this.runtimes.set(session.id, runtime);
+    if (booleanOption(config.options, "exportLogsToReportDir")) {
+      this.sessionLogContexts.set(session.id, {
+        client: resolved.client,
+        serial,
+        startedAtMs: session.startedAt ?? Date.now(),
+        deviceId: config.deviceId,
+        targetId: config.targetId,
+        packageName: target.packageName,
+        pid,
+        uid
+      });
+    }
     return runtime.getSession();
   }
 
@@ -781,6 +814,7 @@ export class AndroidCollector implements MetricCollector {
     if (fpsResult?.metricEvents !== undefined && fpsResult.metricEvents.length > 0) {
       this.finalMetrics.set(sessionId, fpsResult.metricEvents);
     }
+    await this.captureOptInLogcat(sessionId);
     await runtime.stopTargetIfRequested();
     this.runtimes.delete(sessionId);
   }
@@ -789,6 +823,93 @@ export class AndroidCollector implements MetricCollector {
     const events = this.finalMetrics.get(sessionId) ?? [];
     this.finalMetrics.delete(sessionId);
     return events;
+  }
+
+  drainSessionLog(sessionId: string): AndroidSessionLogCapture | undefined {
+    const capture = this.finalSessionLogs.get(sessionId);
+    this.finalSessionLogs.delete(sessionId);
+    return capture;
+  }
+
+  private async captureOptInLogcat(sessionId: string): Promise<void> {
+    const context = this.sessionLogContexts.get(sessionId);
+    this.sessionLogContexts.delete(sessionId);
+    if (context === undefined) {
+      return;
+    }
+    if (typeof context.client.dumpLogcat !== "function") {
+      this.diagnostics.add({
+        level: "warn",
+        category: "report",
+        code: "LOGCAT_CAPTURE_FAILED",
+        message: "ADB logcat export is unavailable for this Android collector.",
+        sessionId,
+        deviceId: context.deviceId,
+        targetId: context.targetId,
+        packageName: context.packageName
+      });
+      return;
+    }
+
+    try {
+      const result = await context.client.dumpLogcat(context.serial, {
+        startedAtMs: context.startedAtMs,
+        pid: context.pid,
+        ...(context.uid === null ? {} : { uid: context.uid })
+      });
+      if (result.exitCode !== 0 || result.timedOut || result.aborted) {
+        this.diagnostics.add({
+          level: "warn",
+          category: "report",
+          code: "LOGCAT_CAPTURE_FAILED",
+          message: "ADB logcat did not return a usable test log.",
+          sessionId,
+          deviceId: context.deviceId,
+          targetId: context.targetId,
+          packageName: context.packageName,
+          details: {
+            exitCode: result.exitCode,
+            timedOut: result.timedOut,
+            aborted: result.aborted,
+            stderr: result.sanitizedStderr
+          }
+        });
+        return;
+      }
+
+      this.finalSessionLogs.set(sessionId, {
+        fileName: "android-logcat.log",
+        content: result.sanitizedStdout.replace(/\r\n/gu, "\n"),
+        source: "adb:logcat",
+        truncated: result.stdoutTruncated
+      });
+      if (result.stdoutTruncated) {
+        this.diagnostics.add({
+          level: "warn",
+          category: "report",
+          code: "LOGCAT_CAPTURE_TRUNCATED",
+          message: "ADB logcat reached the safe output size limit and was truncated.",
+          sessionId,
+          deviceId: context.deviceId,
+          targetId: context.targetId,
+          packageName: context.packageName
+        });
+      }
+    } catch (error) {
+      this.diagnostics.add({
+        level: "warn",
+        category: "report",
+        code: "LOGCAT_CAPTURE_FAILED",
+        message: "ADB logcat export failed.",
+        sessionId,
+        deviceId: context.deviceId,
+        targetId: context.targetId,
+        packageName: context.packageName,
+        details: {
+          reason: error instanceof Error ? error.message : String(error)
+        }
+      });
+    }
   }
 
   streamMetrics(sessionId: string): AsyncIterable<MetricEvent> {

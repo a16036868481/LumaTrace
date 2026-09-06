@@ -211,6 +211,37 @@ describe("packaged local auth", () => {
     });
   });
 
+  it.each(["/api/sessions", "/api/sessions/session-1"])(
+    "allows desktop WebView DELETE preflight for %s",
+    async (url) => {
+      const token = "packaged-test-token-cors-123456";
+      const app = await createServer({
+        packaged: true,
+        host: "127.0.0.1",
+        port: 0,
+        dbPath: ":memory:",
+        authToken: token,
+        enableLogger: false
+      });
+      apps.push(app);
+
+      const response = await app.inject({
+        method: "OPTIONS",
+        url,
+        headers: {
+          origin: "http://tauri.localhost",
+          "access-control-request-method": "DELETE",
+          "access-control-request-headers": "authorization"
+        }
+      });
+
+      expect(response.statusCode).toBe(204);
+      expect(response.headers["access-control-allow-origin"]).toBe("http://tauri.localhost");
+      expect(response.headers["access-control-allow-methods"]).toContain("DELETE");
+      expect(response.headers["access-control-allow-headers"]).toContain("Authorization");
+    }
+  );
+
   it("requires WebSocket token in packaged mode", async () => {
     const token = "packaged-test-token-abcdefghi";
     const app = await createServer({

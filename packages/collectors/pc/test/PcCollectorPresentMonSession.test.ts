@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { PcCollector, type PresentMonCaptureResult, type WindowsProcessInfo } from "../src";
 import { FakeProcessAdapter } from "./fakeProcessAdapter";
+import { FakeHardwareTelemetryProvider } from "./fakeHardwareTelemetryProvider";
 
 function processInfo(overrides: Partial<WindowsProcessInfo> = {}): WindowsProcessInfo {
   return {
@@ -53,6 +54,7 @@ describe("PcCollector PresentMon session", () => {
     const collector = new PcCollector({
       processAdapter: adapter,
       platform: "win32",
+      hardwareTelemetryProvider: new FakeHardwareTelemetryProvider(),
       presentMonRuntimeFactory: () => ({
         async capture() {
           captureCalls += 1;
@@ -91,6 +93,7 @@ describe("PcCollector PresentMon session", () => {
       processAdapter: adapter,
       platform: "win32",
       processorCount: 4,
+      hardwareTelemetryProvider: new FakeHardwareTelemetryProvider(),
       presentMonRuntimeFactory: () => ({
         async capture() {
           return captureResult([
@@ -160,6 +163,7 @@ describe("PcCollector PresentMon session", () => {
     const collector = new PcCollector({
       processAdapter: adapter,
       platform: "win32",
+      hardwareTelemetryProvider: new FakeHardwareTelemetryProvider(),
       presentMonRuntimeFactory: () => ({
         async capture() {
           return captureResult([]);
@@ -201,6 +205,7 @@ describe("PcCollector PresentMon session", () => {
       processAdapter: adapter,
       platform: "win32",
       processorCount: 4,
+      hardwareTelemetryProvider: new FakeHardwareTelemetryProvider(),
       presentMonRuntimeFactory: () => ({
         async capture() {
           captureCalls += 1;
@@ -262,6 +267,50 @@ describe("PcCollector PresentMon session", () => {
     expect(events.some((event) => event.metricName === "frame_time_ms")).toBe(true);
   });
 
+  it("stops the realtime capture loop after one permission-limited result", async () => {
+    let captureCalls = 0;
+    const adapter = new FakeProcessAdapter();
+    adapter.processes = [processInfo()];
+    adapter.queue.set(4321, Array.from({ length: 20 }, () => processInfo()));
+    const collector = new PcCollector({
+      processAdapter: adapter,
+      platform: "win32",
+      hardwareTelemetryProvider: new FakeHardwareTelemetryProvider(),
+      presentMonRuntimeFactory: () => ({
+        async capture() {
+          captureCalls += 1;
+          return {
+            ...captureResult([]),
+            status: "permission_limited" as const,
+            warnings: ["PresentMon requires additional Windows permissions."]
+          };
+        },
+        async abort() {
+          // No-op.
+        }
+      })
+    });
+    const [device] = await collector.discoverDevices();
+    const [target] = await collector.listTargets(device!.id);
+    const session = await collector.startSession({
+      id: "pc-presentmon-permission-limited",
+      name: "PC",
+      deviceId: device!.id,
+      targetId: target!.id,
+      sampleIntervalMs: 1,
+      options: {
+        enablePresentMonRealtime: true,
+        presentMonRealtimeChunkMs: 1000
+      }
+    });
+
+    await collect(collector.streamMetrics(session.id), 4);
+    await new Promise((resolve) => setTimeout(resolve, 20));
+    await collector.stopSession(session.id);
+
+    expect(captureCalls).toBe(1);
+  });
+
   it("aborts pending PresentMon capture on session stop", async () => {
     let aborted = false;
     const adapter = new FakeProcessAdapter();
@@ -270,6 +319,7 @@ describe("PcCollector PresentMon session", () => {
     const collector = new PcCollector({
       processAdapter: adapter,
       platform: "win32",
+      hardwareTelemetryProvider: new FakeHardwareTelemetryProvider(),
       presentMonRuntimeFactory: () => ({
         async capture() {
           return await new Promise<PresentMonCaptureResult>(() => undefined);

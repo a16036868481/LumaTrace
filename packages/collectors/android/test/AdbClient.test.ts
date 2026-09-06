@@ -1,6 +1,11 @@
 ﻿import { describe, expect, it } from "vitest";
 import type { CommandResult, CommandRunnerOptions } from "@lumatrace/core";
-import { AdbClient, resolveDefaultAdbPath, type CommandRunnerLike } from "../src/adb/AdbClient";
+import {
+  AdbClient,
+  formatLogcatSinceTime,
+  resolveDefaultAdbPath,
+  type CommandRunnerLike
+} from "../src/adb/AdbClient";
 import {
   discoverReachableLocalAndroidEmulatorSerials,
   isKnownMumuAdbPort,
@@ -132,6 +137,65 @@ describe("AdbClient", () => {
     await client.listDevices();
     await expect(client.getProps("R58M123ABC")).resolves.toHaveProperty("ro.product.model", "Pixel 8");
     await expect(client.listPackages("R58M123ABC")).resolves.toHaveLength(2);
+  });
+
+  it("exports target-filtered threadtime logcat through the bounded command policy", async () => {
+    const startedAtMs = new Date(2026, 7, 9, 1, 2, 3, 4).getTime();
+    const since = "08-09 01:02:03.004";
+    const command = `-s R58M123ABC logcat -d -v threadtime -T ${since} --uid=10123`;
+    const runner = new FakeRunner({
+      "devices -l": result(readAndroidFixture("adb_devices_one_device.txt")),
+      [command]: result(readAndroidFixture("logcat_threadtime_sample.txt"))
+    });
+    const client = new AdbClient({ commandRunner: runner });
+    await client.listDevices();
+
+    const logcat = await client.dumpLogcat("R58M123ABC", {
+      startedAtMs,
+      uid: 10123,
+      pid: 12345
+    });
+
+    expect(formatLogcatSinceTime(startedAtMs)).toBe(since);
+    expect(logcat.stdout).toContain("12345 12367 I Unity");
+    expect(runner.calls.at(-1)).toMatchObject({
+      args: ["-s", "R58M123ABC", "logcat", "-d", "-v", "threadtime", "-T", since, "--uid=10123"],
+      timeoutMs: 15_000,
+      maxOutputBytes: 8 * 1024 * 1024
+    });
+  });
+
+  it("falls back from uid-filtered logcat to the target pid", async () => {
+    const startedAtMs = new Date(2026, 7, 9, 1, 2, 3, 4).getTime();
+    const since = "08-09 01:02:03.004";
+    const runner = new FakeRunner({
+      "devices -l": result(readAndroidFixture("adb_devices_one_device.txt")),
+      [`-s R58M123ABC logcat -d -v threadtime -T ${since} --uid=10123`]: result(
+        "",
+        1,
+        "unknown option --uid"
+      ),
+      [`-s R58M123ABC logcat -d -v threadtime -T ${since} --pid=12345`]: result(
+        readAndroidFixture("logcat_threadtime_sample.txt")
+      )
+    });
+    const client = new AdbClient({ commandRunner: runner });
+    await client.listDevices();
+
+    await expect(
+      client.dumpLogcat("R58M123ABC", { startedAtMs, uid: 10123, pid: 12345 })
+    ).resolves.toMatchObject({ exitCode: 0 });
+    expect(runner.calls.at(-1)?.args).toEqual([
+      "-s",
+      "R58M123ABC",
+      "logcat",
+      "-d",
+      "-v",
+      "threadtime",
+      "-T",
+      since,
+      "--pid=12345"
+    ]);
   });
 
   it("falls back from pidof to ps", async () => {

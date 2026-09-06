@@ -83,6 +83,30 @@ export interface AndroidCollectorOptions {
   capabilities?: MetricAvailability[];
 }
 
+export interface AndroidLogcatDumpOptions {
+  startedAtMs: number;
+  uid?: number;
+  pid?: number;
+}
+
+export interface AndroidLogcatCommandResult {
+  stdout: string;
+  stderr: string;
+  sanitizedStdout: string;
+  sanitizedStderr: string;
+  exitCode: number | null;
+  timedOut: boolean;
+  aborted: boolean;
+  stdoutTruncated: boolean;
+}
+
+export interface AndroidSessionLogCapture {
+  fileName: "android-logcat.log";
+  content: string;
+  source: "adb:logcat";
+  truncated: boolean;
+}
+
 export interface AndroidAdbClientLike {
   getVersion(): Promise<AdbVersionInfo>;
   listDevices(): Promise<AndroidAdbDevice[]>;
@@ -126,6 +150,10 @@ export interface AndroidAdbClientLike {
     packageName: string,
     options?: { timeoutMs?: number; pollIntervalMs?: number }
   ): Promise<AndroidPidWaitResult>;
+  dumpLogcat?(
+    serial: string,
+    options: AndroidLogcatDumpOptions
+  ): Promise<AndroidLogcatCommandResult>;
   abortPendingCommands?(): void;
 }
 

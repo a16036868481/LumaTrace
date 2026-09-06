@@ -1,21 +1,25 @@
-﻿import type { EventMarker, Session, Target } from "@lumatrace/core";
+﻿import type { EventMarker, Session } from "@lumatrace/core";
 import type {
   MarkerRepository,
   MetricRepository,
   ReportRepository,
   SessionRepository
 } from "@lumatrace/storage";
-import {
-  importIosXctraceCsvMetrics,
-  sanitizeIosTraceDiagnostic,
-  type IosTraceTargetDescriptor,
-  type IosXctraceCaptureOptions
-} from "@lumatrace/collectors-ios";
 import type { GeneratedReport, ReportGenerator } from "@lumatrace/report";
 import { sanitizeFileBaseName } from "@lumatrace/report";
 import type { DeviceService } from "./DeviceService";
 import type { DiagnosticService } from "./DiagnosticService";
 import type { SessionRuntimeManager } from "../runtime/SessionRuntimeManager";
+import {
+  buildTimestampedSessionLog,
+  shouldExportSessionLog,
+  writeSessionLog
+} from "./SessionLogExporter";
+import {
+  buildSessionOutputDirectory,
+  SESSION_REPORT_FOLDER_CREATED_AT_CONFIG_KEY,
+  SESSION_REPORT_FOLDER_LABEL_CONFIG_KEY
+} from "./SessionOutputDirectory";
 import { AppError } from "../utils/errors";
 import { createId } from "../utils/ids";
 
@@ -40,48 +44,14 @@ export interface SessionReportResponse {
   rawMetricCount: number;
 }
 
-export interface IosTraceImportInput {
-  csvText?: string;
-  target?: IosTraceTargetDescriptor;
-  traceStartedAtMs?: number;
-  importedAtMs?: number;
-  captureId?: string;
+export interface DeleteSessionResponse {
+  sessionId: string;
+  deleted: true;
 }
 
-export interface IosTraceImportResponse {
-  status: "success" | "no_data";
-  rawRowCount: number;
-  matchedRowCount: number;
-  metricCount: number;
-  matchStatus: string;
-  matchConfidence: string;
-  reason: string;
-  warnings: string[];
-  diagnosticsId: string;
-}
-
-export interface IosXctraceCaptureInput {
-  target?: IosTraceTargetDescriptor;
-  durationMs?: number;
-  templateName?: string;
-  outputDir?: string;
-  exportXPath?: string;
-  keepTrace?: boolean;
-  traceStartedAtMs?: number;
-  importedAtMs?: number;
-  captureId?: string;
-}
-
-export interface IosXctraceCaptureResponse {
-  status: string;
-  rawRowCount: number;
-  matchedRowCount: number;
-  metricCount: number;
-  matchStatus?: string;
-  matchConfidence?: string;
-  reason: string;
-  warnings: string[];
-  diagnosticsId: string;
+export interface DeleteSessionsResponse {
+  deletedCount: number;
+  skippedSessionIds: string[];
 }
 
 function sanitizeConfig(config: Record<string, unknown> | undefined): Record<string, unknown> | undefined {
@@ -98,35 +68,6 @@ function sanitizeConfig(config: Record<string, unknown> | undefined): Record<str
     }
   }
   return sanitized;
-}
-
-function targetDescriptorFromTarget(target: Target): IosTraceTargetDescriptor {
-  const descriptor: IosTraceTargetDescriptor = {};
-  if (target.bundleId !== undefined) {
-    descriptor.bundleId = target.bundleId;
-  }
-  if (target.pid !== undefined) {
-    descriptor.pid = target.pid;
-  }
-  const processName = target.tags?.processName;
-  if (typeof processName === "string" && processName.length > 0) {
-    descriptor.processName = processName;
-  } else if (target.name.length > 0) {
-    descriptor.processName = target.name;
-  }
-  return descriptor;
-}
-
-function mergeTraceTargetDescriptor(
-  target: Target,
-  requested: IosTraceTargetDescriptor | undefined
-): IosTraceTargetDescriptor {
-  return {
-    ...targetDescriptorFromTarget(target),
-    ...(requested?.bundleId === undefined ? {} : { bundleId: requested.bundleId }),
-    ...(requested?.processName === undefined ? {} : { processName: requested.processName }),
-    ...(requested?.pid === undefined ? {} : { pid: requested.pid })
-  };
 }
 
 export class SessionService {
@@ -184,19 +125,21 @@ export class SessionService {
       });
     }
 
+    const createdAtMs = Date.now();
     const session: Session = {
       id: createId("session"),
-      name: input.name ?? `Session ${new Date().toISOString()}`,
+      name: input.name ?? `Session ${new Date(createdAtMs).toISOString()}`,
       deviceId: input.deviceId,
       targetId: input.targetId,
       sampleIntervalMs: input.sampleIntervalMs ?? 1000,
       status: "created"
     };
 
-    const config = sanitizeConfig(input.config);
-    if (config !== undefined) {
-      session.config = config;
-    }
+    session.config = {
+      ...(sanitizeConfig(input.config) ?? {}),
+      [SESSION_REPORT_FOLDER_LABEL_CONFIG_KEY]: target.name,
+      [SESSION_REPORT_FOLDER_CREATED_AT_CONFIG_KEY]: createdAtMs
+    };
 
     this.sessionRepository.create(session);
     return session;
@@ -214,6 +157,50 @@ export class SessionService {
   listSessions(limit = 20): Session[] {
     const boundedLimit = Math.min(Math.max(Math.trunc(limit), 1), 100);
     return this.sessionRepository.list(boundedLimit);
+  }
+
+  deleteSession(id: string): DeleteSessionResponse {
+    const session = this.getSession(id);
+    if (
+      session.status === "running" ||
+      session.status === "paused" ||
+      this.runtimeManager.getRuntime(id) !== undefined
+    ) {
+      throw new AppError("SESSION_ACTIVE", "Active sessions cannot be deleted.", 409, {
+        sessionId: id,
+        status: session.status
+      });
+    }
+
+    this.deleteStoredSession(id);
+    return {
+      sessionId: id,
+      deleted: true
+    };
+  }
+
+  deleteAllSessions(): DeleteSessionsResponse {
+    const sessions = this.sessionRepository.listAll();
+    const skippedSessionIds: string[] = [];
+    let deletedCount = 0;
+
+    for (const session of sessions) {
+      if (
+        session.status === "running" ||
+        session.status === "paused" ||
+        this.runtimeManager.getRuntime(session.id) !== undefined
+      ) {
+        skippedSessionIds.push(session.id);
+        continue;
+      }
+      this.deleteStoredSession(session.id);
+      deletedCount += 1;
+    }
+
+    return {
+      deletedCount,
+      skippedSessionIds
+    };
   }
 
   listMarkers(sessionId: string): EventMarker[] {
@@ -260,171 +247,6 @@ export class SessionService {
     return this.getSession(id);
   }
 
-  async importIosTraceCsv(sessionId: string, input: IosTraceImportInput): Promise<IosTraceImportResponse> {
-    const session = this.getSession(sessionId);
-    const device = await this.deviceService.getDevice(session.deviceId);
-    if (device === null) {
-      throw new AppError("DEVICE_NOT_FOUND", `Device not found: ${session.deviceId}`, 404, {
-        deviceId: session.deviceId
-      });
-    }
-    if (device.platform !== "ios") {
-      throw new AppError("INVALID_REQUEST", "iOS trace import requires an iOS device session.", 400, {
-        deviceId: session.deviceId,
-        platform: device.platform
-      });
-    }
-    const target = await this.deviceService.getTarget(session.deviceId, session.targetId);
-    if (target === null) {
-      throw new AppError("TARGET_NOT_FOUND", `Target not found: ${session.targetId}`, 404, {
-        targetId: session.targetId
-      });
-    }
-    if (typeof input.csvText !== "string" || input.csvText.trim().length === 0) {
-      throw new AppError("INVALID_REQUEST", "csvText is required.", 400);
-    }
-    if (input.csvText.length > 5 * 1024 * 1024) {
-      throw new AppError("INVALID_REQUEST", "csvText is too large for manual import.", 400, {
-        maxBytes: 5 * 1024 * 1024
-      });
-    }
-
-    const importedAtMs = input.importedAtMs ?? Date.now();
-    const result = importIosXctraceCsvMetrics(input.csvText, {
-      sessionId,
-      deviceId: session.deviceId,
-      targetId: session.targetId,
-      target: mergeTraceTargetDescriptor(target, input.target),
-      ...(input.traceStartedAtMs === undefined ? {} : { traceStartedAtMs: input.traceStartedAtMs }),
-      importedAtMs,
-      ...(input.captureId === undefined ? {} : { captureId: input.captureId })
-    });
-    if (result.metrics.length > 0) {
-      this.metricRepository.insertRawBatch(result.metrics);
-      await this.generateAndWriteReport(sessionId);
-    }
-
-    const level = result.metrics.length > 0 ? "info" : result.match.status === "matched" ? "warn" : "warn";
-    const diagnosticsId = createId("diag");
-    this.diagnosticService.create({
-      id: diagnosticsId,
-      timestampMs: importedAtMs,
-      level,
-      category: "ios:trace_import",
-      sessionId,
-      deviceId: session.deviceId,
-      message:
-        result.metrics.length > 0
-          ? "Imported manual iOS xctrace CSV metrics."
-          : `iOS xctrace CSV import produced no metrics: ${result.match.reason}`,
-      details: sanitizeIosTraceDiagnostic({
-        iosCode: result.metrics.length > 0 ? "IOS_TRACE_IMPORT_COMPLETED" : "IOS_TRACE_IMPORT_NO_DATA",
-        rawRowCount: result.parse.rowCount,
-        matchedRowCount: result.match.matchedRows.length,
-        metricCount: result.metrics.length,
-        matchStatus: result.match.status,
-        matchConfidence: result.match.confidence,
-        reason: result.match.reason,
-        warnings: result.warnings,
-        detectedColumns: result.parse.detectedColumns,
-        candidates: result.match.candidates
-      }) as Record<string, unknown>
-    });
-
-    return {
-      status: result.metrics.length > 0 ? "success" : "no_data",
-      rawRowCount: result.parse.rowCount,
-      matchedRowCount: result.match.matchedRows.length,
-      metricCount: result.metrics.length,
-      matchStatus: result.match.status,
-      matchConfidence: result.match.confidence,
-      reason: result.match.reason,
-      warnings: result.warnings,
-      diagnosticsId
-    };
-  }
-
-  async captureIosXctrace(sessionId: string, input: IosXctraceCaptureInput): Promise<IosXctraceCaptureResponse> {
-    const session = this.getSession(sessionId);
-    const device = await this.deviceService.getDevice(session.deviceId);
-    if (device === null) {
-      throw new AppError("DEVICE_NOT_FOUND", `Device not found: ${session.deviceId}`, 404, {
-        deviceId: session.deviceId
-      });
-    }
-    if (device.platform !== "ios") {
-      throw new AppError("INVALID_REQUEST", "Automatic xctrace capture requires an iOS device session.", 400, {
-        deviceId: session.deviceId,
-        platform: device.platform
-      });
-    }
-    const target = await this.deviceService.getTarget(session.deviceId, session.targetId);
-    if (target === null) {
-      throw new AppError("TARGET_NOT_FOUND", `Target not found: ${session.targetId}`, 404, {
-        targetId: session.targetId
-      });
-    }
-
-    const captureOptions: Omit<IosXctraceCaptureOptions, "udid"> = {
-      sessionId,
-      deviceId: session.deviceId,
-      targetId: session.targetId,
-      target: mergeTraceTargetDescriptor(target, input.target),
-      ...(input.durationMs === undefined ? {} : { durationMs: input.durationMs }),
-      ...(input.templateName === undefined ? {} : { templateName: input.templateName }),
-      ...(input.outputDir === undefined ? {} : { outputDir: input.outputDir }),
-      ...(input.exportXPath === undefined ? {} : { exportXPath: input.exportXPath }),
-      ...(input.keepTrace === undefined ? {} : { keepTrace: input.keepTrace }),
-      ...(input.traceStartedAtMs === undefined ? {} : { traceStartedAtMs: input.traceStartedAtMs }),
-      ...(input.importedAtMs === undefined ? {} : { importedAtMs: input.importedAtMs }),
-      ...(input.captureId === undefined ? {} : { captureId: input.captureId })
-    };
-
-    const result = await this.deviceService.captureIosXctrace(session.deviceId, captureOptions);
-    if (result.metrics.length > 0) {
-      this.metricRepository.insertRawBatch(result.metrics);
-      await this.generateAndWriteReport(sessionId);
-    }
-
-    const diagnosticsId = createId("diag");
-    this.diagnosticService.create({
-      id: diagnosticsId,
-      timestampMs: Date.now(),
-      level: result.status === "success" ? "info" : result.status === "failed" ? "error" : "warn",
-      category: "ios:xctrace_capture",
-      sessionId,
-      deviceId: session.deviceId,
-      message:
-        result.metrics.length > 0
-          ? "Automatic iOS xctrace capture produced metrics."
-          : `Automatic iOS xctrace capture produced no metrics: ${result.reason}`,
-      details: sanitizeIosTraceDiagnostic({
-        iosCode: result.status === "success" ? "IOS_XCTRACE_CAPTURE_COMPLETED" : "IOS_XCTRACE_CAPTURE_NO_DATA",
-        status: result.status,
-        rawRowCount: result.rawRowCount,
-        matchedRowCount: result.matchedRowCount,
-        metricCount: result.metricCount,
-        matchStatus: result.matchStatus,
-        matchConfidence: result.matchConfidence,
-        reason: result.reason,
-        warnings: result.warnings,
-        captureDiagnostics: result.diagnostics
-      }) as Record<string, unknown>
-    });
-
-    return {
-      status: result.status,
-      rawRowCount: result.rawRowCount,
-      matchedRowCount: result.matchedRowCount,
-      metricCount: result.metricCount,
-      ...(result.matchStatus === undefined ? {} : { matchStatus: result.matchStatus }),
-      ...(result.matchConfidence === undefined ? {} : { matchConfidence: result.matchConfidence }),
-      reason: result.reason,
-      warnings: result.warnings,
-      diagnosticsId
-    };
-  }
-
   addMarker(sessionId: string, input: MarkerInput): EventMarker {
     this.getSession(sessionId);
     if (input.label === undefined || input.label.length === 0) {
@@ -469,6 +291,12 @@ export class SessionService {
     };
   }
 
+  private deleteStoredSession(sessionId: string): void {
+    this.diagnosticService.deleteBySession(sessionId);
+    this.runtimeManager.getRingBuffer().clear(sessionId);
+    this.sessionRepository.delete(sessionId);
+  }
+
   private syncCollectorDiagnostics(sessionId: string): void {
     for (const event of this.deviceService.listAndroidDiagnostics({ sessionId })) {
       this.diagnosticService.createFromAndroidEvent(event);
@@ -486,22 +314,30 @@ export class SessionService {
   }
 
   private async generateAndWriteReport(sessionId: string): Promise<GeneratedReport> {
+    const session = this.getSession(sessionId);
     const report = this.reportGenerator.generateFromStorage(sessionId, { saveToRepository: true });
     if (this.reportOutputDir === undefined) {
       return report;
     }
 
+    const sessionOutputDir = buildSessionOutputDirectory(
+      this.reportOutputDir,
+      session,
+      report.generatedAt
+    );
+    const fileBaseName = sanitizeFileBaseName("report");
+
     try {
       await this.reportGenerator.writeFiles(report, {
-        outputDir: this.reportOutputDir,
-        fileBaseName: sanitizeFileBaseName(`${sessionId}-${Date.now()}`),
+        outputDir: sessionOutputDir,
+        fileBaseName,
         saveToRepository: true
       });
       this.diagnosticService.create({
         level: "info",
         category: "report",
         sessionId,
-        message: "Report files were written to the configured report output directory.",
+        message: "Report files were written to the test's report folder.",
         details: {
           reportOutputDir: "<report-output-dir>"
         }
@@ -517,6 +353,55 @@ export class SessionService {
           reason: this.sanitizeReportOutputError(message)
         }
       });
+    }
+
+    if (shouldExportSessionLog(session.config)) {
+      try {
+        const device = await this.deviceService.getDevice(session.deviceId);
+        const androidLog =
+          device?.platform === "android"
+            ? this.deviceService.drainAndroidSessionLog(sessionId)
+            : undefined;
+        if (device?.platform === "android" && androidLog === undefined) {
+          throw new Error("ADB logcat was requested but no log was captured.");
+        }
+
+        const logSource = androidLog?.source ?? "lumatrace:session-events";
+        await writeSessionLog({
+          outputDir: sessionOutputDir,
+          fileName: androidLog?.fileName ?? `${device?.platform ?? "session"}-session.log`,
+          content:
+            androidLog?.content ??
+            buildTimestampedSessionLog({
+              diagnostics: this.diagnosticService.list({ sessionId, limit: 1000 })
+            })
+        });
+        this.diagnosticService.create({
+          level: "info",
+          category: "report",
+          sessionId,
+          message:
+            androidLog === undefined
+              ? "A timestamped LumaTrace session log was written beside the test report files."
+              : "A sanitized ADB logcat file was written beside the test report files.",
+          details: {
+            reportOutputDir: "<report-output-dir>",
+            logSource,
+            ...(androidLog === undefined ? {} : { truncated: androidLog.truncated })
+          }
+        });
+      } catch (caught) {
+        const message = caught instanceof Error ? caught.message : String(caught);
+        this.diagnosticService.create({
+          level: "warn",
+          category: "report",
+          sessionId,
+          message: "The requested session log could not be written to the report output directory.",
+          details: {
+            reason: this.sanitizeReportOutputError(message)
+          }
+        });
+      }
     }
 
     return report;

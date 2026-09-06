@@ -23,6 +23,7 @@ export type AndroidCommandPolicyName =
   | "am_start"
   | "monkey"
   | "force_stop"
+  | "logcat"
   | "default";
 
 export interface AndroidCommandPolicy {
@@ -70,6 +71,7 @@ const DEFAULT_POLICIES: Record<AndroidCommandPolicyName, AndroidCommandPolicy> =
   am_start: { name: "am_start", timeoutMs: 15000, maxOutputBytes: 256 * KIB, retryCount: 0, retryable: false, sideEffect: true },
   monkey: { name: "monkey", timeoutMs: 10000, maxOutputBytes: 256 * KIB, retryCount: 0, retryable: false, sideEffect: true },
   force_stop: { name: "force_stop", timeoutMs: 5000, maxOutputBytes: 128 * KIB, retryCount: 0, retryable: false, sideEffect: true },
+  logcat: { name: "logcat", timeoutMs: 15000, maxOutputBytes: 8 * MIB, retryCount: 0, retryable: false, sideEffect: false },
   default: { name: "default", timeoutMs: 5000, maxOutputBytes: 1 * MIB, retryCount: 0, retryable: false, sideEffect: false }
 };
 

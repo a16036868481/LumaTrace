@@ -57,6 +57,71 @@ export interface ReportGeneratorOptions {
   outputDir?: string;
   fileBaseName?: string;
   saveToRepository?: boolean;
+  localization?: ReportLocalization;
+}
+
+export interface ReportLocalization {
+  locale: string;
+  direction: "ltr" | "rtl";
+  strings: ReportLocalizationStrings;
+  summaryLabels: Partial<Record<keyof ReportSummary, string>>;
+}
+
+export interface ReportLocalizationStrings {
+  title: string;
+  session: string;
+  device: string;
+  target: string;
+  generated: string;
+  rawMetrics: string;
+  version: string;
+  summary: string;
+  fpsAnalysis: string;
+  startedAt: string;
+  endedAt: string;
+  coreMetricsHelp: string;
+  markers: string;
+  metricAvailability: string;
+  toolStatus: string;
+  dataQuality: string;
+  localData: string;
+  metricSamples: string;
+  timestamp: string;
+  label: string;
+  description: string;
+  details: string;
+  metric: string;
+  value: string;
+  source: string;
+  precision: string;
+  confidence: string;
+  platform: string;
+  status: string;
+  reason: string;
+  action: string;
+  tool: string;
+  diagnostics: string;
+  androidDiagnostics: string;
+  pcDiagnostics: string;
+  diagnosticPrivacy: string;
+  presentMonStatus: string;
+  csvRetention: string;
+  permissions: string;
+  noData: string;
+  notAvailable: string;
+  warnings: string;
+  errors: string;
+  frameMetricRows: string;
+  showingMetricRows: string;
+  performanceConclusion: string;
+  performancePoor: string;
+  performanceFair: string;
+  performanceGood: string;
+  performanceUnavailable: string;
+  stabilityGood: string;
+  stabilityNeedsAttention: string;
+  stabilityUnavailable: string;
+  performanceThresholdNote: string;
 }
 
 export interface ReportGeneratorDependencies {
@@ -105,22 +170,9 @@ export interface PcReportDiagnosticsSection {
   noDataReasons: string[];
 }
 
-export interface IosReportDiagnosticsSection {
-  iosDiagnosticsSummary: {
-    total: number;
-    byLevel: Record<string, number>;
-    byCategory: Record<string, number>;
-    warnings: number;
-    errors: number;
-  };
-  diagnosticsTimeline: DiagnosticRecord[];
-  sourcePrecisionNotices: string[];
-  noDataReasons: string[];
-  importStatus?: string;
-}
-
 export interface ReportDocument {
   version: string;
+  locale: string;
   generatedAt: number;
   session: Session;
   device: Device;
@@ -134,7 +186,6 @@ export interface ReportDocument {
   metrics?: MetricEvent[];
   androidDiagnostics?: AndroidReportDiagnosticsSection;
   pcDiagnostics?: PcReportDiagnosticsSection;
-  iosDiagnostics?: IosReportDiagnosticsSection;
 }
 
 export interface ReportBuildResult {

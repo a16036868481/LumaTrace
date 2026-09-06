@@ -6,14 +6,14 @@ import type {
   AndroidAppStopResult,
   AndroidDiagnosticEvent,
   AndroidDiagnosticsListOptions,
-  AndroidDiagnosticsSummary
+  AndroidDiagnosticsSummary,
+  AndroidSessionLogCapture
 } from "@lumatrace/collectors-android";
 import type {
   PcDiagnosticEvent,
   PcDiagnosticsListOptions,
   PcDiagnosticsSummary
 } from "@lumatrace/collectors-pc";
-import type { IosXctraceCaptureOptions, IosXctraceCaptureResult } from "@lumatrace/collectors-ios";
 import type { DeviceRepository, TargetRepository } from "@lumatrace/storage";
 import type { CollectorRegistry } from "../runtime/CollectorRegistry";
 import { AppError } from "../utils/errors";
@@ -42,8 +42,8 @@ interface PcPresentMonCollector extends PcDiagnosticsCollector {
   getPresentMonCaptureStatus(sessionId: string): unknown;
 }
 
-interface IosXctraceCaptureCollector {
-  captureXctrace(options: Omit<IosXctraceCaptureOptions, "udid">): Promise<IosXctraceCaptureResult>;
+interface AndroidSessionLogCollector {
+  drainSessionLog(sessionId: string): AndroidSessionLogCapture | undefined;
 }
 
 function isAndroidLifecycleCollector(collector: unknown): collector is AndroidLifecycleCollector {
@@ -87,12 +87,12 @@ function isPcPresentMonCollector(collector: unknown): collector is PcPresentMonC
   );
 }
 
-function isIosXctraceCaptureCollector(collector: unknown): collector is IosXctraceCaptureCollector {
+function isAndroidSessionLogCollector(collector: unknown): collector is AndroidSessionLogCollector {
   return (
     typeof collector === "object" &&
     collector !== null &&
-    "captureXctrace" in collector &&
-    typeof (collector as IosXctraceCaptureCollector).captureXctrace === "function"
+    "drainSessionLog" in collector &&
+    typeof (collector as AndroidSessionLogCollector).drainSessionLog === "function"
   );
 }
 
@@ -233,6 +233,14 @@ export class DeviceService {
     return collector.summarizeDiagnostics(sessionId);
   }
 
+  drainAndroidSessionLog(sessionId: string): AndroidSessionLogCapture | undefined {
+    const collector = this.registry.getByPlatform("android");
+    if (!isAndroidSessionLogCollector(collector)) {
+      return undefined;
+    }
+    return collector.drainSessionLog(sessionId);
+  }
+
   listPcDiagnostics(options: PcDiagnosticsListOptions = {}): PcDiagnosticEvent[] {
     const collector = this.registry.getByPlatform("windows");
     if (!isPcDiagnosticsCollector(collector)) {
@@ -272,26 +280,6 @@ export class DeviceService {
       throw new AppError("INVALID_REQUEST", "PC PresentMon collector is unavailable.", 400);
     }
     return collector.getPresentMonCaptureStatus(sessionId);
-  }
-
-  async captureIosXctrace(
-    deviceId: string,
-    options: Omit<IosXctraceCaptureOptions, "udid">
-  ): Promise<IosXctraceCaptureResult> {
-    const device = await this.getDevice(deviceId);
-    if (device === null) {
-      throw new AppError("DEVICE_NOT_FOUND", `Device not found: ${deviceId}`, 404, { deviceId });
-    }
-    if (device.platform !== "ios") {
-      throw new AppError("INVALID_REQUEST", "Automatic xctrace capture requires an iOS device.", 400, {
-        deviceId
-      });
-    }
-    const collector = await this.registry.getByDeviceId(deviceId);
-    if (!isIosXctraceCaptureCollector(collector)) {
-      throw new AppError("INVALID_REQUEST", "iOS xctrace capture collector is unavailable.", 400, { deviceId });
-    }
-    return collector.captureXctrace(options);
   }
 
   async getAndroidHealth(deviceId: string): Promise<Record<string, unknown>> {

@@ -4,7 +4,7 @@ import type { LocalServerContext } from "../types";
 import { ok } from "../utils/apiResponse";
 import { AppError } from "../utils/errors";
 
-const PLATFORMS: readonly Platform[] = ["android", "ios", "windows", "macos", "linux"];
+const PLATFORMS: readonly Platform[] = ["android", "windows", "macos", "linux"];
 
 function parsePlatform(value: unknown): Platform | undefined {
   if (value === undefined) {

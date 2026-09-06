@@ -2,6 +2,7 @@
   "name": "@lumatrace/local-server",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
@@ -15,7 +16,6 @@
   "dependencies": {
     "@fastify/websocket": "^11.0.2",
     "@lumatrace/collectors-android": "workspace:*",
-    "@lumatrace/collectors-ios": "workspace:*",
     "@lumatrace/collectors-mock": "workspace:*",
     "@lumatrace/collectors-pc": "workspace:*",
     "@lumatrace/core": "workspace:*",

@@ -9,6 +9,7 @@ import type {
   PresentMonCaptureStatusListener,
   PresentMonCaptureStatusSnapshot
 } from "./windows/PresentMonCaptureStatus";
+import type { WindowsHardwareTelemetryProviderLike } from "./windows/WindowsHardwareTelemetryProvider";
 
 export interface WindowsProcessInfo {
   pid: number;
@@ -23,6 +24,7 @@ export interface WindowsProcessInfo {
   userTimeMs?: number;
   startTimeMs?: number;
   iconDataUrl?: string;
+  hasMainWindow?: boolean;
   parentPid?: number;
   architecture?: string;
   owner?: string;
@@ -69,6 +71,7 @@ export interface PcCollectorOptions {
   diagnostics?: PcDiagnosticsTimeline;
   presentMonRuntimeFactory?: PresentMonCaptureRuntimeFactory;
   presentMonTempDir?: string;
+  hardwareTelemetryProvider?: WindowsHardwareTelemetryProviderLike;
 }
 
 export interface PresentMonCaptureRuntimeLike {
@@ -127,6 +130,9 @@ export function processToTarget(process: WindowsProcessInfo): Target {
   }
   if (process.iconDataUrl !== undefined) {
     tags.iconDataUrl = process.iconDataUrl;
+  }
+  if (process.hasMainWindow !== undefined) {
+    tags.hasMainWindow = process.hasMainWindow;
   }
   const target: Target = {
     id: `pc-windows-process:${process.pid}:${runtimeId}`,

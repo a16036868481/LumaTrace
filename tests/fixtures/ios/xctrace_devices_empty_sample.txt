@@ -1,5 +1,0 @@
-== Devices ==
-ARGO MacBook Pro (14.4) (00006000-0000000000000000)
-
-== Simulators ==
-Apple Watch Series 9 (10.2) (ABCDABCD-1111-2222-3333-ABCDEABCDEAB) (Shutdown)

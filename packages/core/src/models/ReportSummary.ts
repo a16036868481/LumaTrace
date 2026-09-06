@@ -18,8 +18,24 @@ export interface ReportSummary {
   avgCpuPercent?: number;
   peakCpuPercent?: number;
 
+  avgGpuPercent?: number;
+  peakGpuPercent?: number;
+
   avgMemoryMb?: number;
   peakMemoryMb?: number;
+
+  avgPowerW?: number;
+  peakPowerW?: number;
+
+  avgCpuTemperatureC?: number;
+  peakCpuTemperatureC?: number;
+
+  avgGpuTemperatureC?: number;
+  peakGpuTemperatureC?: number;
+
+  /** Legacy ambiguous temperature fields retained for old stored reports. */
+  avgTemperatureC?: number;
+  peakTemperatureC?: number;
 
   networkRxMb?: number;
   networkTxMb?: number;

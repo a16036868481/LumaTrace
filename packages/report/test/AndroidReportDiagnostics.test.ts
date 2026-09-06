@@ -124,7 +124,7 @@ function input(): ReportInput {
 }
 
 describe("Android report diagnostics", () => {
-  it("adds sanitized diagnostics, notices, and network summary to JSON and HTML", () => {
+  it("keeps sanitized diagnostics in JSON without showing diagnostics or data notes in HTML", () => {
     const report = new ReportGenerator().generate(input(), { includeRawMetricsInHtml: true });
     const json = JSON.parse(report.json) as {
       androidDiagnostics?: {
@@ -138,10 +138,11 @@ describe("Android report diagnostics", () => {
     expect(json.androidDiagnostics?.networkPrecisionNotice).toContain("not target-only");
     expect(json.androidDiagnostics?.fallbackNotices.join(" ")).toContain("/proc/<pid>/status");
     expect(JSON.stringify(json)).not.toContain("ZX1G22ABCDEF");
-    expect(report.html).toContain("Android Diagnostics");
-    expect(report.html).toContain("Device-level network counters may include traffic from other apps.");
-    expect(report.html).toContain("Android FPS probe is experimental.");
-    expect(report.html).toContain("does not include logcat or bugreport output by default");
+    expect(report.html).not.toContain("Android Diagnostics");
+    expect(report.html).not.toContain("Device-level network counters may include traffic from other apps.");
+    expect(report.html).not.toContain("Android FPS probe is experimental.");
+    expect(report.html).not.toContain("Diagnostic exports are sanitized and exclude private raw logs.");
+    expect(report.html).not.toContain("Data quality");
     expect(report.html).not.toContain("bugreport output</pre>");
   });
 });

@@ -140,6 +140,18 @@ export class SessionRepository {
     return rows.map((row) => rowToSession(row));
   }
 
+  listAll(): Session[] {
+    const rows = this.db
+      .prepare(
+        `
+        SELECT * FROM sessions
+        ORDER BY COALESCE(started_at, created_at) DESC, created_at DESC, id ASC
+      `
+      )
+      .all() as SessionRow[];
+    return rows.map((row) => rowToSession(row));
+  }
+
   listByDevice(deviceId: string, limit = 100): Session[] {
     const rows = this.db
       .prepare(
@@ -171,6 +183,30 @@ export class SessionRepository {
       `
       )
       .run(status, timestamps.startedAt ?? null, timestamps.endedAt ?? null, Date.now(), sessionId);
+  }
+
+  finalizeInterruptedSessions(): number {
+    const result = this.db
+      .prepare(
+        `
+        UPDATE sessions
+        SET status = 'stopped',
+            ended_at = COALESCE(
+              ended_at,
+              (
+                SELECT MAX(metric_events_raw.timestamp_ms)
+                FROM metric_events_raw
+                WHERE metric_events_raw.session_id = sessions.id
+              ),
+              started_at,
+              updated_at
+            ),
+            updated_at = ?
+        WHERE status IN ('running', 'paused')
+      `
+      )
+      .run(Date.now());
+    return result.changes;
   }
 
   delete(sessionId: string): void {

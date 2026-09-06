@@ -1,3 +1,0 @@
-Time (s),Process,Bundle Identifier,PID,FPS,Frame Time (ms),CPU %
-0.000,ExampleGame,com.example.game,421,60,16.67,12.5
-0.016,ExampleGame,com.example.game,421,not-a-number,17.01

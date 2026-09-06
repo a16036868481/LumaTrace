@@ -18,6 +18,26 @@ function parseNumber(value: unknown): number | undefined {
   return Number.isFinite(parsed) ? parsed : undefined;
 }
 
+function parseBoolean(value: unknown): boolean | undefined {
+  if (typeof value === "boolean") {
+    return value;
+  }
+  if (typeof value === "number") {
+    return value !== 0;
+  }
+  if (typeof value !== "string") {
+    return undefined;
+  }
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "true" || normalized === "1") {
+    return true;
+  }
+  if (normalized === "false" || normalized === "0") {
+    return false;
+  }
+  return undefined;
+}
+
 function parseMemoryBytes(value: unknown): number | undefined {
   if (typeof value === "number" && Number.isFinite(value)) {
     return value;
@@ -106,6 +126,10 @@ function normalizeProcess(row: Record<string, unknown>, warnings: string[]): Win
   const iconDataUrl = row.IconDataUrl ?? row.iconDataUrl;
   if (typeof iconDataUrl === "string" && iconDataUrl.startsWith("data:image/")) {
     process.iconDataUrl = iconDataUrl;
+  }
+  const hasMainWindow = parseBoolean(row.HasMainWindow ?? row.hasMainWindow);
+  if (hasMainWindow !== undefined) {
+    process.hasMainWindow = hasMainWindow;
   }
   const commandLine = row.CommandLine ?? row.commandLine;
   if (typeof commandLine === "string" && commandLine.length > 0) {
@@ -234,6 +258,10 @@ $OutputEncoding=[System.Text.UTF8Encoding]::new($false);
 $iconEnabled=$true;
 try { Add-Type -AssemblyName System.Drawing -ErrorAction Stop } catch { $iconEnabled=$false }
 $iconCache=@{};
+$windowProcessIds=@{};
+Get-Process -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowHandle -ne 0 } | ForEach-Object {
+  $windowProcessIds[[int]$_.Id]=$true;
+}
 Get-CimInstance Win32_Process | ForEach-Object {
   $path=$_.ExecutablePath;
   $iconDataUrl=$null;
@@ -275,6 +303,7 @@ Get-CimInstance Win32_Process | ForEach-Object {
     KernelModeTime=$_.KernelModeTime;
     UserModeTime=$_.UserModeTime;
     IconDataUrl=$iconDataUrl;
+    HasMainWindow=$windowProcessIds.ContainsKey([int]$_.ProcessId);
   }
 } | ConvertTo-Json -Compress
 `.trim();

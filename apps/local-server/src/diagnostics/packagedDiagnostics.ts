@@ -161,12 +161,17 @@ export type {
 } from "./sidecarCrashRecovery";
 export {
   buildPackagingNoticeManifest,
+  PINNED_LICENSE_ASSETS,
   packagingNoticeStats,
-  renderThirdPartyNoticesMarkdown
+  renderThirdPartyNoticesMarkdown,
+  stagePinnedLicenseAssetsForRuntime
 } from "./packagingNotices";
 export type {
   PackagingNoticeEntry,
+  PackagingNoticeFile,
   PackagingNoticeManifest,
   PackagingNoticeReviewStatus,
-  PackagingNoticeSummary
+  PackagingNoticeSummary,
+  PinnedLicenseAssetSpec,
+  StagedLicenseAsset
 } from "./packagingNotices";

@@ -77,6 +77,20 @@ describe("WindowsProcessList parsers", () => {
     expect(target.tags?.iconDataUrl).toBe("data:image/png;base64,AAAA");
   });
 
+  it("maps main-window availability without exposing the window title", () => {
+    const parsed = parsePowerShellProcessJson(
+      JSON.stringify({
+        ProcessId: 1000,
+        Name: "VisibleGame.exe",
+        HasMainWindow: true
+      })
+    );
+    const target = processToTarget(parsed.processes[0]!);
+    expect(parsed.processes[0]?.hasMainWindow).toBe(true);
+    expect(target.tags?.hasMainWindow).toBe(true);
+    expect(target.tags).not.toHaveProperty("mainWindowTitle");
+  });
+
   it("converts Win32_Process 100ns CPU times to milliseconds", () => {
     const parsed = parsePowerShellProcessJson(
       JSON.stringify({
@@ -139,6 +153,7 @@ describe("WindowsProcessList parsers", () => {
     expect(runner.runs[0]?.args?.join(" ")).toContain("OutputEncoding");
     expect(runner.runs[0]?.args?.join(" ")).toContain("UTF8Encoding");
     expect(runner.runs[0]?.args?.join(" ")).toContain("ExtractAssociatedIcon");
+    expect(runner.runs[0]?.args?.join(" ")).toContain("MainWindowHandle");
   });
 
   it("returns warnings for malformed output", () => {

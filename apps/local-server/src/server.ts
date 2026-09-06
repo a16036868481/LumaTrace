@@ -1,7 +1,6 @@
 import websocket from "@fastify/websocket";
 import Fastify, { type FastifyInstance } from "fastify";
 import { AndroidCollector } from "@lumatrace/collectors-android";
-import { IosCollector } from "@lumatrace/collectors-ios";
 import { MockCollector } from "@lumatrace/collectors-mock";
 import { PcCollector } from "@lumatrace/collectors-pc";
 import {
@@ -40,7 +39,6 @@ import { registerToolRoutes } from "./routes/tools";
 import { registerDiagnosticRoutes } from "./routes/diagnostics";
 import { registerAndroidRoutes } from "./routes/android";
 import { registerPcRoutes } from "./routes/pc";
-import { registerIosRoutes } from "./routes/ios";
 import { registerPackagedRoutes } from "./routes/packaged";
 import { registerSessionStreamRoutes } from "./ws/sessionStream";
 import { rotateLogs } from "./diagnostics/logMetadata";
@@ -73,6 +71,10 @@ export async function createServer(options: LocalServerOptions = {}): Promise<Fa
   const reportRepository = new ReportRepository(database);
   const toolStatusRepository = new ToolStatusRepository(database);
   const diagnosticRepository = new DiagnosticRepository(database);
+
+  // A runtime only lives inside this sidecar process. Any persisted active status at startup
+  // belongs to an interrupted previous process and must not remain permanently undeletable.
+  sessionRepository.finalizeInterruptedSessions();
 
   const collectorRegistry = new CollectorRegistry();
   collectorRegistry.register(new MockCollector({ seed: "local-server-mock" }));
@@ -113,24 +115,6 @@ export async function createServer(options: LocalServerOptions = {}): Promise<Fa
       });
     }
   }
-  const iosCollector = options.enableIosCollector === false ? undefined : options.iosCollector ?? new IosCollector();
-  if (iosCollector !== undefined) {
-    collectorRegistry.register(iosCollector);
-    try {
-      const getToolStatus = iosCollector.getToolStatus;
-      if (getToolStatus !== undefined) {
-        toolStatusRepository.upsert(await getToolStatus.call(iosCollector));
-      }
-    } catch {
-      toolStatusRepository.upsert({
-        toolName: "xcrun",
-        status: "unknown",
-        reason: "iOS xcrun detection failed during local-server startup.",
-        suggestedAction: "Install Xcode command line tools on macOS and ensure xcrun is available."
-      });
-    }
-  }
-
   const ringBuffer = new MetricRingBuffer(options.ringBufferSize ?? 1000);
   const diagnosticService = new DiagnosticService(diagnosticRepository);
   const runtimeManager = new SessionRuntimeManager({
@@ -241,7 +225,6 @@ export async function createServer(options: LocalServerOptions = {}): Promise<Fa
   await registerDiagnosticRoutes(app, context);
   await registerAndroidRoutes(app, context);
   await registerPcRoutes(app, context);
-  await registerIosRoutes(app, context);
   await registerPackagedRoutes(app, context);
   await registerSessionStreamRoutes(app, context);
 

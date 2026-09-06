@@ -91,4 +91,8 @@ export class DiagnosticService {
       limit: Math.min(options.limit ?? 100, 1000)
     });
   }
+
+  deleteBySession(sessionId: string): void {
+    this.repository.deleteBySession(sessionId);
+  }
 }

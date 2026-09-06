@@ -5,6 +5,9 @@ export type PcDiagnosticCategory =
   | "process"
   | "cpu"
   | "memory"
+  | "gpu"
+  | "power"
+  | "temperature"
   | "presentmon"
   | "report";
 
@@ -17,6 +20,10 @@ export type PcDiagnosticCode =
   | "CPU_BASELINE_ONLY"
   | "CPU_SAMPLE_FAILED"
   | "MEMORY_SAMPLE_FAILED"
+  | "GPU_TELEMETRY_FAILED"
+  | "POWER_TELEMETRY_FAILED"
+  | "CPU_TEMPERATURE_TELEMETRY_FAILED"
+  | "GPU_TEMPERATURE_TELEMETRY_FAILED"
   | "PRESENTMON_MISSING"
   | "PRESENTMON_UNSUPPORTED"
   | "PRESENTMON_VERSION_DETECTED"

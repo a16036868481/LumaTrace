@@ -7,6 +7,7 @@ export const METRIC_UNITS = {
   BYTES_PER_SECOND: "B/s",
   MILLIAMPS: "mA",
   MILLIVOLTS: "mV",
+  WATTS: "W",
   CELSIUS: "C",
   COUNT: "count"
 } as const;

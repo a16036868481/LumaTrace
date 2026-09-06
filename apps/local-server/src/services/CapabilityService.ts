@@ -1,7 +1,7 @@
 ﻿import { METRIC_NAMES, type MetricAvailability, type Platform } from "@lumatrace/core";
 import type { DeviceService } from "./DeviceService";
 
-const PLATFORMS: readonly Platform[] = ["android", "ios", "windows", "macos", "linux"];
+const PLATFORMS: readonly Platform[] = ["android", "windows", "macos", "linux"];
 
 function unavailablePlatformCapabilities(platform: Platform): MetricAvailability[] {
   const baseReason = `Real ${platform} collection is not implemented in MVP-A.`;

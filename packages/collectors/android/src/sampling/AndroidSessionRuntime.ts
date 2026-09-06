@@ -68,6 +68,7 @@ export class AndroidSessionRuntime {
   private session: Session;
   private status: Session["status"];
   private sequence = 0;
+  private processMissingDiagnosticRecorded = false;
   private readonly startedMonotonicMs = Date.now();
 
   constructor(options: AndroidSessionRuntimeOptions) {
@@ -241,10 +242,11 @@ export class AndroidSessionRuntime {
 
       const processState = await this.processWatcher.check();
       if (processState.status === "stopped" || (processState.status === "missing" && this.processMissingPolicy === "fail_session")) {
+        const targetEnded = processState.status === "stopped";
         this.diagnostics?.add({
-          level: "error",
+          level: targetEnded ? "warn" : "error",
           category: "process",
-          code: "PID_MISSING",
+          code: targetEnded ? "TARGET_PROCESS_ENDED" : "PID_MISSING",
           message: processState.reason ?? "Target process is no longer running.",
           sessionId: this.session.id,
           deviceId: this.session.deviceId,
@@ -252,11 +254,12 @@ export class AndroidSessionRuntime {
           packageName: this.context.packageName,
           ...(processState.previousPid === undefined ? {} : { pid: processState.previousPid })
         });
-        this.status = "failed";
-        this.session.status = "failed";
+        this.status = targetEnded ? "stopped" : "failed";
+        this.session.status = this.status;
+        this.session.endedAt = Date.now();
         throw new CollectorError(
           processState.reason ?? "Target process is no longer running.",
-          "TARGET_PROCESS_NOT_RUNNING",
+          targetEnded ? "TARGET_PROCESS_ENDED" : "TARGET_PROCESS_NOT_RUNNING",
           {
             collectorId: "android-adb",
             sessionId: this.session.id
@@ -265,17 +268,20 @@ export class AndroidSessionRuntime {
       }
 
       if (processState.status === "missing") {
-        this.diagnostics?.add({
-          level: "warn",
-          category: "process",
-          code: "PID_MISSING",
-          message: processState.reason ?? "Target process is missing.",
-          sessionId: this.session.id,
-          deviceId: this.session.deviceId,
-          targetId: this.session.targetId,
-          packageName: this.context.packageName,
-          ...(processState.previousPid === undefined ? {} : { pid: processState.previousPid })
-        });
+        if (!this.processMissingDiagnosticRecorded) {
+          this.processMissingDiagnosticRecorded = true;
+          this.diagnostics?.add({
+            level: "warn",
+            category: "process",
+            code: "PID_MISSING",
+            message: processState.reason ?? "Target process is missing.",
+            sessionId: this.session.id,
+            deviceId: this.session.deviceId,
+            targetId: this.session.targetId,
+            packageName: this.context.packageName,
+            ...(processState.previousPid === undefined ? {} : { pid: processState.previousPid })
+          });
+        }
         if (this.processMissingPolicy === "wait_for_rebind") {
           await sleep(this.session.sampleIntervalMs);
           continue;
@@ -288,6 +294,7 @@ export class AndroidSessionRuntime {
       }
 
       if (processState.status === "rebound" && processState.pid !== undefined) {
+        this.processMissingDiagnosticRecorded = false;
         this.sampler.rebindProcess(processState.pid);
         this.diagnostics?.add({
           level: "info",
@@ -313,6 +320,10 @@ export class AndroidSessionRuntime {
             timestampMs: processState.timestampMs
           }
         };
+      }
+
+      if (processState.status === "running") {
+        this.processMissingDiagnosticRecorded = false;
       }
 
       for (const event of await this.collectSample()) {

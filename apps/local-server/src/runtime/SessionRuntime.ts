@@ -1,5 +1,6 @@
 ﻿import type { MetricEvent, MetricCollector, Session } from "@lumatrace/core";
 import type { MetricRepository, SessionRepository } from "@lumatrace/storage";
+import { CollectorError } from "@lumatrace/core";
 import type { MetricRingBuffer } from "./MetricRingBuffer";
 import { AppError } from "../utils/errors";
 
@@ -71,6 +72,7 @@ export class SessionRuntime {
   private readonly pendingMetrics: MetricEvent[] = [];
   private started = false;
   private stopping = false;
+  private finalized = false;
   private loopPromise: Promise<void> | undefined;
   private lastFlushAt = Date.now();
 
@@ -158,13 +160,14 @@ export class SessionRuntime {
   }
 
   async stop(): Promise<void> {
-    if (this.session.status === "stopped") {
+    if (this.finalized) {
       await this.flush();
       return;
     }
 
     this.stopping = true;
-    const endedAt = Date.now();
+    const endedAt = this.session.endedAt ?? Date.now();
+    const terminalStatus = this.session.status === "failed" ? "failed" : "stopped";
     try {
       await this.collector.stopSession(this.session.id);
     } catch (error) {
@@ -174,25 +177,30 @@ export class SessionRuntime {
     }
     await this.collectFinalMetrics();
 
-    this.session.status = "stopped";
+    this.session.status = terminalStatus;
     this.session.endedAt = endedAt;
-    this.sessionRepository.updateStatus(this.session.id, "stopped", { endedAt });
+    this.sessionRepository.updateStatus(this.session.id, terminalStatus, { endedAt });
 
     if (this.loopPromise !== undefined) {
       await this.loopPromise;
     }
 
     await this.flush();
+    this.finalized = true;
+    this.broadcast({
+      type: "session_status",
+      data: {
+        sessionId: this.session.id,
+        status: terminalStatus
+      }
+    });
     this.broadcast({
       type: "session_stopped",
       data: {
         sessionId: this.session.id
       }
     });
-    for (const client of this.clients) {
-      client.close?.();
-    }
-    this.clients.clear();
+    this.closeClients();
   }
 
   subscribe(client: SessionRuntimeClient): () => void {
@@ -240,19 +248,66 @@ export class SessionRuntime {
           });
         }
       }
+      if (!this.stopping) {
+        throw new CollectorError(
+          "Metric collector stream ended before the session was stopped.",
+          "COLLECTOR_STREAM_ENDED",
+          { collectorId: this.collector.id, sessionId: this.session.id }
+        );
+      }
     } catch (error) {
-      this.session.status = "failed";
-      this.sessionRepository.updateStatus(this.session.id, "failed");
+      if (this.stopping) {
+        return;
+      }
+      const collectorCode = error instanceof CollectorError ? error.code : "INTERNAL_ERROR";
+      const targetEnded = collectorCode === "TARGET_PROCESS_ENDED";
+      const endedAt = Date.now();
+      const terminalStatus: Session["status"] = targetEnded ? "stopped" : "failed";
+      this.session.status = terminalStatus;
+      this.session.endedAt = endedAt;
+      this.sessionRepository.updateStatus(this.session.id, terminalStatus, { endedAt });
+
+      if (targetEnded) {
+        this.writeDiagnostic("info", "collector", "Target process ended; the session stopped automatically.", {
+          code: collectorCode,
+          reason: errorMessage(error)
+        });
+        this.broadcast({
+          type: "session_status",
+          data: {
+            sessionId: this.session.id,
+            status: terminalStatus
+          }
+        });
+        this.broadcast({
+          type: "session_stopped",
+          data: {
+            sessionId: this.session.id
+          }
+        });
+        this.closeClients();
+        return;
+      }
+
       this.writeDiagnostic("error", "collector", "Metric collection loop failed.", {
+        code: collectorCode,
         error: errorMessage(error)
+      });
+      this.broadcast({
+        type: "session_status",
+        data: {
+          sessionId: this.session.id,
+          status: terminalStatus
+        }
       });
       this.broadcast({
         type: "error",
         error: {
-          code: "INTERNAL_ERROR",
+          code: collectorCode,
           message: "Metric collection loop failed."
         }
       });
+      this.closeClients();
     } finally {
       await this.flush();
     }
@@ -299,6 +354,13 @@ export class SessionRuntime {
         });
       }
     }
+  }
+
+  private closeClients(): void {
+    for (const client of this.clients) {
+      client.close?.();
+    }
+    this.clients.clear();
   }
 
   private writeDiagnostic(

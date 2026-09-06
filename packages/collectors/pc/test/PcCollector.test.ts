@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { PcCollector, type WindowsProcessInfo } from "../src";
 import { FakeProcessAdapter } from "./fakeProcessAdapter";
+import { FakeHardwareTelemetryProvider } from "./fakeHardwareTelemetryProvider";
 
 function processInfo(overrides: Partial<WindowsProcessInfo> = {}): WindowsProcessInfo {
   return {
@@ -48,7 +49,12 @@ describe("PcCollector", () => {
       processInfo({ kernelTimeMs: 300, userTimeMs: 600, workingSetBytes: 115343360 }),
       processInfo({ kernelTimeMs: 300, userTimeMs: 600, workingSetBytes: 115343360 })
     ]);
-    const collector = new PcCollector({ processAdapter: adapter, platform: "win32", processorCount: 4 });
+    const collector = new PcCollector({
+      processAdapter: adapter,
+      platform: "win32",
+      processorCount: 4,
+      hardwareTelemetryProvider: new FakeHardwareTelemetryProvider()
+    });
     const [device] = await collector.discoverDevices();
     expect(device?.id).toBe("pc-local:windows");
     const [target] = await collector.listTargets(device!.id);
@@ -77,7 +83,11 @@ describe("PcCollector", () => {
     const adapter = new FakeProcessAdapter();
     adapter.processes = [processInfo()];
     adapter.queue.set(4321, [processInfo(), null]);
-    const collector = new PcCollector({ processAdapter: adapter, platform: "win32" });
+    const collector = new PcCollector({
+      processAdapter: adapter,
+      platform: "win32",
+      hardwareTelemetryProvider: new FakeHardwareTelemetryProvider()
+    });
     const [device] = await collector.discoverDevices();
     const [target] = await collector.listTargets(device!.id);
     const session = await collector.startSession({

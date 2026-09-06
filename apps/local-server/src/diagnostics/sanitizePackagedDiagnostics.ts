@@ -46,6 +46,11 @@ function isSensitiveKey(key: string): boolean {
     /commandLine|stack|stdout|stderr|rawCsv|rawLog|authToken|authorization|token|secret|password/iu.test(key);
 }
 
+function isCredentialKey(key: string): boolean {
+  return /^(?:authToken|authorization|token|secret|password)$/iu.test(key) ||
+    /[a-z](?:AuthToken|Authorization|Token|Secret|Password)$/u.test(key);
+}
+
 export function sanitizePackagedDiagnosticText(value: string | undefined): string | undefined {
   return value === undefined ? undefined : redactString(value);
 }
@@ -60,7 +65,9 @@ export function sanitizePackagedDiagnostics<T>(value: T): T {
   if (value !== null && typeof value === "object") {
     const sanitized: Record<string, unknown> = {};
     for (const [key, entry] of Object.entries(value)) {
-      if (isSensitiveKey(key) && typeof entry === "string") {
+      if (isCredentialKey(key) && entry !== undefined && entry !== null) {
+        sanitized[key] = "<redacted>";
+      } else if (isSensitiveKey(key) && typeof entry === "string") {
         sanitized[key] = redactString(entry);
       } else if (isSensitiveKey(key) && Array.isArray(entry)) {
         sanitized[key] = entry.map((item, index, values) => {

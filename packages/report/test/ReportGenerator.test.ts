@@ -20,7 +20,7 @@ import {
   SessionRepository,
   TargetRepository
 } from "@lumatrace/storage";
-import { ReportGenerator, type ReportInput } from "../src";
+import { DEFAULT_REPORT_LOCALIZATION, ReportGenerator, type ReportInput } from "../src";
 
 function device(): Device {
   return {
@@ -86,12 +86,48 @@ function metric(overrides: Partial<MetricEvent>): MetricEvent {
 
 function metrics(): MetricEvent[] {
   return [
-    metric({ timestampMs: 1000, sequence: 0, metricName: METRIC_NAMES.FPS, unit: METRIC_UNITS.FPS, value: 60 }),
-    metric({ timestampMs: 2000, sequence: 1, metricName: METRIC_NAMES.FPS, unit: METRIC_UNITS.FPS, value: 30 }),
-    metric({ timestampMs: 3000, sequence: 2, metricName: METRIC_NAMES.FPS, unit: METRIC_UNITS.FPS, value: 20 }),
-    metric({ timestampMs: 1000, sequence: 3, metricName: METRIC_NAMES.FRAME_TIME_MS, unit: METRIC_UNITS.MILLISECONDS, value: 16 }),
-    metric({ timestampMs: 2000, sequence: 4, metricName: METRIC_NAMES.FRAME_TIME_MS, unit: METRIC_UNITS.MILLISECONDS, value: 34 }),
-    metric({ timestampMs: 3000, sequence: 5, metricName: METRIC_NAMES.FRAME_TIME_MS, unit: METRIC_UNITS.MILLISECONDS, value: 51 }),
+    metric({
+      timestampMs: 1000,
+      sequence: 0,
+      metricName: METRIC_NAMES.FPS,
+      unit: METRIC_UNITS.FPS,
+      value: 60
+    }),
+    metric({
+      timestampMs: 2000,
+      sequence: 1,
+      metricName: METRIC_NAMES.FPS,
+      unit: METRIC_UNITS.FPS,
+      value: 30
+    }),
+    metric({
+      timestampMs: 3000,
+      sequence: 2,
+      metricName: METRIC_NAMES.FPS,
+      unit: METRIC_UNITS.FPS,
+      value: 20
+    }),
+    metric({
+      timestampMs: 1000,
+      sequence: 3,
+      metricName: METRIC_NAMES.FRAME_TIME_MS,
+      unit: METRIC_UNITS.MILLISECONDS,
+      value: 16
+    }),
+    metric({
+      timestampMs: 2000,
+      sequence: 4,
+      metricName: METRIC_NAMES.FRAME_TIME_MS,
+      unit: METRIC_UNITS.MILLISECONDS,
+      value: 34
+    }),
+    metric({
+      timestampMs: 3000,
+      sequence: 5,
+      metricName: METRIC_NAMES.FRAME_TIME_MS,
+      unit: METRIC_UNITS.MILLISECONDS,
+      value: 51
+    }),
     metric({
       timestampMs: 1000,
       sequence: 6,
@@ -108,8 +144,20 @@ function metrics(): MetricEvent[] {
       value: 400,
       tags: { normalizedPercent: 50, rawPercent: 400, coreCount: 8 }
     }),
-    metric({ timestampMs: 1000, sequence: 8, metricName: METRIC_NAMES.MEMORY_MB, unit: METRIC_UNITS.MEGABYTES, value: 500 }),
-    metric({ timestampMs: 2000, sequence: 9, metricName: METRIC_NAMES.MEMORY_MB, unit: METRIC_UNITS.MEGABYTES, value: 550 })
+    metric({
+      timestampMs: 1000,
+      sequence: 8,
+      metricName: METRIC_NAMES.MEMORY_MB,
+      unit: METRIC_UNITS.MEGABYTES,
+      value: 500
+    }),
+    metric({
+      timestampMs: 2000,
+      sequence: 9,
+      metricName: METRIC_NAMES.MEMORY_MB,
+      unit: METRIC_UNITS.MEGABYTES,
+      value: 550
+    })
   ];
 }
 
@@ -143,6 +191,52 @@ function seedStorage(database: LumaTraceDatabase): void {
 }
 
 describe("ReportGenerator", () => {
+  it("renders HTML with the selected report localization", () => {
+    const report = new ReportGenerator().generate(input(), {
+      localization: {
+        ...DEFAULT_REPORT_LOCALIZATION,
+        locale: "zh-CN",
+        strings: {
+          ...DEFAULT_REPORT_LOCALIZATION.strings,
+          title: "测试结果",
+          summary: "核心指标",
+          localData: "数据保存在本机。"
+        },
+        summaryLabels: {
+          ...DEFAULT_REPORT_LOCALIZATION.summaryLabels,
+          avgFps: "平均 FPS"
+        }
+      }
+    });
+
+    expect(report.html).toContain('<html lang="zh-CN" dir="ltr">');
+    expect(report.html).toContain("LumaTrace · 测试结果");
+    expect(report.html).toContain("核心指标");
+    expect(report.html).toContain("平均 FPS");
+    expect(report.html).not.toContain("数据保存在本机。");
+    expect(JSON.parse(report.json)).toMatchObject({ locale: "zh-CN" });
+  });
+
+  it("uses report localization stored with the session", () => {
+    const localizedSession = {
+      ...session(),
+      config: {
+        reportLocalization: {
+          ...DEFAULT_REPORT_LOCALIZATION,
+          locale: "ja-JP",
+          strings: {
+            ...DEFAULT_REPORT_LOCALIZATION.strings,
+            title: "テスト結果"
+          }
+        }
+      }
+    };
+    const report = new ReportGenerator().generate({ ...input(), session: localizedSession });
+
+    expect(report.html).toContain('<html lang="ja-JP" dir="ltr">');
+    expect(report.html).toContain("LumaTrace · テスト結果");
+  });
+
   it("generates summary/json/csv/html from mock metrics", () => {
     const report = new ReportGenerator().generate(input(), {
       includeRawMetricsInHtml: true
@@ -159,9 +253,9 @@ describe("ReportGenerator", () => {
     expect(report.rawMetricCount).toBe(metrics().length);
     expect(JSON.parse(report.json)).toMatchObject({ version: "mvp-a" });
     expect(report.csv).toContain("timestampMs,monotonicMs,sequence");
-    expect(report.html).toContain("LumaTrace Report");
+    expect(report.html).toContain("LumaTrace · Test Results");
     expect(report.html).toContain("FPS Analysis");
-    expect(report.html).toContain("1% Low is");
+    expect(report.html).toContain("1% Low FPS:</strong> 20 fps");
   });
 
   it("uses metric timestamp range when session duration is incomplete and does not fake missing metrics", () => {
@@ -219,6 +313,67 @@ describe("ReportGenerator", () => {
     expect(report.summary.avgFps).toBeUndefined();
   });
 
+  it("summarizes Windows GPU, power, and CPU/GPU temperatures independently", () => {
+    const report = new ReportGenerator().generate({
+      ...input(),
+      metrics: [
+        metric({ metricName: METRIC_NAMES.GPU_UTILIZATION, unit: METRIC_UNITS.PERCENT, value: 20 }),
+        metric({ metricName: METRIC_NAMES.GPU_UTILIZATION, unit: METRIC_UNITS.PERCENT, value: 60 }),
+        metric({ metricName: METRIC_NAMES.POWER_W, unit: METRIC_UNITS.WATTS, value: 40 }),
+        metric({ metricName: METRIC_NAMES.POWER_W, unit: METRIC_UNITS.WATTS, value: 80 }),
+        metric({
+          metricName: METRIC_NAMES.CPU_TEMPERATURE_C,
+          unit: METRIC_UNITS.CELSIUS,
+          value: 50
+        }),
+        metric({
+          metricName: METRIC_NAMES.CPU_TEMPERATURE_C,
+          unit: METRIC_UNITS.CELSIUS,
+          value: 70
+        }),
+        metric({
+          metricName: METRIC_NAMES.GPU_TEMPERATURE_C,
+          unit: METRIC_UNITS.CELSIUS,
+          value: 45
+        }),
+        metric({
+          metricName: METRIC_NAMES.GPU_TEMPERATURE_C,
+          unit: METRIC_UNITS.CELSIUS,
+          value: 65
+        })
+      ]
+    });
+
+    expect(report.summary.avgGpuPercent).toBe(40);
+    expect(report.summary.peakGpuPercent).toBe(60);
+    expect(report.summary.avgPowerW).toBe(60);
+    expect(report.summary.peakPowerW).toBe(80);
+    expect(report.summary.avgCpuTemperatureC).toBe(60);
+    expect(report.summary.peakCpuTemperatureC).toBe(70);
+    expect(report.summary.avgGpuTemperatureC).toBe(55);
+    expect(report.summary.peakGpuTemperatureC).toBe(65);
+    expect(report.summary.peakTemperatureC).toBeUndefined();
+    expect(report.html).not.toContain("CPU Temperature");
+    expect(report.html).toContain("Peak GPU Temperature");
+  });
+
+  it("does not summarize CPU temperatures from the withdrawn ACPI zone classifier", () => {
+    const report = new ReportGenerator().generate({
+      ...input(),
+      metrics: [
+        metric({
+          metricName: METRIC_NAMES.CPU_TEMPERATURE_C,
+          unit: METRIC_UNITS.CELSIUS,
+          value: 27.85,
+          source: "windows:acpi-processor-thermal-zone"
+        })
+      ]
+    });
+
+    expect(report.summary.avgCpuTemperatureC).toBeUndefined();
+    expect(report.summary.peakCpuTemperatureC).toBeUndefined();
+  });
+
   it("generates from storage and saves report cache when requested", () => {
     const database = new LumaTraceDatabase({ dbPath: ":memory:" });
     seedStorage(database);
@@ -253,7 +408,7 @@ describe("ReportGenerator", () => {
       });
 
       expect(paths.jsonPath?.endsWith("_unsafe_session.json")).toBe(true);
-      expect(await readFile(paths.jsonPath ?? "", "utf8")).toContain("\"version\": \"mvp-a\"");
+      expect(await readFile(paths.jsonPath ?? "", "utf8")).toContain('"version": "mvp-a"');
       expect(await readFile(paths.csvPath ?? "", "utf8")).toContain("timestampMs");
       expect(await readFile(paths.htmlPath ?? "", "utf8")).toContain("<!doctype html>");
     } finally {

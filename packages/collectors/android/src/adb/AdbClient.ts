@@ -9,6 +9,7 @@ import path from "node:path";
 import type {
   AdbVersionInfo,
   AndroidAdbDevice,
+  AndroidLogcatDumpOptions,
   AndroidPackage,
   PackageUidResult,
   PidofParseResult,
@@ -115,6 +116,22 @@ function assertValidUid(uid: number): void {
   }
 }
 
+export function formatLogcatSinceTime(timestampMs: number): string {
+  if (!Number.isFinite(timestampMs)) {
+    throw new CollectorError("Invalid Android logcat start time.", "INVALID_REQUEST", {
+      collectorId: "android-adb"
+    });
+  }
+  const date = new Date(timestampMs);
+  if (Number.isNaN(date.getTime())) {
+    throw new CollectorError("Invalid Android logcat start time.", "INVALID_REQUEST", {
+      collectorId: "android-adb"
+    });
+  }
+  const pad = (value: number, length = 2): string => String(value).padStart(length, "0");
+  return `${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds(), 3)}`;
+}
+
 function assertValidComponentName(componentName: string): void {
   if (
     !COMPONENT_NAME_PATTERN.test(componentName) ||
@@ -210,6 +227,36 @@ export class AdbClient {
   ): Promise<CommandResult> {
     this.assertDeviceReady(serial);
     return this.run(serialArgs(serial, ["shell", ...args]), options);
+  }
+
+  async dumpLogcat(serial: string, options: AndroidLogcatDumpOptions): Promise<CommandResult> {
+    this.assertDeviceReady(serial);
+    const since = formatLogcatSinceTime(options.startedAtMs);
+    let filter: string;
+    if (options.uid !== undefined) {
+      assertValidUid(options.uid);
+      filter = `--uid=${options.uid}`;
+    } else if (options.pid !== undefined) {
+      assertValidPid(options.pid);
+      filter = `--pid=${options.pid}`;
+    } else {
+      throw new CollectorError("Android logcat export requires a target uid or pid.", "INVALID_REQUEST", {
+        collectorId: "android-adb"
+      });
+    }
+
+    const runDump = (targetFilter: string): Promise<CommandResult> =>
+      this.run(serialArgs(serial, ["logcat", "-d", "-v", "threadtime", "-T", since, targetFilter]), {
+        policyName: "logcat",
+        timeoutMs: 15_000,
+        maxOutputBytes: 8 * 1024 * 1024
+      });
+    const result = await runDump(filter);
+    if (result.exitCode !== 0 && options.uid !== undefined && options.pid !== undefined) {
+      assertValidPid(options.pid);
+      return runDump(`--pid=${options.pid}`);
+    }
+    return result;
   }
 
   async getProps(serial: string): Promise<Record<string, string>> {

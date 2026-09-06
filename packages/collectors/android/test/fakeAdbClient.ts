@@ -2,6 +2,8 @@ import type {
   AdbVersionInfo,
   AndroidAdbClientLike,
   AndroidAdbDevice,
+  AndroidLogcatCommandResult,
+  AndroidLogcatDumpOptions,
   AndroidPackage
 } from "../src/types";
 import type {
@@ -68,6 +70,8 @@ export class FakeSamplingAdbClient implements AndroidAdbClientLike {
   startActivityCalls: string[] = [];
   monkeyLaunchCalls: string[] = [];
   forceStopCalls: string[] = [];
+  dumpLogcatCalls: Array<{ serial: string; options: AndroidLogcatDumpOptions }> = [];
+  logcatOutput = readAndroidFixture("logcat_threadtime_sample.txt");
   waitForPidCalls = 0;
   clearGfxinfoFramestatsCalls = 0;
   enableSurfaceFlingerTimestatsCalls = 0;
@@ -294,5 +298,34 @@ export class FakeSamplingAdbClient implements AndroidAdbClientLike {
       durationMs: 1,
       ...(pid === null ? { reason: "Timed out waiting for target PID." } : {})
     });
+  }
+
+  async dumpLogcat(
+    serial: string,
+    options: AndroidLogcatDumpOptions
+  ): Promise<AndroidLogcatCommandResult> {
+    this.dumpLogcatCalls.push({ serial, options });
+    if (this.failMethods.has("dumpLogcat")) {
+      return {
+        stdout: "",
+        stderr: "logcat failed",
+        sanitizedStdout: "",
+        sanitizedStderr: "logcat failed",
+        exitCode: 1,
+        timedOut: false,
+        aborted: false,
+        stdoutTruncated: false
+      };
+    }
+    return {
+      stdout: this.logcatOutput,
+      stderr: "",
+      sanitizedStdout: this.logcatOutput,
+      sanitizedStderr: "",
+      exitCode: 0,
+      timedOut: false,
+      aborted: false,
+      stdoutTruncated: false
+    };
   }
 }

@@ -94,6 +94,7 @@ describe("packaged diagnostics", () => {
   it("sanitizes tokens, paths, long text, stacks, and command arrays", () => {
     const sanitized = sanitizePackagedDiagnostics({
       authorization: "Bearer secret-token-123456789",
+      tokenPresent: true,
       protocol: "lumatrace-auth.websocket-secret-token",
       email: "user@example.com",
       path: "C:\\Users\\Alice\\AppData\\Local\\LumaTrace\\local-server.log",
@@ -115,6 +116,7 @@ describe("packaged diagnostics", () => {
     expect(text).toContain("<redacted>");
     expect(text).toContain("<local-path>");
     expect(text).toContain("<truncated>");
+    expect(sanitized.tokenPresent).toBe(true);
   });
 
   it("sanitizes log excerpts without returning raw paths", () => {

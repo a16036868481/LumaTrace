@@ -6,18 +6,13 @@ export { HtmlExporter } from "./exporters/HtmlExporter";
 export type { HtmlExportOptions } from "./exporters/HtmlExporter";
 export { renderReportHtml } from "./templates/reportHtml";
 export {
-  csvEscape,
-  csvRow,
-  csvTable
-} from "./utils/csvEscape";
-export {
-  formatValue,
-  htmlEscape
-} from "./utils/htmlEscape";
-export {
-  sanitizeFileBaseName,
-  writeReportFiles
-} from "./utils/fileWriter";
+  DEFAULT_REPORT_LOCALIZATION,
+  localizationFromSessionConfig,
+  normalizeReportLocalization
+} from "./localization/reportLocalization";
+export { csvEscape, csvRow, csvTable } from "./utils/csvEscape";
+export { formatValue, htmlEscape } from "./utils/htmlEscape";
+export { sanitizeFileBaseName, writeReportFiles } from "./utils/fileWriter";
 export {
   cpuMetricValues,
   hasMetric,
@@ -32,5 +27,7 @@ export type {
   ReportFilePaths,
   ReportGeneratorDependencies,
   ReportGeneratorOptions,
-  ReportInput
+  ReportInput,
+  ReportLocalization,
+  ReportLocalizationStrings
 } from "./types";

@@ -5,9 +5,6 @@ export type MetricAvailabilityStatus =
   | "unavailable"
   | "requires_tool"
   | "requires_permission"
-  | "requires_xcode"
-  | "requires_developer_signing"
-  | "requires_manual_trace"
   | "experimental";
 
 export interface MetricAvailability {

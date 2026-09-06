@@ -104,6 +104,55 @@ describe("AndroidCollector lifecycle sessions", () => {
     expect(adbClient.forceStopCalls).toEqual(["com.example.app"]);
   });
 
+  it("captures and exposes sanitized ADB logcat only when report log export is enabled", async () => {
+    const adbClient = new FakeSamplingAdbClient();
+    const collector = new AndroidCollector({ adbClient });
+    const [device] = await collector.discoverDevices();
+    const [target] = await collector.listTargets(device!.id);
+    const session = await collector.startSession({
+      id: "logcat-opt-in",
+      name: "Logcat opt-in",
+      deviceId: device!.id,
+      targetId: target!.id,
+      sampleIntervalMs: 1,
+      options: {
+        exportLogsToReportDir: true
+      }
+    });
+
+    await collector.stopSession(session.id);
+
+    expect(adbClient.dumpLogcatCalls).toHaveLength(1);
+    expect(adbClient.dumpLogcatCalls[0]).toMatchObject({
+      options: { uid: 10123, pid: 12345 }
+    });
+    expect(collector.drainSessionLog(session.id)).toMatchObject({
+      fileName: "android-logcat.log",
+      source: "adb:logcat",
+      content: expect.stringContaining("12345 12367 I Unity")
+    });
+    expect(collector.drainSessionLog(session.id)).toBeUndefined();
+  });
+
+  it("does not read logcat when report log export is left disabled", async () => {
+    const adbClient = new FakeSamplingAdbClient();
+    const collector = new AndroidCollector({ adbClient });
+    const [device] = await collector.discoverDevices();
+    const [target] = await collector.listTargets(device!.id);
+    const session = await collector.startSession({
+      id: "logcat-default-off",
+      name: "Logcat default off",
+      deviceId: device!.id,
+      targetId: target!.id,
+      sampleIntervalMs: 1
+    });
+
+    await collector.stopSession(session.id);
+
+    expect(adbClient.dumpLogcatCalls).toHaveLength(0);
+    expect(collector.drainSessionLog(session.id)).toBeUndefined();
+  });
+
   it("marks device metrics with processMissing and avoids fake CPU/memory", async () => {
     const adbClient = new FakeSamplingAdbClient();
     adbClient.pidQueue = [12345, null, null, 23456, 23456, 23456];
@@ -127,6 +176,7 @@ describe("AndroidCollector lifecycle sessions", () => {
     expect(missingEvents.some((event) => event.metricName === "cpu_percent")).toBe(false);
     expect(missingEvents.some((event) => event.metricName === "memory_mb")).toBe(false);
     expect(events.every((event) => event.value !== 0 || event.metricName !== "cpu_percent")).toBe(true);
+    expect(collector.listDiagnostics({ sessionId: session.id }).filter((event) => event.code === "PID_MISSING")).toHaveLength(1);
     await collector.stopSession(session.id);
   });
 });

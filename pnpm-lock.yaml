@@ -81,9 +81,6 @@ importers:
       '@lumatrace/collectors-android':
         specifier: workspace:*
         version: link:../../packages/collectors/android
-      '@lumatrace/collectors-ios':
-        specifier: workspace:*
-        version: link:../../packages/collectors/ios
       '@lumatrace/collectors-mock':
         specifier: workspace:*
         version: link:../../packages/collectors/mock
@@ -111,12 +108,6 @@ importers:
         version: 8.20.0
 
   packages/collectors/android:
-    dependencies:
-      '@lumatrace/core':
-        specifier: workspace:*
-        version: link:../../core
-
-  packages/collectors/ios:
     dependencies:
       '@lumatrace/core':
         specifier: workspace:*

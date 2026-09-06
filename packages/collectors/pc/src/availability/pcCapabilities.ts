@@ -3,6 +3,14 @@
 export interface PcCapabilityOptions {
   platform?: "windows" | "macos" | "linux";
   presentMonAvailable?: boolean;
+  processGpuAvailable?: boolean;
+  processGpuSource?: string;
+  powerAvailable?: boolean;
+  powerSource?: string;
+  cpuTemperatureAvailable?: boolean;
+  cpuTemperatureSource?: string;
+  gpuTemperatureAvailable?: boolean;
+  gpuTemperatureSource?: string;
 }
 
 export function getPcCapabilities(options: PcCapabilityOptions = {}): MetricAvailability[] {
@@ -14,6 +22,9 @@ export function getPcCapabilities(options: PcCapabilityOptions = {}): MetricAvai
     ? "PC Foundation supports local Windows process discovery and CPU/memory sampling."
     : "PC Foundation currently implements Windows sampling. macOS/Linux are planned.";
   const fpsStatus = presentMonAvailable ? "experimental" : "requires_tool";
+  const processGpuAvailable = isWindows && options.processGpuAvailable === true;
+  const powerAvailable = isWindows && options.powerAvailable === true;
+  const gpuTemperatureAvailable = isWindows && options.gpuTemperatureAvailable === true;
 
   return [
     {
@@ -72,11 +83,46 @@ export function getPcCapabilities(options: PcCapabilityOptions = {}): MetricAvai
       source: "PresentMon"
     },
     {
-      metricName: "gpu_utilization",
+      metricName: METRIC_NAMES.GPU_UTILIZATION,
       platform,
-      status: "unavailable",
-      reason: "GPU telemetry is outside Milestone 3B.",
-      source: "planned"
+      status: processGpuAvailable ? "available" : "unavailable",
+      reason: processGpuAvailable
+        ? "Collected for the selected process from Windows GPU Engine counters using the busiest-engine value."
+        : "Windows GPU Engine performance counters did not return a usable process-level source.",
+      ...(processGpuAvailable
+        ? {}
+        : {
+            suggestedAction:
+              "Update the graphics driver and confirm Windows GPU performance counters are available."
+          }),
+      source: options.processGpuSource ?? "windows:cim-gpu-engine"
+    },
+    {
+      metricName: METRIC_NAMES.POWER_W,
+      platform,
+      status: powerAvailable ? "available" : "requires_tool",
+      reason: powerAvailable
+        ? "Collected from the GPU driver's board-power sensor. This is device-level GPU power, not per-process power."
+        : "No supported GPU driver power sensor returned a reading. Power remains unavailable rather than estimated.",
+      ...(powerAvailable
+        ? {}
+        : { suggestedAction: "Install or update the supported graphics driver telemetry tool." }),
+      source: options.powerSource ?? "supported-gpu-driver"
+    },
+    {
+      metricName: METRIC_NAMES.GPU_TEMPERATURE_C,
+      platform,
+      status: gpuTemperatureAvailable ? "available" : "requires_tool",
+      reason: gpuTemperatureAvailable
+        ? "Collected from a GPU driver or supported local hardware-monitor sensor. This is device-level GPU temperature, not per-process temperature."
+        : "No supported GPU temperature provider returned a valid reading.",
+      ...(gpuTemperatureAvailable
+        ? {}
+        : {
+            suggestedAction:
+              "Install or update the supported graphics driver telemetry tool, or enable WMI sensors in a supported local hardware monitor."
+          }),
+      source: options.gpuTemperatureSource ?? "supported-gpu-temperature-provider"
     },
     {
       metricName: METRIC_NAMES.NETWORK_RX_BYTES,

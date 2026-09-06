@@ -10,6 +10,14 @@ export const WINDOWS_COMMAND_POLICIES = {
     timeoutMs: 8000,
     maxOutputBytes: 4 * 1024 * 1024
   },
+  hardware_telemetry: {
+    timeoutMs: 5000,
+    maxOutputBytes: 256 * 1024
+  },
+  nvidia_smi: {
+    timeoutMs: 3000,
+    maxOutputBytes: 256 * 1024
+  },
   presentmon_version: {
     timeoutMs: 3000,
     maxOutputBytes: 256 * 1024

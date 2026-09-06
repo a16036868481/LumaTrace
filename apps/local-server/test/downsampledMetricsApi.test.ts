@@ -83,8 +83,7 @@ describe("downsampled metrics API", () => {
       database,
       enableLogger: false,
       enableAndroidCollector: false,
-      enablePcCollector: false,
-      enableIosCollector: false
+      enablePcCollector: false
     });
 
     try {
@@ -134,8 +133,7 @@ describe("downsampled metrics API", () => {
       database,
       enableLogger: false,
       enableAndroidCollector: false,
-      enablePcCollector: false,
-      enableIosCollector: false
+      enablePcCollector: false
     });
 
     try {

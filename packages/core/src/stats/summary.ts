@@ -34,11 +34,30 @@ function calculateDurationMs(events: readonly MetricEvent[], startedAt?: number,
   return Math.max(...timestamps) - Math.min(...timestamps);
 }
 
+function averageAndPeak(
+  values: readonly number[],
+  averageField: keyof ReportSummary,
+  peakField: keyof ReportSummary
+): Partial<ReportSummary> {
+  if (values.length === 0) {
+    return {};
+  }
+  return {
+    [averageField]: values.reduce((total, value) => total + value, 0) / values.length,
+    [peakField]: Math.max(...values)
+  };
+}
+
 export function buildReportSummary(input: ReportSummaryInput): ReportSummary {
   const frameTimes = numericValues(input.events, METRIC_NAMES.FRAME_TIME_MS);
   const fpsSamples = numericValues(input.events, METRIC_NAMES.FPS);
   const cpuSamples = numericValues(input.events, METRIC_NAMES.CPU_PERCENT);
+  const gpuSamples = numericValues(input.events, METRIC_NAMES.GPU_UTILIZATION);
   const memorySamples = numericValues(input.events, METRIC_NAMES.MEMORY_MB);
+  const powerSamples = numericValues(input.events, METRIC_NAMES.POWER_W);
+  const cpuTemperatureSamples = numericValues(input.events, METRIC_NAMES.CPU_TEMPERATURE_C);
+  const gpuTemperatureSamples = numericValues(input.events, METRIC_NAMES.GPU_TEMPERATURE_C);
+  const temperatureSamples = numericValues(input.events, METRIC_NAMES.TEMPERATURE_C);
   const batterySamples: BatteryLevelSample[] = input.events
     .filter((event) => event.metricName === METRIC_NAMES.BATTERY_LEVEL_PERCENT && event.value !== null)
     .map((event) => ({ timestampMs: event.timestampMs, levelPercent: event.value }))
@@ -142,7 +161,20 @@ export function buildReportSummary(input: ReportSummaryInput): ReportSummary {
   return {
     ...summary,
     ...summarizeCpu(cpuSamples),
+    ...averageAndPeak(gpuSamples, "avgGpuPercent", "peakGpuPercent"),
     ...summarizeMemory(memorySamples),
+    ...averageAndPeak(powerSamples, "avgPowerW", "peakPowerW"),
+    ...averageAndPeak(
+      cpuTemperatureSamples,
+      "avgCpuTemperatureC",
+      "peakCpuTemperatureC"
+    ),
+    ...averageAndPeak(
+      gpuTemperatureSamples,
+      "avgGpuTemperatureC",
+      "peakGpuTemperatureC"
+    ),
+    ...averageAndPeak(temperatureSamples, "avgTemperatureC", "peakTemperatureC"),
     ...summarizeNetworkDeltas(networkDeltas),
     ...summarizeBattery(batterySamples)
   };

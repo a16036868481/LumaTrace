@@ -9,6 +9,7 @@ function document(metrics = true): ReportDocument {
   };
   return {
     version: "test",
+    locale: "en-US",
     generatedAt: 1234,
     session: {
       id: "session-1",

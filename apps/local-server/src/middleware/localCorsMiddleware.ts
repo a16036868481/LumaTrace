@@ -22,7 +22,7 @@ function isAllowedLocalOrigin(origin: string | undefined): origin is string {
 function applyCorsHeaders(reply: FastifyReply, origin: string): void {
   reply.header("Access-Control-Allow-Origin", origin);
   reply.header("Vary", "Origin");
-  reply.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  reply.header("Access-Control-Allow-Methods", "GET,POST,DELETE,OPTIONS");
   reply.header("Access-Control-Allow-Headers", "Authorization, Content-Type, Sec-WebSocket-Protocol");
   reply.header("Access-Control-Max-Age", "600");
 }

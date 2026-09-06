@@ -1,4 +1,4 @@
-export type Platform = "android" | "ios" | "windows" | "macos" | "linux";
+export type Platform = "android" | "windows" | "macos" | "linux";
 
 export type ConnectionType = "usb" | "network" | "local";
 

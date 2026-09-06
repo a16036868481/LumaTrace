@@ -132,4 +132,8 @@ export class DiagnosticRepository {
     const rows = this.db.prepare(sql).all(...params) as DiagnosticRow[];
     return rows.map((row) => rowToDiagnostic(row));
   }
+
+  deleteBySession(sessionId: string): void {
+    this.db.prepare("DELETE FROM diagnostics WHERE session_id = ?").run(sessionId);
+  }
 }

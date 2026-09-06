@@ -37,6 +37,27 @@ export {
   WindowsCpuSampler
 } from "./windows/WindowsCpuSampler";
 export { snapshotMemoryFromProcess, WindowsMemorySampler } from "./windows/WindowsMemorySampler";
+export {
+  parseNvidiaSmiTelemetryCsv,
+  parseWindowsSystemTelemetryJson,
+  WindowsHardwareTelemetryProvider
+} from "./windows/WindowsHardwareTelemetryProvider";
+export type {
+  NvidiaGpuTelemetry,
+  WindowsGpuEngineSnapshot,
+  WindowsHardwareTelemetryProbe,
+  WindowsHardwareTelemetryProviderLike,
+  WindowsHardwareTelemetrySample,
+  WindowsHardwareTelemetryWarning,
+  WindowsSystemTelemetrySnapshot,
+  WindowsTemperatureSensorSnapshot
+} from "./windows/WindowsHardwareTelemetryProvider";
+export { WindowsHardwareTelemetrySampler } from "./windows/WindowsHardwareTelemetrySampler";
+export type { WindowsHardwareTelemetrySamplerOptions } from "./windows/WindowsHardwareTelemetrySampler";
+export {
+  findProcessorAssociatedThermalZoneNames,
+  parseCpuThermalZoneDiscoveryJson
+} from "./windows/WindowsAcpiThermalZone";
 export { WindowsProcessSampler } from "./windows/WindowsProcessSampler";
 export { WindowsProcessWatcher } from "./windows/WindowsProcessWatcher";
 export type { WindowsProcessState, WindowsProcessStatus } from "./windows/WindowsProcessWatcher";

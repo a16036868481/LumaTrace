@@ -36,10 +36,6 @@ export interface LocalServerOptions {
     getToolStatus?: () => Promise<ToolStatus>;
   };
   enablePcCollector?: boolean;
-  iosCollector?: MetricCollector & {
-    getToolStatus?: () => Promise<ToolStatus>;
-  };
-  enableIosCollector?: boolean;
 }
 
 export interface PackagedServerState {

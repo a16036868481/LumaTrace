@@ -16,7 +16,6 @@ import { HtmlExporter } from "./exporters/HtmlExporter";
 import { JsonExporter } from "./exporters/JsonExporter";
 import type {
   GeneratedReport,
-  IosReportDiagnosticsSection,
   PcReportDiagnosticsSection,
   ReportBuildResult,
   ReportDocument,
@@ -28,13 +27,13 @@ import type {
 import { writeReportFiles } from "./utils/fileWriter";
 import { buildAndroidReportDiagnosticsSection } from "./utils/androidDiagnostics";
 import { cpuMetricValues, inferRefreshRate, metricValues } from "./utils/metricGrouping";
+import {
+  localizationFromSessionConfig,
+  normalizeReportLocalization
+} from "./localization/reportLocalization";
 
 const DEFAULT_VERSION = "mvp-a";
-const DEFAULT_LIMITATIONS = [
-  "This report was generated locally.",
-  "Mock metrics are for development and testing only when source is mock.",
-  "Unavailable metrics are not estimated or fabricated."
-] as const;
+const REJECTED_CPU_TEMPERATURE_SOURCES = new Set(["windows:acpi-processor-thermal-zone"]);
 
 function calculateDurationMs(session: Session, metrics: readonly MetricEvent[]): number {
   if (
@@ -66,7 +65,8 @@ function buildNetworkDeltas(metrics: readonly MetricEvent[]): NetworkDelta[] {
 
   for (const rxEvent of rxBytesEvents) {
     const txEvent = txBytesEvents.find((event) => event.timestampMs === rxEvent.timestampMs);
-    const intervalMs = typeof rxEvent.tags?.intervalMs === "number" ? rxEvent.tags.intervalMs : 1000;
+    const intervalMs =
+      typeof rxEvent.tags?.intervalMs === "number" ? rxEvent.tags.intervalMs : 1000;
     if (txEvent === undefined || rxEvent.value === null || txEvent.value === null) {
       continue;
     }
@@ -98,7 +98,8 @@ function buildNetworkDeltas(metrics: readonly MetricEvent[]): NetworkDelta[] {
   );
   for (const rxEvent of rxRateEvents) {
     const txEvent = txRateEvents.find((event) => event.timestampMs === rxEvent.timestampMs);
-    const intervalMs = typeof rxEvent.tags?.intervalMs === "number" ? rxEvent.tags.intervalMs : 1000;
+    const intervalMs =
+      typeof rxEvent.tags?.intervalMs === "number" ? rxEvent.tags.intervalMs : 1000;
     if (
       txEvent === undefined ||
       rxEvent.value === null ||
@@ -122,7 +123,9 @@ function buildNetworkDeltas(metrics: readonly MetricEvent[]): NetworkDelta[] {
 
 function buildBatterySamples(metrics: readonly MetricEvent[]): BatteryLevelSample[] {
   return metrics
-    .filter((event) => event.metricName === METRIC_NAMES.BATTERY_LEVEL_PERCENT && event.value !== null)
+    .filter(
+      (event) => event.metricName === METRIC_NAMES.BATTERY_LEVEL_PERCENT && event.value !== null
+    )
     .map((event) => ({ timestampMs: event.timestampMs, levelPercent: event.value }))
     .filter((sample): sample is BatteryLevelSample => Number.isFinite(sample.levelPercent));
 }
@@ -137,11 +140,33 @@ function assignDefined<T extends object, K extends keyof T>(
   }
 }
 
+function assignAverageAndPeak(
+  summary: ReportSummary,
+  values: readonly number[],
+  averageKey: keyof ReportSummary,
+  peakKey: keyof ReportSummary
+): void {
+  if (values.length === 0) {
+    return;
+  }
+  const average = values.reduce((total, value) => total + value, 0) / values.length;
+  const peak = Math.max(...values);
+  Object.assign(summary, { [averageKey]: average, [peakKey]: peak });
+}
+
 export function buildSummary(input: ReportInput): ReportSummary {
   const frameTimesMs = metricValues(input.metrics, METRIC_NAMES.FRAME_TIME_MS);
   const fpsSamples = metricValues(input.metrics, METRIC_NAMES.FPS);
   const cpuSamples = cpuMetricValues(input.metrics);
+  const gpuSamples = metricValues(input.metrics, METRIC_NAMES.GPU_UTILIZATION);
   const memorySamples = metricValues(input.metrics, METRIC_NAMES.MEMORY_MB);
+  const powerSamples = metricValues(input.metrics, METRIC_NAMES.POWER_W);
+  const cpuTemperatureSamples = metricValues(
+    input.metrics.filter((event) => !REJECTED_CPU_TEMPERATURE_SOURCES.has(event.source)),
+    METRIC_NAMES.CPU_TEMPERATURE_C
+  );
+  const gpuTemperatureSamples = metricValues(input.metrics, METRIC_NAMES.GPU_TEMPERATURE_C);
+  const legacyTemperatureSamples = metricValues(input.metrics, METRIC_NAMES.TEMPERATURE_C);
   const thermalEvents = input.metrics.filter(
     (event) => event.metricName === METRIC_NAMES.THERMAL_EVENT && event.value !== null
   );
@@ -171,15 +196,31 @@ export function buildSummary(input: ReportInput): ReportSummary {
   }
 
   Object.assign(summary, summarizeCpu(cpuSamples));
+  assignAverageAndPeak(summary, gpuSamples, "avgGpuPercent", "peakGpuPercent");
   Object.assign(summary, summarizeMemory(memorySamples));
+  assignAverageAndPeak(summary, powerSamples, "avgPowerW", "peakPowerW");
+  assignAverageAndPeak(summary, cpuTemperatureSamples, "avgCpuTemperatureC", "peakCpuTemperatureC");
+  assignAverageAndPeak(summary, gpuTemperatureSamples, "avgGpuTemperatureC", "peakGpuTemperatureC");
+  assignAverageAndPeak(summary, legacyTemperatureSamples, "avgTemperatureC", "peakTemperatureC");
   Object.assign(summary, summarizeNetworkDeltas(buildNetworkDeltas(input.metrics)));
   Object.assign(summary, summarizeBattery(buildBatterySamples(input.metrics), thermalEvents));
 
   return summary;
 }
 
-function mergeLimitations(limitations: readonly string[] = []): string[] {
-  return [...new Set([...DEFAULT_LIMITATIONS, ...limitations])];
+function mergeLimitations(
+  localization: ReportGeneratorOptions["localization"],
+  limitations: readonly string[] = []
+): string[] {
+  const normalized = normalizeReportLocalization(localization);
+  return [
+    ...new Set([
+      normalized.strings.localData,
+      normalized.strings.coreMetricsHelp,
+      normalized.strings.diagnosticPrivacy,
+      ...limitations
+    ])
+  ];
 }
 
 function incrementCounter(counter: Record<string, number>, key: string): void {
@@ -197,7 +238,12 @@ function sanitizeReportUnknown(value: unknown): unknown {
   if (typeof value === "string") {
     return sanitizeReportText(value);
   }
-  if (value === null || value === undefined || typeof value === "number" || typeof value === "boolean") {
+  if (
+    value === null ||
+    value === undefined ||
+    typeof value === "number" ||
+    typeof value === "boolean"
+  ) {
     return value;
   }
   if (Array.isArray(value)) {
@@ -216,7 +262,9 @@ function sanitizeReportUnknown(value: unknown): unknown {
   return String(value);
 }
 
-function buildPcReportDiagnosticsSection(input: ReportInput): PcReportDiagnosticsSection | undefined {
+function buildPcReportDiagnosticsSection(
+  input: ReportInput
+): PcReportDiagnosticsSection | undefined {
   const pcDiagnostics = (input.diagnostics ?? [])
     .filter((record) => record.category.startsWith("pc"))
     .map((record) => ({
@@ -230,6 +278,18 @@ function buildPcReportDiagnosticsSection(input: ReportInput): PcReportDiagnostic
     (event) => event.tags?.platform === "windows" || event.source.startsWith("windows:")
   );
   const hasPresentMonMetrics = input.metrics.some((event) => event.source.startsWith("PresentMon"));
+  const hasProcessGpuMetrics = input.metrics.some(
+    (event) => event.metricName === METRIC_NAMES.GPU_UTILIZATION && event.tags?.scope === "process"
+  );
+  const hasDeviceSensorMetrics = input.metrics.some(
+    (event) =>
+      (event.metricName === METRIC_NAMES.POWER_W ||
+        event.metricName === METRIC_NAMES.CPU_TEMPERATURE_C ||
+        event.metricName === METRIC_NAMES.GPU_TEMPERATURE_C ||
+        event.metricName === METRIC_NAMES.TEMPERATURE_C ||
+        event.metricName === METRIC_NAMES.GPU_UTILIZATION) &&
+      event.precision === "device_level"
+  );
   const presentMonAvailability = (input.availability ?? input.device.capabilities).find(
     (availability) =>
       availability.platform === "windows" &&
@@ -241,14 +301,30 @@ function buildPcReportDiagnosticsSection(input: ReportInput): PcReportDiagnostic
   if (hasPcMetrics) {
     notices.push("PC CPU and memory metrics are sampled from Windows process counters.");
   }
+  if (hasProcessGpuMetrics) {
+    notices.push(
+      "PC GPU utilization is sampled for the selected process from Windows GPU Engine counters using its busiest engine."
+    );
+  }
+  if (hasDeviceSensorMetrics) {
+    notices.push(
+      "GPU power plus CPU/GPU temperature sensor values are device-level hardware readings; they are not attributed to the selected process."
+    );
+  }
   if (presentMonAvailability?.status === "requires_tool") {
-    notices.push("PresentMon is required for PC FPS/frame-time capture; missing PresentMon does not block CPU/memory.");
+    notices.push(
+      "PresentMon is required for PC FPS/frame-time capture; missing PresentMon does not block CPU/memory."
+    );
   }
   if (presentMonAvailability?.status === "experimental") {
-    notices.push("PC FPS/frame-time collection is experimental and must be explicitly enabled for a PC process session.");
+    notices.push(
+      "PC FPS/frame-time collection is experimental and must be explicitly enabled for a PC process session."
+    );
   }
   if (hasPresentMonMetrics) {
-    notices.push("PresentMon FPS/frame-time metrics come from explicit CSV capture and target process matching. Raw CSV content and full local paths are not included.");
+    notices.push(
+      "PresentMon FPS/frame-time metrics come from explicit CSV capture and target process matching. Raw CSV content and full local paths are not included."
+    );
   }
   const presentMonDiagnostics = pcDiagnostics.filter(
     (record) =>
@@ -260,20 +336,22 @@ function buildPcReportDiagnosticsSection(input: ReportInput): PcReportDiagnostic
     (record) => record.details?.pcCode === "PRESENTMON_VERSION_DETECTED"
   );
   const permissionNotices = presentMonDiagnostics
-    .filter((record) =>
-      record.details?.pcCode === "PRESENTMON_PERMISSION_LIMITED" ||
-      record.details?.pcCode === "PRESENTMON_LOG_ACCESS_USERS_HINT" ||
-      record.details?.pcCode === "PRESENTMON_ADMIN_HINT"
+    .filter(
+      (record) =>
+        record.details?.pcCode === "PRESENTMON_PERMISSION_LIMITED" ||
+        record.details?.pcCode === "PRESENTMON_LOG_ACCESS_USERS_HINT" ||
+        record.details?.pcCode === "PRESENTMON_ADMIN_HINT"
     )
     .map((record) => record.message);
   const noDataReasons = presentMonDiagnostics
-    .filter((record) =>
-      record.details?.pcCode === "PRESENTMON_TARGET_NO_MATCH" ||
-      record.details?.pcCode === "PRESENTMON_TARGET_AMBIGUOUS" ||
-      record.details?.pcCode === "PRESENTMON_CSV_EMPTY" ||
-      record.details?.pcCode === "PRESENTMON_CSV_MISSING" ||
-      record.details?.pcCode === "PRESENTMON_PROCESS_EXITED_DURING_CAPTURE" ||
-      record.details?.pcCode === "PRESENTMON_PID_REUSED_DURING_CAPTURE"
+    .filter(
+      (record) =>
+        record.details?.pcCode === "PRESENTMON_TARGET_NO_MATCH" ||
+        record.details?.pcCode === "PRESENTMON_TARGET_AMBIGUOUS" ||
+        record.details?.pcCode === "PRESENTMON_CSV_EMPTY" ||
+        record.details?.pcCode === "PRESENTMON_CSV_MISSING" ||
+        record.details?.pcCode === "PRESENTMON_PROCESS_EXITED_DURING_CAPTURE" ||
+        record.details?.pcCode === "PRESENTMON_PID_REUSED_DURING_CAPTURE"
     )
     .map((record) => record.message);
   const csvRetentionDiagnostic = presentMonDiagnostics.find(
@@ -303,70 +381,24 @@ function buildPcReportDiagnosticsSection(input: ReportInput): PcReportDiagnostic
     },
     diagnosticsTimeline: pcDiagnostics,
     sourcePrecisionNotices: notices,
-    ...(lastPresentMonDiagnostic === undefined ? {} : { presentMonCaptureStatus: lastPresentMonDiagnostic.message }),
+    ...(lastPresentMonDiagnostic === undefined
+      ? {}
+      : { presentMonCaptureStatus: lastPresentMonDiagnostic.message }),
     ...(compatibilityDiagnostic?.details?.details !== undefined &&
     typeof compatibilityDiagnostic.details.details === "object" &&
     compatibilityDiagnostic.details.details !== null
-      ? { presentMonCompatibility: compatibilityDiagnostic.details.details as Record<string, unknown> }
+      ? {
+          presentMonCompatibility: compatibilityDiagnostic.details.details as Record<
+            string,
+            unknown
+          >
+        }
       : {}),
-    ...(csvRetentionDiagnostic === undefined ? {} : { csvRetentionSummary: csvRetentionDiagnostic.message }),
+    ...(csvRetentionDiagnostic === undefined
+      ? {}
+      : { csvRetentionSummary: csvRetentionDiagnostic.message }),
     permissionNotices,
     noDataReasons
-  };
-}
-
-function buildIosReportDiagnosticsSection(input: ReportInput): IosReportDiagnosticsSection | undefined {
-  const iosDiagnostics = (input.diagnostics ?? [])
-    .filter((record) => record.category.startsWith("ios"))
-    .map((record) => ({
-      ...record,
-      message: sanitizeReportText(record.message),
-      ...(record.details === undefined
-        ? {}
-        : { details: sanitizeReportUnknown(record.details) as Record<string, unknown> })
-    }));
-  const hasIosTraceMetrics = input.metrics.some((event) => event.source === "ios:xctrace-csv-import");
-  const notices: string[] = [];
-
-  if (input.device.platform === "ios") {
-    notices.push("iOS live sessions are not implemented; imported iOS metrics must come from explicit manual trace workflows.");
-  }
-  if (hasIosTraceMetrics) {
-    notices.push("iOS metrics in this report come from manual xctrace CSV import after target matching. They are experimental and estimated.");
-  }
-
-  const noDataReasons = iosDiagnostics
-    .filter((record) => record.details?.iosCode === "IOS_TRACE_IMPORT_NO_DATA")
-    .map((record) => record.message);
-  const lastImportDiagnostic = iosDiagnostics.find(
-    (record) =>
-      record.details?.iosCode === "IOS_TRACE_IMPORT_COMPLETED" ||
-      record.details?.iosCode === "IOS_TRACE_IMPORT_NO_DATA"
-  );
-
-  if (iosDiagnostics.length === 0 && notices.length === 0) {
-    return undefined;
-  }
-
-  const byLevel: Record<string, number> = {};
-  const byCategory: Record<string, number> = {};
-  for (const diagnostic of iosDiagnostics) {
-    incrementCounter(byLevel, diagnostic.level);
-    incrementCounter(byCategory, diagnostic.category);
-  }
-
-  return {
-    iosDiagnosticsSummary: {
-      total: iosDiagnostics.length,
-      byLevel,
-      byCategory,
-      warnings: byLevel.warn ?? 0,
-      errors: byLevel.error ?? 0
-    },
-    diagnosticsTimeline: iosDiagnostics,
-    sourcePrecisionNotices: notices,
-    noDataReasons,
-    ...(lastImportDiagnostic === undefined ? {} : { importStatus: lastImportDiagnostic.message })
   };
 }
 
@@ -397,10 +429,22 @@ export class ReportGenerator {
       this.dependencies.sessionRepository,
       "sessionRepository"
     );
-    const deviceRepository = requireDependency(this.dependencies.deviceRepository, "deviceRepository");
-    const targetRepository = requireDependency(this.dependencies.targetRepository, "targetRepository");
-    const metricRepository = requireDependency(this.dependencies.metricRepository, "metricRepository");
-    const markerRepository = requireDependency(this.dependencies.markerRepository, "markerRepository");
+    const deviceRepository = requireDependency(
+      this.dependencies.deviceRepository,
+      "deviceRepository"
+    );
+    const targetRepository = requireDependency(
+      this.dependencies.targetRepository,
+      "targetRepository"
+    );
+    const metricRepository = requireDependency(
+      this.dependencies.metricRepository,
+      "metricRepository"
+    );
+    const markerRepository = requireDependency(
+      this.dependencies.markerRepository,
+      "markerRepository"
+    );
 
     const session = sessionRepository.getById(sessionId);
     if (session === null) {
@@ -459,6 +503,10 @@ export class ReportGenerator {
 
   build(input: ReportInput, options: ReportGeneratorOptions = {}): ReportBuildResult {
     const version = options.version ?? DEFAULT_VERSION;
+    const localization =
+      options.localization === undefined
+        ? localizationFromSessionConfig(input.session.config)
+        : normalizeReportLocalization(options.localization);
     const generatedAt = input.generatedAt ?? Date.now();
     const summary = buildSummary(input);
     const androidDiagnostics = buildAndroidReportDiagnosticsSection({
@@ -467,9 +515,9 @@ export class ReportGenerator {
       diagnostics: input.diagnostics ?? []
     });
     const pcDiagnostics = buildPcReportDiagnosticsSection(input);
-    const iosDiagnostics = buildIosReportDiagnosticsSection(input);
     const document: ReportDocument = {
       version,
+      locale: localization.locale,
       generatedAt,
       session: input.session,
       device: input.device,
@@ -479,11 +527,10 @@ export class ReportGenerator {
       availability: input.availability ?? input.device.capabilities,
       toolStatus: input.toolStatus ?? [],
       rawMetricCount: input.metrics.length,
-      limitations: mergeLimitations(input.limitations),
+      limitations: mergeLimitations(localization, input.limitations),
       metrics: input.metrics,
       ...(androidDiagnostics === undefined ? {} : { androidDiagnostics }),
-      ...(pcDiagnostics === undefined ? {} : { pcDiagnostics }),
-      ...(iosDiagnostics === undefined ? {} : { iosDiagnostics })
+      ...(pcDiagnostics === undefined ? {} : { pcDiagnostics })
     };
     const json = this.jsonExporter.export(document, {
       includeRawMetricsInJson: options.includeRawMetricsInJson ?? true
@@ -491,7 +538,8 @@ export class ReportGenerator {
     const csv = this.csvExporter.export(input.metrics);
     const html = this.htmlExporter.export(document, {
       includeRawMetricsInHtml: options.includeRawMetricsInHtml ?? false,
-      maxHtmlMetricRows: options.maxHtmlMetricRows ?? 500
+      maxHtmlMetricRows: options.maxHtmlMetricRows ?? 500,
+      localization
     });
 
     return {

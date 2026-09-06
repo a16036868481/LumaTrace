@@ -5,10 +5,12 @@ import { HtmlExporter, type ReportDocument } from "../src";
 function document(metricCount = 2): ReportDocument {
   const summary: ReportSummary = {
     durationMs: 1000,
-    avgFps: 58
+    avgFps: 58,
+    onePercentLowFps: 52
   };
   return {
     version: "test",
+    locale: "en-US",
     generatedAt: 1234,
     session: {
       id: "session-1",
@@ -38,7 +40,7 @@ function document(metricCount = 2): ReportDocument {
         sessionId: "session-1",
         timestampMs: 1100,
         label: "<img>",
-        description: "\"quoted\"",
+        description: '"quoted"',
         tags: {
           phase: "one"
         }
@@ -84,33 +86,69 @@ function document(metricCount = 2): ReportDocument {
 }
 
 describe("HtmlExporter", () => {
-  it("outputs static escaped HTML with summary, markers, and availability", () => {
+  it("outputs static escaped HTML with summary, markers, availability, and a conclusion", () => {
     const html = new HtmlExporter().export(document(), {
       includeRawMetricsInHtml: true,
       maxHtmlMetricRows: 10
     });
 
     expect(html.startsWith("<!doctype html>")).toBe(true);
-    expect(html).toContain("LumaTrace Report");
-    expect(html).toContain("Avg FPS");
+    expect(html).toContain("LumaTrace · Test Results");
+    expect(html).toContain("Average FPS");
     expect(html).toContain("&lt;script&gt;Session&lt;/script&gt;");
     expect(html).toContain("Device &amp; Test");
     expect(html).toContain("&lt;img&gt;");
     expect(html).toContain("Generated &lt;locally&gt;");
-    expect(html).toContain("install &amp; retry");
+    expect(html).toContain("Performance Conclusion");
+    expect(html).toContain(
+      "Average FPS is 58, between 30 and 59.9 FPS. Performance is acceptable"
+    );
+    expect(html).toContain("1% Low is 52 FPS (89.66% of the average)");
+    expect(html).not.toContain("Tool Status");
+    expect(html).not.toContain("install &amp; retry");
+    expect(html).not.toContain("Metric Samples");
+    expect(html).not.toContain("&lt;tag&gt;");
     expect(html).not.toContain("<script");
     expect(html).not.toContain("http://");
     expect(html).not.toContain("https://");
   });
 
-  it("limits raw metric rows and displays N/A for undefined summary values", () => {
+  it("omits technical raw sections even when raw metrics are requested", () => {
     const html = new HtmlExporter().export(document(3), {
       includeRawMetricsInHtml: true,
       maxHtmlMetricRows: 1
     });
 
-    expect(html).toContain("Showing first 1 of 3 metric rows.");
-    expect((html.match(/<td>1000<\/td>/g) ?? []).length).toBe(1);
+    expect(html).not.toContain("Showing metric rows");
+    expect(html).not.toContain("Monotonic");
+    expect(html).not.toContain("install &amp; retry");
     expect(html).toContain("<strong>N/A</strong>");
+  });
+
+  it("uses honest FPS performance bands and reports missing FPS without a rating", () => {
+    const poor = document();
+    poor.summary.avgFps = 29.5;
+    poor.summary.onePercentLowFps = 15;
+    const poorHtml = new HtmlExporter().export(poor);
+    expect(poorHtml).toContain("Average FPS is 29.5, below 30 FPS. Performance is poor");
+    expect(poorHtml).toContain("indicating noticeable frame-rate fluctuations");
+
+    const good = document();
+    good.summary.avgFps = 60;
+    good.summary.onePercentLowFps = 55;
+    expect(new HtmlExporter().export(good)).toContain(
+      "Average FPS is 60, at or above 60 FPS. Performance is good"
+    );
+
+    const unavailable = document();
+    delete unavailable.summary.avgFps;
+    delete unavailable.summary.onePercentLowFps;
+    const unavailableHtml = new HtmlExporter().export(unavailable);
+    expect(unavailableHtml).toContain(
+      "Average FPS was not collected, so this report cannot rate rendering performance."
+    );
+    expect(unavailableHtml).toContain(
+      "There is not enough 1% Low data to assess frame-rate stability."
+    );
   });
 });

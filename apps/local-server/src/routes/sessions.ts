@@ -103,6 +103,13 @@ export async function registerSessionRoutes(
     ok(await context.sessionService.createSession(parseBody<CreateSessionInput>(request.body)))
   );
 
+  app.delete("/api/sessions", async () => ok(context.sessionService.deleteAllSessions()));
+
+  app.delete<{ Params: { id?: string } }>("/api/sessions/:id", async (request) => {
+    const sessionId = requireStringParam(request.params.id, "session id");
+    return ok(context.sessionService.deleteSession(sessionId));
+  });
+
   app.post<{ Params: { id?: string } }>("/api/sessions/:id/start", async (request) => {
     const sessionId = requireStringParam(request.params.id, "session id");
     return ok(await context.sessionService.startSession(sessionId));

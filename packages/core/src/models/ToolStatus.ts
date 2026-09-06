@@ -1,10 +1,5 @@
 export type ToolName =
   | "adb"
-  | "xcrun"
-  | "xctrace"
-  | "ideviceinfo"
-  | "idevice_id"
-  | "idevicesyslog"
   | "PresentMon";
 
 export interface ToolStatus {

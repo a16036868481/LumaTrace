@@ -1,5 +1,6 @@
 ﻿import type { ReportGenerator } from "@lumatrace/report";
 import { AppError } from "../utils/errors";
+import type { ReportLocalization } from "@lumatrace/report";
 
 export type ExportFormat = "csv" | "json" | "html";
 
@@ -26,9 +27,15 @@ export class ExportService {
     this.reportGenerator = reportGenerator;
   }
 
-  exportSession(sessionId: string, formatValue: string | undefined): ExportResult {
+  exportSession(
+    sessionId: string,
+    formatValue: string | undefined,
+    localization?: ReportLocalization
+  ): ExportResult {
     const format = parseFormat(formatValue);
-    const report = this.reportGenerator.generateFromStorage(sessionId);
+    const report = this.reportGenerator.generateFromStorage(sessionId, {
+      ...(localization === undefined ? {} : { localization })
+    });
 
     if (format === "json") {
       return {
