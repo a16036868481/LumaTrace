@@ -1,0 +1,34 @@
+{
+  "locale": "sv-SE",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Se prestanda tydligt. Börja från den plattform du vill testa. LumaTrace kommer att vägleda nästa steg och behålla otillgängliga mätvärden som N/A.",
+  "description": "Se prestanda tydligt.\n\nBörja från den plattform du vill testa. LumaTrace kommer att vägleda nästa steg och behålla otillgängliga mätvärden som N/A.\n\nWindows: Välj ett program eller en spelprocess på den här datorn och börja testa. Om processen avslutas stoppas sessionen eller registrerar ett tydligt avbrott.\n\nAndroid: Aktivera utvecklaralternativ och USB-felsökning på telefonen, auktorisera den här datorn, öppna appen du vill testa och klicka sedan på Starta test. LumaTrace upptäcker förgrundspaketet automatiskt.\n\nVälj ett testresultat för att visa FPS, 1% low, ramtid, CPU, minne och exporterade rapporter.\n\nAndroid sparar en sanerad ADB logcat för testperioden. Windows sparar tidsstämplade LumaTrace sessionsposter.\n\nSaknade värden förblir N/A och fylls aldrig med 0.\n\nIngen molnuppladdning",
+  "features": [
+    "Lokal samling",
+    "Ingen molnuppladdning",
+    "Rapporter med ett klick",
+    "Kärnmetriska diagram",
+    "Exporter"
+  ],
+  "keywords": [
+    "mätvärden",
+    "Genomsnittlig FPS",
+    "Genomsnittlig CPU",
+    "Genomsnittligt minne",
+    "Android",
+    "Windows",
+    "Rapporter"
+  ],
+  "screenshotCaptions": [
+    "Se prestanda tydligt.",
+    "Välj vad du vill testa",
+    "Test pågår",
+    "Testresultat"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

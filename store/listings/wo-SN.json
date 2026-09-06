@@ -1,0 +1,34 @@
+{
+  "locale": "wo-SN",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Gis doole gi bu leer. Tambalee ci àlluway bi nga bëgg natt. LumaTrace dina la wommat ci jéego bi ci topp te bàyyi natt yi jàppandiwul ci N/A.",
+  "description": "Gis doole gi bu leer.\n\nTambalee ci àlluway bi nga bëgg natt. LumaTrace dina la wommat ci jéego bi ci topp te bàyyi natt yi jàppandiwul ci N/A.\n\nWindows: Tànn prosesu jëfekaay walla po ci PC bii, ba noppi tambali nattu. Bu proses bi génnee, sesiyoŋ bi taxaw walla bind taxaw gu leer.\n\nAndroid: Tàmbali Tànneef yi ñeel Defarkat bi ak USB debugging ci telefon bi, may PC bii ndigal, ubbi jëfekaay bi nga bëgg natt, ba noppi bës Tambali Nattu. LumaTrace dina gis pake bi nekk ci kanam ci boppam.\n\nTànn njureefu nattu ngir gis FPS, 1% Low, waxtu frame, CPU, xel ak rapoor yi ñu génne.\n\nAndroid dina denc ADB logcat bu ñu sellal ci diiru nattu bi. Windows dina denc jaar-jaari sesiyoŋ LumaTrace yu am màndargaal waxtu.\n\nSolo yi ñàkk dinañu des N/A te duñu leen feesal ak 0.\n\nYónneewuñu dara ci niir bi",
+  "features": [
+    "Daj ci jumtukaay bi",
+    "Yónneewuñu dara ci niir bi",
+    "Rapoor ci benn bës",
+    "Kurbi Natt yu Mag yi",
+    "Génne yi"
+  ],
+  "keywords": [
+    "natt yi",
+    "Digg-dóomu FPS",
+    "Digg-dóomu CPU",
+    "Digg-dóomu Xel",
+    "Android",
+    "Windows",
+    "Rapoor yi"
+  ],
+  "screenshotCaptions": [
+    "Gis doole gi bu leer.",
+    "Tànn li ñuy natt",
+    "Nattu bi mi ngi dox",
+    "Njureefi Nattu"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

@@ -1,0 +1,34 @@
+{
+  "locale": "quz-PE",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Ruwana allin kayta sut'ita qhaway. Pruebanayki plataformamanta qallariy. LumaTraceqa qatiq puriyta rikuchisunki hinaspa mana hap'iy atisqa tupuykunata N/A hina saqinqa.",
+  "description": "Ruwana allin kayta sut'ita qhaway.\n\nPruebanayki plataformamanta qallariy. LumaTraceqa qatiq puriyta rikuchisunki hinaspa mana hap'iy atisqa tupuykunata N/A hina saqinqa.\n\nWindows: Kay PCpi huk app utaq pukllay procesota akllay, chaymanta pruebatam qallariy. Proceso lluqsiptinqa sesión sayan utaq sut'i t'aqakuyta qillqan.\n\nAndroid: Telefonopi Desarrollador akllanakunata hinaspa USB debuggingta qhawariy, kay PCman sañuta quy, pruebanayki appta kichay, chaymanta Pruebata Qallariy ñit'iy. LumaTraceqa ñawpaqpi paquete kachkanta kikinmanta tarin.\n\nFPS, 1% Low, frame pacha, CPU, xel hinaspa génnesqa reportekunata qhawanapaq huk prueba resultadota akllay.\n\nAndroidqa prueba pachapi pakasqa ADB logcatta waqaychan. Windowsqa pacha yupayniyuq LumaTrace sesión registroykunata waqaychan.\n\nMana tarisqa chaninkuna N/A hina qhipan hinaspa hayk'aqpas 0wan mana hunt'achisqachu.\n\nPuyuman mana wichachisqa",
+  "features": [
+    "Kaypi huñuy",
+    "Puyuman mana wichachisqa",
+    "Huk ñit'iywan reportekuna",
+    "Hatun Tupuy Rëddkuna",
+    "Génneykuna"
+  ],
+  "keywords": [
+    "tupuykuna",
+    "FPS Promedio",
+    "CPU Promedio",
+    "Xel Promedio",
+    "Android",
+    "Windows",
+    "Reportekuna"
+  ],
+  "screenshotCaptions": [
+    "Ruwana allin kayta sut'ita qhaway.",
+    "Ima pruebanata akllay",
+    "Prueba purichkan",
+    "Prueba Resultados"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

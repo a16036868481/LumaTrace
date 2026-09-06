@@ -1,0 +1,34 @@
+{
+  "locale": "zh-TW",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "看見效能\n最佳化體驗 先選擇要測試的平台。無法擷取的指標會顯示 N/A，不會填入 0。",
+  "description": "看見效能\n最佳化體驗\n\n先選擇要測試的平台。無法擷取的指標會顯示 N/A，不會填入 0。\n\nWindows 本機: 選擇這台電腦上的應用程式或遊戲處理程序，然後開始測試。\n\nAndroid 手機: 開啟開發者選項和 USB 偵錯，連線並授權這台電腦；在手機上開啟要測試的 App 後開始測試。\n\n選擇一筆測試結果，直接查看 FPS、1% Low、幀時間、CPU、記憶體，以及報告匯出功能。\n\nAndroid 會儲存測試期間經過去識別化的 ADB logcat；Windows 會儲存帶有時間的 LumaTrace 擷取紀錄。\n\n無法擷取的指標保持 N/A，不會填 0。\n\n資料不上傳",
+  "features": [
+    "本機擷取",
+    "資料不上傳",
+    "一鍵報告",
+    "核心指標曲線",
+    "匯出"
+  ],
+  "keywords": [
+    "指標",
+    "平均 FPS",
+    "平均 CPU",
+    "平均記憶體",
+    "Android 手機",
+    "Windows 本機",
+    "報告"
+  ],
+  "screenshotCaptions": [
+    "看見效能\n最佳化體驗",
+    "選擇要測試的應用程式",
+    "測試進行中",
+    "測試結果"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

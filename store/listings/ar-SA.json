@@ -1,0 +1,34 @@
+{
+  "locale": "ar-SA",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "شاهد الأداء بوضوح. ابدأ بالمنصة المراد اختبارها. سيرشدك LumaTrace إلى الخطوة التالية، وستبقى المؤشرات غير المتاحة بالقيمة N/A.",
+  "description": "شاهد الأداء بوضوح.\n\nابدأ بالمنصة المراد اختبارها. سيرشدك LumaTrace إلى الخطوة التالية، وستبقى المؤشرات غير المتاحة بالقيمة N/A.\n\nWindows: اختر عملية تطبيق أو لعبة على هذا الكمبيوتر، ثم ابدأ الاختبار. إذا انتهت العملية، تتوقف الجلسة أو تسجّل انقطاعًا واضحًا.\n\nAndroid: فعّل خيارات المطور وتصحيح أخطاء USB على الهاتف، واسمح لهذا الكمبيوتر بالاتصال، وافتح التطبيق المراد اختباره، ثم انقر على «بدء الاختبار». يكتشف LumaTrace حزمة التطبيق الظاهر في الواجهة تلقائيًا.\n\nاختر نتيجة اختبار لعرض FPS و1% Low وزمن الإطار وCPU والذاكرة والتقارير المصدّرة.\n\nيحفظ Android سجل ADB logcat منقحًا لفترة الاختبار، ويحفظ Windows سجلات جلسة LumaTrace مرفقة بطوابع زمنية.\n\nتبقى القيم المفقودة N/A ولا تُستبدل أبدًا بالقيمة 0.\n\nبلا رفع إلى السحابة",
+  "features": [
+    "جمع محلي",
+    "بلا رفع إلى السحابة",
+    "تقارير بنقرة واحدة",
+    "مخططات المؤشرات الأساسية",
+    "الصادرات"
+  ],
+  "keywords": [
+    "المؤشرات",
+    "متوسط FPS",
+    "متوسط CPU",
+    "متوسط الذاكرة",
+    "Android",
+    "Windows",
+    "التقارير"
+  ],
+  "screenshotCaptions": [
+    "شاهد الأداء بوضوح.",
+    "اختر ما تريد اختباره",
+    "الاختبار جارٍ",
+    "نتائج الاختبار"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

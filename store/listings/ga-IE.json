@@ -1,0 +1,34 @@
+{
+  "locale": "ga-IE",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Feidhmíocht le feiceáil go soiléir. Tosaigh ón ardán is mian leat a thástáil. Treoróidh LumaTrace an chéad chéim eile agus coinneoidh sé méadrachtaí nach bhfuil ar fáil mar N/A.",
+  "description": "Feidhmíocht le feiceáil go soiléir.\n\nTosaigh ón ardán is mian leat a thástáil. Treoróidh LumaTrace an chéad chéim eile agus coinneoidh sé méadrachtaí nach bhfuil ar fáil mar N/A.\n\nWindows: Roghnaigh próiseas feidhmchláir nó cluiche ar an ríomhaire seo, ansin tosaigh ag tástáil. Má chríochnaíonn an próiseas, stopfaidh an seisiún nó taifeadfaidh sé briseadh soiléir.\n\nAndroid: Cumasaigh roghanna Forbróra agus debugging USB ar an bhfón, údaraigh an ríomhaire seo, oscail an aip is mian leat a thástáil, ansin cliceáil Tosaigh tástáil. Aimsíonn LumaTrace an pacáiste sa tulra go huathoibríoch.\n\nRoghnaigh toradh tástála chun FPS, 1% Low, am fráma, CPU, cuimhne agus tuairiscí easpórtáilte a fheiceáil.\n\nSábhálann Android ADB logcat sláintithe do thréimhse na tástála. Sábhálann Windows taifid seisiúin LumaTrace a bhfuil stampa ama orthu.\n\nFanann luachanna ar iarraidh mar N/A agus ní líontar iad le 0 riamh.\n\nGan uaslódáil néil",
+  "features": [
+    "Bailiú áitiúil",
+    "Gan uaslódáil néil",
+    "Tuairiscí aonchliceála",
+    "Cairteacha croímhéadrachtaí",
+    "Easpórtálacha"
+  ],
+  "keywords": [
+    "méadrachtaí",
+    "Meán-FPS",
+    "Meán-CPU",
+    "Meánchuimhne",
+    "Android",
+    "Windows",
+    "Tuairiscí"
+  ],
+  "screenshotCaptions": [
+    "Feidhmíocht le feiceáil go soiléir.",
+    "Roghnaigh cad atá le tástáil",
+    "Tástáil ar siúl",
+    "Torthaí tástála"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

@@ -1,0 +1,34 @@
+{
+  "locale": "mi-NZ",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Kia mārama te kite i te mahinga. Tīmata i te paepae e hiahia ana koe ki te whakamātau. Mā LumaTrace koe e ārahi ki te hipanga e whai ake nei, ā, ka waiho ngā inenga kāore i te wātea hei N/A.",
+  "description": "Kia mārama te kite i te mahinga.\n\nTīmata i te paepae e hiahia ana koe ki te whakamātau. Mā LumaTrace koe e ārahi ki te hipanga e whai ake nei, ā, ka waiho ngā inenga kāore i te wātea hei N/A.\n\nWindows: Kōwhiria he tukanga taupānga, kēmu rānei i tēnei PC, kātahi tīmatahia te whakamātau. Ki te mutu te tukanga, ka mutu te wāhanga, ka tuhi rānei i tētahi aukatinga mārama.\n\nAndroid: Whakahohea ngā kōwhiringa Kaiwhakawhanake me te USB debugging i te waea, whakamanahia tēnei PC, huakina te taupānga hei whakamātau, kātahi pāwhiria Tīmata whakamātautau. Ka rapu aunoa a LumaTrace i te mōkī kei mua.\n\nKōwhiria he hua whakamātautau kia kite i te FPS, 1% Low, wā tāpare, CPU, mahara me ngā pūrongo kua kaweake.\n\nKa penapena a Android i tētahi ADB logcat kua purea mō te wā whakamātautau. Ka penapena a Windows i ngā pūkete wāhanga LumaTrace whai waitohu-wā.\n\nKa noho ngā uara ngaro hei N/A, ā, e kore rawa e whakakīia ki te 0.\n\nKāore e tuku ki te kapua",
+  "features": [
+    "Kohinga ā-rohe",
+    "Kāore e tuku ki te kapua",
+    "Pūrongo pāwhiri-kotahi",
+    "Ngā tūtohi inenga matua",
+    "Ngā kaweake"
+  ],
+  "keywords": [
+    "inenga",
+    "FPS toharite",
+    "CPU toharite",
+    "Mahara toharite",
+    "Android",
+    "Windows",
+    "Pūrongo"
+  ],
+  "screenshotCaptions": [
+    "Kia mārama te kite i te mahinga.",
+    "Kōwhiria te mea hei whakamātau",
+    "Kei te haere te whakamātautau",
+    "Ngā hua whakamātautau"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

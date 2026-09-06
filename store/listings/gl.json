@@ -1,0 +1,34 @@
+{
+  "locale": "gl",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Observa claramente o rendemento. Comeza pola plataforma que queres probar. LumaTrace guiará o seguinte paso e manterá as métricas non dispoñibles como N/A.",
+  "description": "Observa claramente o rendemento.\n\nComeza pola plataforma que queres probar. LumaTrace guiará o seguinte paso e manterá as métricas non dispoñibles como N/A.\n\nWindows: Escolle un proceso de aplicación ou xogo neste PC e comeza a proba. Se o proceso remata, a sesión detense ou rexistra unha interrupción clara.\n\nAndroid: Activa as opcións de desenvolvedor e a depuración USB no teléfono, autoriza este PC, abre a aplicación que queres probar e preme Iniciar proba. LumaTrace detecta automaticamente o paquete en primeiro plano.\n\nEscolle un resultado para ver FPS, 1% low, tempo de fotograma, CPU, memoria e informes exportados.\n\nAndroid garda un ADB logcat saneado do período de proba. Windows garda rexistros de sesión de LumaTrace con marca de tempo.\n\nOs valores ausentes permanecen como N/A e nunca se enchen con 0.\n\nSen carga na nube",
+  "features": [
+    "Recollida local",
+    "Sen carga na nube",
+    "Informes cun clic",
+    "Gráficos de métricas principais",
+    "Exportacións"
+  ],
+  "keywords": [
+    "métricas",
+    "FPS medio",
+    "CPU media",
+    "Memoria media",
+    "Android",
+    "Windows",
+    "Informes"
+  ],
+  "screenshotCaptions": [
+    "Observa claramente o rendemento.",
+    "Escolle que probar",
+    "Proba en curso",
+    "Resultados da proba"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

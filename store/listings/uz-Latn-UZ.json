@@ -1,0 +1,34 @@
+{
+  "locale": "uz-Latn-UZ",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Unumdorlikni aniq ko'ring. Sinov qilmoqchi bo'lgan platformadan boshlang. LumaTrace keyingi bosqichni ko'rsatadi va mavjud bo'lmagan ko'rsatkichlarni N/A holatida qoldiradi.",
+  "description": "Unumdorlikni aniq ko'ring.\n\nSinov qilmoqchi bo'lgan platformadan boshlang. LumaTrace keyingi bosqichni ko'rsatadi va mavjud bo'lmagan ko'rsatkichlarni N/A holatida qoldiradi.\n\nWindows: Shu PC-da ilova yoki o'yin jarayonini tanlab sinovni boshlang. Jarayon yopilsa, seans to'xtaydi yoki uzilish haqida aniq yozuv yaratadi.\n\nAndroid: Telefonda dasturchi parametrlarini va USB orqali nosozliklarni tuzatishni yoqing, shu PC-ga ruxsat bering, sinov qilmoqchi bo'lgan ilovani oching va sinovni boshlash tugmasini bosing. LumaTrace old plandagi paketni avtomatik aniqlaydi.\n\nFPS, 1% Low, kadr vaqti, CPU, xotira va eksport qilingan hisobotlarni ko'rish uchun sinov natijasini tanlang.\n\nAndroid sinovi davomida maxfiy ma'lumotlardan tozalangan ADB logcat saqlanadi. Windows vaqt tamg'ali LumaTrace seans yozuvlarini saqlaydi.\n\nYetishmayotgan qiymatlar N/A bo'lib qoladi va hech qachon 0 bilan to'ldirilmaydi.\n\nBulutga yuklanmaydi",
+  "features": [
+    "Mahalliy to'plash",
+    "Bulutga yuklanmaydi",
+    "Bir bosishda hisobot",
+    "Asosiy ko'rsatkich grafiklari",
+    "Eksportlar"
+  ],
+  "keywords": [
+    "ko'rsatkichlar",
+    "O'rtacha FPS",
+    "O'rtacha CPU",
+    "O'rtacha xotira",
+    "Android",
+    "Windows",
+    "Hisobotlar"
+  ],
+  "screenshotCaptions": [
+    "Unumdorlikni aniq ko'ring.",
+    "Sinov qilinadigan narsani tanlang",
+    "Sinov davom etmoqda",
+    "Sinov natijalari"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

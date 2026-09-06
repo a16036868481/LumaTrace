@@ -1,0 +1,34 @@
+{
+  "locale": "ku-Arab-IQ",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "کارایی بە ڕوونی ببینە. لە پلاتفۆرمەکەی دەتەوێت تاقی بکەیتەوە دەست پێ بکە. LumaTrace هەنگاوی داهاتوو پیشان دەدات و پێوانە بەردەستنەبووەکان بە N/A دەهێڵێتەوە.",
+  "description": "کارایی بە ڕوونی ببینە.\n\nلە پلاتفۆرمەکەی دەتەوێت تاقی بکەیتەوە دەست پێ بکە. LumaTrace هەنگاوی داهاتوو پیشان دەدات و پێوانە بەردەستنەبووەکان بە N/A دەهێڵێتەوە.\n\nWindows: لەسەر ئەم PCیە پرۆسەی ئەپ یان یاری هەڵبژێرە، پاشان تاقیکردنەوە دەست پێ بکە. ئەگەر پرۆسەکە دەرچوو دانیشتن دەوەستێت یان پچڕانێکی ڕوون تۆمار دەکات.\n\nAndroid: لە مۆبایلدا Developer options و USB debugging چالاک بکە، ڕێگە بە ئەم PCیە بدە، ئەپی تاقیکردنەوە بکەرەوە، پاشان دەستپێکردنی تاقیکردنەوە بکە. LumaTrace packageی پێشەوە خۆکارانە دەدۆزێتەوە.\n\nئەنجامی تاقیکردنەوە هەڵبژێرە بۆ بینینی FPS، 1% Low، frame time، CPU، بیرگە و ڕاپۆرتە exportکراوەکان.\n\nAndroid logcatی پاککراوی ADBی ماوەی تاقیکردنەوە هەڵدەگرێت. Windows تۆمارە کات‌مۆرکراوەکانی دانیشتنی LumaTrace هەڵدەگرێت.\n\nنرخە ونبووەکان N/A دەمێننەوە و هەرگیز بە 0 پڕ ناکرێنەوە.\n\nبارکردن بۆ هەور نییە",
+  "features": [
+    "کۆکردنەوەی ناوخۆیی",
+    "بارکردن بۆ هەور نییە",
+    "ڕاپۆرت بە یەک کرتە",
+    "هێڵکاری پێوانە سەرەکییەکان",
+    "Exportەکان"
+  ],
+  "keywords": [
+    "پێوانەکان",
+    "تێکڕای FPS",
+    "تێکڕای CPU",
+    "تێکڕای بیرگە",
+    "Android",
+    "Windows",
+    "ڕاپۆرتەکان"
+  ],
+  "screenshotCaptions": [
+    "کارایی بە ڕوونی ببینە.",
+    "چی تاقی دەکەیتەوە هەڵبژێرە",
+    "تاقیکردنەوە بەردەوامە",
+    "ئەنجامەکانی تاقیکردنەوە"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

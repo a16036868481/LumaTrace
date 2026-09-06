@@ -1,0 +1,34 @@
+{
+  "locale": "af-ZA",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Sien prestasie duidelik. Begin vanaf die platform wat jy wil toets. LumaTrace sal die volgende stap lei en onbeskikbare maatstawwe hou as N/A.",
+  "description": "Sien prestasie duidelik.\n\nBegin vanaf die platform wat jy wil toets. LumaTrace sal die volgende stap lei en onbeskikbare maatstawwe hou as N/A.\n\nWindows: Kies 'n toepassing of speletjieproses op hierdie rekenaar en begin dan toets. As die proses eindig, stop die sessie of teken 'n duidelike onderbreking aan.\n\nAndroid: Aktiveer ontwikkelaaropsies en USB-ontfouting op die foon, magtig hierdie rekenaar, maak die toepassing oop wat u wil toets, en klik dan Begin toets. LumaTrace bespeur die voorgrondpakket outomaties.\n\nKies 'n toetsresultaat om FPS, 1% low, raamtyd, CPU, geheue en uitgevoerde verslae te sien.\n\nAndroid stoor 'n ontsmette ADB logcat vir die toetsperiode. Windows stoor tydstempel LumaTrace sessie rekords.\n\nOntbrekende waardes bly N/A en word nooit met 0 gevul nie.\n\nGeen wolkoplaai nie",
+  "features": [
+    "Plaaslike versameling",
+    "Geen wolkoplaai nie",
+    "Een-klik verslae",
+    "Kern metrieke kaarte",
+    "Uitvoere"
+  ],
+  "keywords": [
+    "metrieke",
+    "Gemiddelde FPS",
+    "Gemiddelde CPU",
+    "Gemiddelde geheue",
+    "Android",
+    "Windows",
+    "Verslae"
+  ],
+  "screenshotCaptions": [
+    "Sien prestasie duidelik.",
+    "Kies wat om te toets",
+    "Toets aan die gang",
+    "Toetsresultate"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

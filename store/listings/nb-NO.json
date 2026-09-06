@@ -1,0 +1,34 @@
+{
+  "locale": "nb-NO",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Se ytelsen tydelig. Start fra plattformen du vil teste. LumaTrace vil veilede neste trinn og beholde utilgjengelige beregninger som N/A.",
+  "description": "Se ytelsen tydelig.\n\nStart fra plattformen du vil teste. LumaTrace vil veilede neste trinn og beholde utilgjengelige beregninger som N/A.\n\nWindows: Velg en applikasjon eller spillprosess på denne PC-en, og begynn å teste. Hvis prosessen avsluttes, stopper økten eller registrerer et tydelig avbrudd.\n\nAndroid: Aktiver utvikleralternativer og USB-feilsøking på telefonen, autoriser denne PC-en, åpne appen du vil teste, og klikk deretter Start Test. LumaTrace oppdager forgrunnspakken automatisk.\n\nVelg et testresultat for å vise FPS, 1% low, bildetid, CPU, minne og eksporterte rapporter.\n\nAndroid lagrer en renset ADB logcat for testperioden. Windows lagrer tidsstemplede LumaTrace øktposter.\n\nManglende verdier forblir N/A og blir aldri fylt med 0.\n\nIngen skyopplasting",
+  "features": [
+    "Lokal samling",
+    "Ingen skyopplasting",
+    "Ett-klikks rapporter",
+    "Kjernemetriske diagrammer",
+    "Eksport"
+  ],
+  "keywords": [
+    "beregninger",
+    "Gjennomsnittlig FPS",
+    "Gjennomsnittlig CPU",
+    "Gjennomsnittlig minne",
+    "Android",
+    "Windows",
+    "Rapporter"
+  ],
+  "screenshotCaptions": [
+    "Se ytelsen tydelig.",
+    "Velg hva du vil teste",
+    "Test pågår",
+    "Testresultater"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

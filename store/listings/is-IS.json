@@ -1,0 +1,34 @@
+{
+  "locale": "is-IS",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Sjáðu afköstin skýrt. Byrjaðu á verkvanginum sem á að prófa. LumaTrace leiðir þig í næsta skref og heldur ótiltækum mæligildum sem N/A.",
+  "description": "Sjáðu afköstin skýrt.\n\nByrjaðu á verkvanginum sem á að prófa. LumaTrace leiðir þig í næsta skref og heldur ótiltækum mæligildum sem N/A.\n\nWindows: Veldu forrits- eða leikjaferli í þessari tölvu og byrjaðu prófun. Ef ferlinu lýkur stöðvast prófunin eða skýr truflun er skráð.\n\nAndroid: Virkjaðu þróunarvalkosti og USB-kembingu í símanum, heimilaðu þessa tölvu, opnaðu forritið sem á að prófa og veldu Hefja prófun. LumaTrace finnur sjálfkrafa pakkann í forgrunni.\n\nVeldu niðurstöðu til að skoða FPS, 1% Low, rammatíma, CPU, minni og útfluttar skýrslur.\n\nAndroid vistar hreinsaðan ADB logcat-annál fyrir prófunartímann. Windows vistar LumaTrace-prófunarfærslur með tímastimplum.\n\nGildi sem vantar haldast N/A og eru aldrei fyllt með 0.\n\nEngin skýjaupphleðsla",
+  "features": [
+    "Staðbundin söfnun",
+    "Engin skýjaupphleðsla",
+    "Skýrslur með einum smelli",
+    "Línurit helstu mæligilda",
+    "Útflutningur"
+  ],
+  "keywords": [
+    "mæligildi",
+    "Meðal-FPS",
+    "Meðal-CPU",
+    "Meðalminni",
+    "Android",
+    "Windows",
+    "Skýrslur"
+  ],
+  "screenshotCaptions": [
+    "Sjáðu afköstin skýrt.",
+    "Veldu hvað á að prófa",
+    "Prófun í gangi",
+    "Prófunarniðurstöður"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

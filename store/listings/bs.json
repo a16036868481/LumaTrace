@@ -1,0 +1,34 @@
+{
+  "locale": "bs",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Jasno pratite performanse. Počnite od platforme koju želite testirati. LumaTrace će vas voditi kroz sljedeći korak, a nedostupne metrike zadržati kao N/A.",
+  "description": "Jasno pratite performanse.\n\nPočnite od platforme koju želite testirati. LumaTrace će vas voditi kroz sljedeći korak, a nedostupne metrike zadržati kao N/A.\n\nWindows: Odaberite proces aplikacije ili igre na ovom računaru, a zatim pokrenite test. Ako se proces zatvori, test se zaustavlja ili bilježi jasan prekid.\n\nAndroid: Omogućite opcije za razvojne programere i USB otklanjanje grešaka na telefonu, autorizirajte ovaj računar, otvorite aplikaciju koju želite testirati i kliknite Pokreni test. LumaTrace automatski otkriva paket aplikacije u prvom planu.\n\nOdaberite rezultat testa kako biste vidjeli FPS, 1% Low, vrijeme okvira, CPU, memoriju i izvezene izvještaje.\n\nAndroid čuva očišćeni ADB logcat za vrijeme testa. Windows čuva LumaTrace zapise testa s vremenskim oznakama.\n\nNedostajuće vrijednosti ostaju N/A i nikada se ne popunjavaju nulom.\n\nBez prijenosa u oblak",
+  "features": [
+    "Lokalno prikupljanje",
+    "Bez prijenosa u oblak",
+    "Izvještaji jednim klikom",
+    "Grafikoni ključnih metrika",
+    "Izvozi"
+  ],
+  "keywords": [
+    "metrike",
+    "Prosječni FPS",
+    "Prosječni CPU",
+    "Prosječna memorija",
+    "Android",
+    "Windows",
+    "Izvještaji"
+  ],
+  "screenshotCaptions": [
+    "Jasno pratite performanse.",
+    "Odaberite što želite testirati",
+    "Test je u toku",
+    "Rezultati testova"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

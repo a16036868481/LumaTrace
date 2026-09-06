@@ -1,0 +1,34 @@
+{
+  "locale": "eu-ES",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Ikusi errendimendua argi. Hasi probatu nahi duzun plataformatik. LumaTrace-k hurrengo urratsa gidatuko du eta erabilgarri ez dauden metrikak N/A gisa mantenduko ditu.",
+  "description": "Ikusi errendimendua argi.\n\nHasi probatu nahi duzun plataformatik. LumaTrace-k hurrengo urratsa gidatuko du eta erabilgarri ez dauden metrikak N/A gisa mantenduko ditu.\n\nWindows: Aukeratu aplikazio- edo joko-prozesu bat PC honetan, eta hasi proba. Prozesua amaitzen bada, saioa gelditu edo eten argi bat erregistratuko da.\n\nAndroid: Gaitu Garatzaile-aukerak eta USB arazketa telefonoan, baimendu PC hau, ireki probatu nahi duzun aplikazioa, eta sakatu Hasi proba. LumaTrace-k lehen planoko paketea automatikoki detektatzen du.\n\nAukeratu proba-emaitza bat FPSak, % 1 Low, fotograma-denbora, CPUa, memoria eta esportatutako txostenak ikusteko.\n\nAndroid-ek pribatutasuna babesteko garbitutako ADB logcat bat gordetzen du probaren aldirako. Windows-ek denbora-zigiludun LumaTrace saio-erregistroak gordetzen ditu.\n\nFalta diren balioak N/A gisa geratzen dira eta ez dira inoiz 0rekin betetzen.\n\nEz da hodeira kargatzen",
+  "features": [
+    "Tokiko bilketa",
+    "Ez da hodeira kargatzen",
+    "Klik bakarreko txostenak",
+    "Oinarrizko metriken grafikoak",
+    "Esportazioak"
+  ],
+  "keywords": [
+    "metrikak",
+    "Batez besteko FPS",
+    "Batez besteko CPU",
+    "Batez besteko memoria",
+    "Android",
+    "Windows",
+    "Txostenak"
+  ],
+  "screenshotCaptions": [
+    "Ikusi errendimendua argi.",
+    "Aukeratu zer probatu",
+    "Proba martxan",
+    "Proben emaitzak"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

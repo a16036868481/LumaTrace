@@ -1,0 +1,34 @@
+{
+  "locale": "rw-RW",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Bona imikorere neza. Tangira ku rubuga ushaka kugerageza. LumaTrace izakuyobora ku ntambwe ikurikira kandi ibipimo bitaboneka bizaguma N/A.",
+  "description": "Bona imikorere neza.\n\nTangira ku rubuga ushaka kugerageza. LumaTrace izakuyobora ku ntambwe ikurikira kandi ibipimo bitaboneka bizaguma N/A.\n\nWindows: Hitamo prosesusi ya porogaramu cyangwa umukino kuri iyi PC, hanyuma utangire ikizamini. Iyo prosesusi irangiye, isomo rirahagarara cyangwa rikandika ihagarara risobanutse.\n\nAndroid: Fungura Amahitamo y'Utegura na USB debugging kuri telefoni, wemerere iyi PC, ufungure porogaramu ushaka kugerageza, hanyuma ukande Tangira Ikizamini. LumaTrace ivumbura paki iri imbere mu buryo bwikora.\n\nHitamo igisubizo cy'ikizamini kugira ngo urebe FPS, 1% Low, igihe cya frame, CPU, ububiko, na raporo zasohowe.\n\nAndroid ibika ADB logcat yasukuye y'igihe cy'ikizamini. Windows ibika inyandiko z'isomo rya LumaTrace zifite igihe.\n\nAgaciro kabura kaguma N/A kandi ntigasimbuzwa 0.\n\nNta kohereza mu gicu",
+  "features": [
+    "Ikusanya ryo kuri iki gikoresho",
+    "Nta kohereza mu gicu",
+    "Raporo ku gukanda rimwe",
+    "Imirongo y'Ibipimo by'Ingenzi",
+    "Ibisohoka"
+  ],
+  "keywords": [
+    "ibipimo",
+    "Impuzandengo ya FPS",
+    "Impuzandengo ya CPU",
+    "Impuzandengo y'Ububiko",
+    "Android",
+    "Windows",
+    "Raporo"
+  ],
+  "screenshotCaptions": [
+    "Bona imikorere neza.",
+    "Hitamo icyo kugerageza",
+    "Ikizamini kirakorwa",
+    "Ibisubizo by'Ikizamini"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

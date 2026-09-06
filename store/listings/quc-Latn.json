@@ -1,0 +1,34 @@
+{
+  "locale": "quc-Latn",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Tatz'eta chi saq ri usamaj. Tikirisaj ruk' ri nuk'ulem katraj katijtob'ej. LumaTrace nucholajij ri jun chik q'at, ri etab'alil man k'o ta kewa' N/A.",
+  "description": "Tatz'eta chi saq ri usamaj.\n\nTikirisaj ruk' ri nuk'ulem katraj katijtob'ej. LumaTrace nucholajij ri jun chik q'at, ri etab'alil man k'o ta kewa' N/A.\n\nWindows: Cha' jun app o etz'anem process pa we PC, k'a te ri' tikirisaj ri etab'al. We nitz'apix ri process, niq'at ri session o nitz'ib'ax jun q'alaj q'atoj.\n\nAndroid: Pa ri oyonib'al tikirisaj Developer options xuquje' USB debugging, ya' q'ij che ri PC, jaq ri app katraj katijtob'ej, k'a te ri' pitz'a Tikirisaj ri etab'al. LumaTrace nretamaj pa rib'il rib' ri package k'o chuwäch.\n\nCha' jun xk'ulmatajik rech katz'eta FPS, 1% low, frame time, CPU, memory xuquje' ri taq utzijoxik elesam.\n\nAndroid nukol jun ch'ajch'ojirisam ADB logcat pa ri ramaj etab'al. Windows nukol taq LumaTrace session record ruk' retab'al ramaj.\n\nRi rajil man k'o ta kewa' N/A, man kenojisax ta ruk' 0.\n\nMan netaq pa cloud ta",
+  "features": [
+    "K'amab'al pa we k'olib'al",
+    "Man netaq pa cloud ta",
+    "Utzijoxik ruk' jun pitz'",
+    "Taq k'ux chart rech etab'alil",
+    "Elesab'al"
+  ],
+  "keywords": [
+    "Etab'alil",
+    "Nik'aj FPS",
+    "Nik'aj CPU",
+    "Nik'aj Memory",
+    "Android",
+    "Windows",
+    "Taq utzijoxik"
+  ],
+  "screenshotCaptions": [
+    "Tatz'eta chi saq ri usamaj.",
+    "Cha' ri katijtob'ej",
+    "Tajin nib'an ri etab'al",
+    "Ri xk'ulmatajik pa ri etab'al"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

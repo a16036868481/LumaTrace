@@ -1,0 +1,34 @@
+{
+  "locale": "gu-IN",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "કાર્યક્ષમતા સ્પષ્ટ રીતે જુઓ. તમે જે પ્લેટફોર્મનું પરીક્ષણ કરવા માંગો છો ત્યાંથી શરૂ કરો. LumaTrace આગલા પગલાંમાં માર્ગદર્શન આપશે અને ઉપલબ્ધ ન હોય તેવા મેટ્રિક્સ N/A રાખશે.",
+  "description": "કાર્યક્ષમતા સ્પષ્ટ રીતે જુઓ.\n\nતમે જે પ્લેટફોર્મનું પરીક્ષણ કરવા માંગો છો ત્યાંથી શરૂ કરો. LumaTrace આગલા પગલાંમાં માર્ગદર્શન આપશે અને ઉપલબ્ધ ન હોય તેવા મેટ્રિક્સ N/A રાખશે.\n\nWindows: આ PC પર એપ અથવા ગેમ પ્રક્રિયા પસંદ કરીને પરીક્ષણ શરૂ કરો. પ્રક્રિયા બંધ થાય તો સત્ર અટકશે અથવા સ્પષ્ટ વિક્ષેપ નોંધશે.\n\nAndroid: ફોનમાં Developer options અને USB debugging સક્ષમ કરો, આ PC ને અધિકૃત કરો, પરીક્ષણ કરવાની એપ ખોલો, પછી પરીક્ષણ શરૂ કરો ક્લિક કરો. LumaTrace અગ્રભાગનું પેકેજ આપમેળે શોધે છે.\n\nFPS, 1% Low, ફ્રેમ સમય, CPU, મેમરી અને નિકાસ કરેલા અહેવાલ જોવા પરીક્ષણ પરિણામ પસંદ કરો.\n\nAndroid પરીક્ષણ સમયગાળા માટે ગોપનીયતા-સુરક્ષિત ADB logcat સાચવે છે. Windows સમયમુદ્રાવાળા LumaTrace સત્ર રેકોર્ડ સાચવે છે.\n\nગુમ મૂલ્યો N/A રહે છે અને ક્યારેય 0 ભરાતા નથી.\n\nક્લાઉડ પર અપલોડ નહીં",
+  "features": [
+    "સ્થાનિક સંગ્રહ",
+    "ક્લાઉડ પર અપલોડ નહીં",
+    "એક-ક્લિક અહેવાલો",
+    "મુખ્ય મેટ્રિક ચાર્ટ્સ",
+    "નિકાસો"
+  ],
+  "keywords": [
+    "મેટ્રિક્સ",
+    "સરેરાશ FPS",
+    "સરેરાશ CPU",
+    "સરેરાશ મેમરી",
+    "Android",
+    "Windows",
+    "અહેવાલો"
+  ],
+  "screenshotCaptions": [
+    "કાર્યક્ષમતા સ્પષ્ટ રીતે જુઓ.",
+    "શું પરીક્ષણ કરવું તે પસંદ કરો",
+    "પરીક્ષણ ચાલુ છે",
+    "પરીક્ષણ પરિણામો"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

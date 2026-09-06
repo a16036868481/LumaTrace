@@ -1,0 +1,34 @@
+{
+  "locale": "mt-MT",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Ara l-prestazzjoni b'mod ċar. Ibda mill-pjattaforma li trid tittestja. LumaTrace jiggwidak għall-pass li jmiss u jżomm il-metriċi mhux disponibbli bħala N/A.",
+  "description": "Ara l-prestazzjoni b'mod ċar.\n\nIbda mill-pjattaforma li trid tittestja. LumaTrace jiggwidak għall-pass li jmiss u jżomm il-metriċi mhux disponibbli bħala N/A.\n\nWindows: Agħżel proċess ta' app jew logħba fuq dan il-PC, imbagħad ibda l-ittestjar. Jekk il-proċess jieqaf, is-sessjoni tieqaf jew tirreġistra interruzzjoni ċara.\n\nAndroid: Attiva l-Għażliet tal-iżviluppatur u d-debugging USB fuq it-telefon, awtorizza dan il-PC, iftaħ l-app li trid tittestja, imbagħad ikklikkja Ibda t-test. LumaTrace jiskopri awtomatikament il-pakkett tal-app fuq quddiem.\n\nAgħżel riżultat tat-test biex tara l-FPS, l-1% Low, il-ħin tal-frame, is-CPU, il-memorja u r-rapporti esportati.\n\nAndroid isalva ADB logcat sanitizzat għall-perjodu tat-test. Windows isalva r-rekords tas-sessjoni LumaTrace b'timestamps.\n\nIl-valuri nieqsa jibqgħu N/A u qatt ma jimtlew b'0.\n\nEbda upload fil-cloud",
+  "features": [
+    "Ġbir lokali",
+    "Ebda upload fil-cloud",
+    "Rapporti b'klikk waħda",
+    "Grafiċi tal-metriċi ewlenin",
+    "Esportazzjonijiet"
+  ],
+  "keywords": [
+    "metriċi",
+    "FPS medju",
+    "CPU medju",
+    "Memorja medja",
+    "Android",
+    "Windows",
+    "Rapporti"
+  ],
+  "screenshotCaptions": [
+    "Ara l-prestazzjoni b'mod ċar.",
+    "Agħżel x'tittestja",
+    "Test għaddej",
+    "Riżultati tat-test"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

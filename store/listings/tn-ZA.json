@@ -1,0 +1,34 @@
+{
+  "locale": "tn-ZA",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Bona tiragatso sentle. Simolola mo seraleng se o batlang go se leka. LumaTrace e tla go kaela mo kgatong e e latelang mme e boloke ditekanyo tse di seyong e le N/A.",
+  "description": "Bona tiragatso sentle.\n\nSimolola mo seraleng se o batlang go se leka. LumaTrace e tla go kaela mo kgatong e e latelang mme e boloke ditekanyo tse di seyong e le N/A.\n\nWindows: Tlhopha porosesi ya tiriso kgotsa motshameko mo PC eno, mme o simolole teko. Fa porosesi e tswa, seshene e a ema kgotsa e kwala kgoreletso e e bonalang.\n\nAndroid: Dira gore Dikgetho tsa Motlhabolodi le USB debugging di dire mo founong, letlelela PC eno, bula tiriso e o batlang go e leka, mme o tobetse Simolola Teko. LumaTrace e bona pakete e e kwa pele ka go itirisa.\n\nTlhopha pholo ya teko go bona FPS, 1% Low, nako ya frame, CPU, memori le dipego tse di rometsweng ntle.\n\nAndroid e boloka ADB logcat e e phepafaditsweng ya nako ya teko. Windows e boloka diloko tsa seshene ya LumaTrace tse di nang le nako.\n\nBoleng jo bo seyong bo nna N/A mme ga bo tsenngwe 0.\n\nGa go romelwe kwa lerung",
+  "features": [
+    "Kgobokanyo mo sedirisiweng",
+    "Ga go romelwe kwa lerung",
+    "Dipego ka go tobetsa gangwe",
+    "Dikerafo tsa Ditekanyo tsa Botlhokwa",
+    "Dithomelontle"
+  ],
+  "keywords": [
+    "ditekanyo",
+    "Palogare ya FPS",
+    "Palogare ya CPU",
+    "Palogare ya Memori",
+    "Android",
+    "Windows",
+    "Dipego"
+  ],
+  "screenshotCaptions": [
+    "Bona tiragatso sentle.",
+    "Tlhopha se se tla lekwang",
+    "Teko e a dira",
+    "Dipholo tsa Teko"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

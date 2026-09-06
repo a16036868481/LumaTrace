@@ -1,0 +1,34 @@
+{
+  "locale": "mn-MN",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Гүйцэтгэлийг тодорхой хар. Турших платформоос эхэлнэ үү. LumaTrace дараагийн алхмыг зааж, боломжгүй хэмжүүрийг N/A хэвээр үлдээнэ.",
+  "description": "Гүйцэтгэлийг тодорхой хар.\n\nТурших платформоос эхэлнэ үү. LumaTrace дараагийн алхмыг зааж, боломжгүй хэмжүүрийг N/A хэвээр үлдээнэ.\n\nWindows: Энэ PC дээр апп эсвэл тоглоомын процесс сонгож туршилт эхлүүлнэ үү. Процесс хаагдвал сесс зогсох эсвэл тодорхой тасалдлыг тэмдэглэнэ.\n\nAndroid: Утсанд Developer options ба USB debugging-г идэвхжүүлж, энэ PC-г зөвшөөрөн, турших аппыг нээгээд Туршилт эхлүүлэхийг дарна уу. LumaTrace урд талын багцыг автоматаар илрүүлнэ.\n\nFPS, 1% Low, фреймийн хугацаа, CPU, санах ой болон экспортолсон тайланг харахын тулд туршилтын үр дүн сонгоно уу.\n\nAndroid туршилтын хугацаанд цэвэрлэсэн ADB logcat хадгална. Windows хугацааны тэмдэгтэй LumaTrace сессийн бичлэг хадгална.\n\nАлга болсон утга N/A хэвээр байх бөгөөд хэзээ ч 0-ээр бөглөгдөхгүй.\n\nҮүлэнд байршуулахгүй",
+  "features": [
+    "Дотоод цуглуулга",
+    "Үүлэнд байршуулахгүй",
+    "Нэг товшилтын тайлан",
+    "Гол хэмжүүрийн график",
+    "Экспортууд"
+  ],
+  "keywords": [
+    "хэмжүүрүүд",
+    "Дундаж FPS",
+    "Дундаж CPU",
+    "Дундаж санах ой",
+    "Android",
+    "Windows",
+    "Тайлангууд"
+  ],
+  "screenshotCaptions": [
+    "Гүйцэтгэлийг тодорхой хар.",
+    "Юуг туршихаа сонгоно уу",
+    "Туршилт явагдаж байна",
+    "Туршилтын үр дүн"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

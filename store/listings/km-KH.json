@@ -1,0 +1,34 @@
+{
+  "locale": "km-KH",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "មើលឃើញប្រសិទ្ធភាពយ៉ាងច្បាស់។ ចាប់ផ្តើមពីវេទិកាដែលអ្នកចង់សាកល្បង។ LumaTrace នឹងណែនាំជំហានបន្ទាប់ និងរក្សារង្វាស់ដែលមិនអាចប្រើបានជា N/A។",
+  "description": "មើលឃើញប្រសិទ្ធភាពយ៉ាងច្បាស់។\n\nចាប់ផ្តើមពីវេទិកាដែលអ្នកចង់សាកល្បង។ LumaTrace នឹងណែនាំជំហានបន្ទាប់ និងរក្សារង្វាស់ដែលមិនអាចប្រើបានជា N/A។\n\nWindows: ជ្រើសរើសដំណើរការកម្មវិធី ឬហ្គេមនៅលើ PC នេះ ហើយចាប់ផ្តើមសាកល្បង។ បើដំណើរការបិទ សម័យនឹងឈប់ ឬកត់ត្រាការរំខានយ៉ាងច្បាស់។\n\nAndroid: បើក Developer options និង USB debugging នៅលើទូរសព្ទ អនុញ្ញាត PC នេះ បើកកម្មវិធីដែលចង់សាកល្បង ហើយចុច ចាប់ផ្តើមសាកល្បង។ LumaTrace រកឃើញ package ខាងមុខដោយស្វ័យប្រវត្តិ។\n\nជ្រើសរើសលទ្ធផលសាកល្បង ដើម្បីមើល FPS, 1% low, frame time, CPU, អង្គចងចាំ និងរបាយការណ៍ដែលបាននាំចេញ។\n\nAndroid រក្សាទុក ADB logcat ដែលបានសម្អាតសម្រាប់រយៈពេលសាកល្បង។ Windows រក្សាទុកកំណត់ត្រាសម័យ LumaTrace ដែលមានពេលវេលា។\n\nតម្លៃដែលខ្វះនៅជា N/A ហើយមិនត្រូវបានបំពេញដោយ 0 ទេ។\n\nមិនផ្ទុកឡើង Cloud",
+  "features": [
+    "ប្រមូលក្នុងម៉ាស៊ីន",
+    "មិនផ្ទុកឡើង Cloud",
+    "របាយការណ៍ដោយចុចម្តង",
+    "ក្រាហ្វរង្វាស់សំខាន់",
+    "ការនាំចេញ"
+  ],
+  "keywords": [
+    "រង្វាស់",
+    "FPS មធ្យម",
+    "CPU មធ្យម",
+    "អង្គចងចាំមធ្យម",
+    "Android",
+    "Windows",
+    "របាយការណ៍"
+  ],
+  "screenshotCaptions": [
+    "មើលឃើញប្រសិទ្ធភាពយ៉ាងច្បាស់។",
+    "ជ្រើសរើសអ្វីដែលត្រូវសាកល្បង",
+    "ការសាកល្បងកំពុងដំណើរការ",
+    "លទ្ធផលសាកល្បង"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

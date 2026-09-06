@@ -1,0 +1,34 @@
+{
+  "locale": "pt",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Veja o desempenho\nMelhore a experiência Comece pela plataforma que deseja testar. LumaTrace orientará a próxima etapa e manterá as métricas indisponíveis como N/A.",
+  "description": "Veja o desempenho\nMelhore a experiência\n\nComece pela plataforma que deseja testar. LumaTrace orientará a próxima etapa e manterá as métricas indisponíveis como N/A.\n\nWindows: Escolha um aplicativo ou processo de jogo neste PC e comece a testar. Se o processo for encerrado, a sessão será interrompida ou registrará uma interrupção clara.\n\nAndroid: Ative as opções do desenvolvedor e a depuração USB no telefone, autorize este PC, abra o aplicativo que deseja testar e clique em Iniciar teste. LumaTrace detecta o pacote em primeiro plano automaticamente.\n\nEscolha um resultado de teste recente para visualizar FPS, 1% baixo, tempo de quadro, CPU, memória e relatór exportados.\n\nO Android salva um ADB logcat higienizado durante o teste. O Windows salva eventos de coleta do LumaTrace com data e hora.\n\nOs valores ausentes permanecem N/A e nunca são preenchidos com 0.\n\nSem envio para a nuvem",
+  "features": [
+    "Recolha local",
+    "Sem envio para a nuvem",
+    "Relatórios num clique",
+    "Gráficos de métricas principais",
+    "Exportações"
+  ],
+  "keywords": [
+    "métricas",
+    "FPS médio",
+    "CPU média",
+    "Memória média",
+    "Android",
+    "Windows",
+    "Relatór"
+  ],
+  "screenshotCaptions": [
+    "Veja o desempenho\nMelhore a experiência",
+    "Escolha o que deseja teste",
+    "Teste em andamento",
+    "Resultados do teste"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

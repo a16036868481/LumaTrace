@@ -1,0 +1,34 @@
+{
+  "locale": "prs-AF",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "کارایی را روشن ببینید. از پلتفرم مورد نظر آغاز کنید. LumaTrace گام بعدی را نشان می‌دهد و معیارهای دسترس‌ناپذیر را N/A نگه می‌دارد.",
+  "description": "کارایی را روشن ببینید.\n\nاز پلتفرم مورد نظر آغاز کنید. LumaTrace گام بعدی را نشان می‌دهد و معیارهای دسترس‌ناپذیر را N/A نگه می‌دارد.\n\nWindows: یک پردازش برنامه یا بازی را در این کمپیوتر انتخاب و آزمون را آغاز کنید. اگر پردازش بسته شود، نشست متوقف می‌شود یا وقفه را به‌روشنی ثبت می‌کند.\n\nAndroid: گزینه‌های برنامه‌نویس و اشکال‌زدایی USB را در تلفن فعال کنید، به این کمپیوتر اجازه دهید، برنامه مورد نظر را باز کنید و «آغاز آزمون» را بزنید. LumaTrace بسته پیش‌زمینه را خودکار تشخیص می‌دهد.\n\nیک نتیجه را برای دیدن FPS، 1% Low، زمان فریم، CPU، حافظه و گزارش‌های خروجی انتخاب کنید.\n\nAndroid یک ADB logcat ضدعفونی‌شده از زمان آزمون ذخیره می‌کند. Windows رویدادهای نشست LumaTrace را با زمان ثبت می‌کند.\n\nمقادیر از دست رفته N/A باقی می مانند و هرگز با 0 پر نمی شوند.\n\nبدون بارگذاری ابری",
+  "features": [
+    "گردآوری محلی",
+    "بدون بارگذاری ابری",
+    "گزارش با یک کلیک",
+    "نمودار معیارهای اصلی",
+    "خروجی‌ها"
+  ],
+  "keywords": [
+    "معیارها",
+    "میانگین FPS",
+    "میانگین CPU",
+    "میانگین حافظه",
+    "Android",
+    "Windows",
+    "گزارش‌ها"
+  ],
+  "screenshotCaptions": [
+    "کارایی را روشن ببینید.",
+    "انتخاب کنید چه چیزی را آزمایش کنید",
+    "آزمون در حال اجرا است",
+    "نتایج آزمون"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

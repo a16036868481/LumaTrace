@@ -1,0 +1,34 @@
+{
+  "locale": "ro-RO",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Vedeți clar performanța. Începeți de la platforma pe care doriți să o testați. LumaTrace va ghida pasul următor și va păstra valorile indisponibile ca N/A.",
+  "description": "Vedeți clar performanța.\n\nÎncepeți de la platforma pe care doriți să o testați. LumaTrace va ghida pasul următor și va păstra valorile indisponibile ca N/A.\n\nWindows: Alegeți o aplicație sau un proces de joc pe acest computer, apoi începeți testarea. Dacă procesul iese, sesiunea se oprește sau înregistrează o întrerupere clară.\n\nAndroid: Activați opțiunile pentru dezvoltatori și depanarea USB pe telefon, autorizați acest computer, deschideți aplicația pe care doriți să o testați, apoi faceți clic pe Start Test. LumaTrace detectează automat pachetul din prim-plan.\n\nAlegeți un rezultat al testului pentru a vizualiza FPS, 1% low, timpul cadru, CPU, memoria și rapoartele exportate.\n\nAndroid salvează un ADB logcat igienizat pentru perioada de testare. Windows salvează înregistrările de sesiune LumaTrace marcate cu ora.\n\nValorile lipsă rămân N/A și nu sunt niciodată completate cu 0.\n\nFără încărcare în cloud",
+  "features": [
+    "Colecție locală",
+    "Fără încărcare în cloud",
+    "Rapoarte cu un singur clic",
+    "Diagrame de metrică de bază",
+    "Exporturi"
+  ],
+  "keywords": [
+    "metrici",
+    "FPS medie",
+    "CPU medie",
+    "Memorie medie",
+    "Android",
+    "Windows",
+    "Rapoarte"
+  ],
+  "screenshotCaptions": [
+    "Vedeți clar performanța.",
+    "Alegeți ce să testați",
+    "Test în curs",
+    "Rezultatele testelor"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

@@ -1,0 +1,34 @@
+{
+  "locale": "fr-CA",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Comprendre les performances\nAméliorer l’expérience Démarrez à partir de la plateforme que vous souhaitez tester. LumaTrace guidera l'étape suivante et conservera les métriques indisponibles comme N/A.",
+  "description": "Comprendre les performances\nAméliorer l’expérience\n\nDémarrez à partir de la plateforme que vous souhaitez tester. LumaTrace guidera l'étape suivante et conservera les métriques indisponibles comme N/A.\n\nWindows: Choisissez une application ou un processus de jeu sur ce PC, puis commencez les tests. Si le processus se termine, la session s'arrête ou enregistre une interruption nette.\n\nAndroid: Activez les options de développement et le débogage USB sur le téléphone, autorisez ce PC, ouvrez l'application que vous souhaitez tester, puis cliquez sur Démarrer le test. LumaTrace détecte automatiquement le package de premier plan.\n\nChoisissez un résultat pour afficher les FPS, le 1% Low, le temps d’image, le CPU, la mémoire et les rapports exportés.\n\nAndroid enregistre un ADB logcat nettoyé pour la durée du test. Windows enregistre les événements LumaTrace horodatés.\n\nLes valeurs manquantes restent N/A et ne sont jamais remplies avec 0.\n\nAucun envoi dans le nuage",
+  "features": [
+    "Collecte locale",
+    "Aucun envoi dans le nuage",
+    "Rapports en un clic",
+    "Graphiques de métriques de base",
+    "Exportations"
+  ],
+  "keywords": [
+    "métriques",
+    "FPS moyen",
+    "CPU moyen",
+    "Mémoire moyenne",
+    "Android",
+    "Windows",
+    "Rapports"
+  ],
+  "screenshotCaptions": [
+    "Comprendre les performances\nAméliorer l’expérience",
+    "Choisissez ce que vous souhaitez tester",
+    "Test en cours",
+    "Résultats des tests"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

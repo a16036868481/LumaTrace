@@ -1,0 +1,34 @@
+{
+  "locale": "fi-FI",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Katso suorituskyky selkeästi. Aloita alustalta, jota haluat testata. LumaTrace ohjaa seuraavaa vaihetta ja pitää saatavilla olevat mittarit muodossa N/A.",
+  "description": "Katso suorituskyky selkeästi.\n\nAloita alustalta, jota haluat testata. LumaTrace ohjaa seuraavaa vaihetta ja pitää saatavilla olevat mittarit muodossa N/A.\n\nWindows: Valitse sovellus tai peliprosessi tällä tietokoneella ja aloita testaus. Jos prosessi päättyy, istunto pysähtyy tai tallentaa selvän keskeytyksen.\n\nAndroid: Ota kehittäjäasetukset ja USB-virheenkorjaus käyttöön puhelimessa, valtuuta tämä tietokone, avaa testattava sovellus ja napsauta sitten Aloita testi. LumaTrace tunnistaa etualan paketin automaattisesti.\n\nValitse testitulos tarkastellaksesi FPS, 1% low, kehysaikaa, CPU, muistia ja vietyjä raportteja.\n\nAndroid säästää desinfioidun ADB logcat:n testijakson ajaksi. Windows tallentaa aikaleimattuja LumaTrace-istuntotietueita.\n\nPuuttuvat arvot pysyvät N/A, eikä niitä koskaan täytetä nollalla.\n\nEi pilvilatausta",
+  "features": [
+    "Paikallinen kokoelma",
+    "Ei pilvilatausta",
+    "Raportit yhdellä napsautuksella",
+    "Ydinmittarikaaviot",
+    "Vienti"
+  ],
+  "keywords": [
+    "mittareita",
+    "Keskimääräinen FPS",
+    "Keskimääräinen CPU",
+    "Keskimääräinen muisti",
+    "Android",
+    "Windows",
+    "Raportit"
+  ],
+  "screenshotCaptions": [
+    "Katso suorituskyky selkeästi.",
+    "Valitse mitä testaat",
+    "Testi käynnissä",
+    "Testitulokset"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

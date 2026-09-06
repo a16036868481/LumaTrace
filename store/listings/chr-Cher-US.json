@@ -1,0 +1,34 @@
+{
+  "locale": "chr-Cher-US",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "ᎾᎦᎵᏍᏓᏁᎲ ᎬᏂᎨᏒ ᎯᎪᏩᏘ. ᎭᎴᏂᏍᎩ ᎾᎿ ᏅᏓᏳᏓᎴᏅᎯ ᎬᏙᏗ ᏚᏓᎴᎾ ᏂᎯ ᎣᏏ ᏱᏣᏰᎸᏍᏗ ᎾᎿ ᎪᎵᏰᏍᏗ. LumaTrace ᏛᎵᏍᏔᏂ ᎠᏓᏎᎮᎯ ᎣᏂ ᎢᏴᏛ ᎠᎢᏒ ᎢᏴᏛ ᎠᎴ ᎠᏍᏆᏂᎪᏙᏗ Ꮭ ᎠᏛᏅᎢᏍᏔᏅ ᏗᎦᏟᎶᏍᏗ ᎾᏍᎩ N/A.",
+  "description": "ᎾᎦᎵᏍᏓᏁᎲ ᎬᏂᎨᏒ ᎯᎪᏩᏘ.\n\nᎭᎴᏂᏍᎩ ᎾᎿ ᏅᏓᏳᏓᎴᏅᎯ ᎬᏙᏗ ᏚᏓᎴᎾ ᏂᎯ ᎣᏏ ᏱᏣᏰᎸᏍᏗ ᎾᎿ ᎪᎵᏰᏍᏗ. LumaTrace ᏛᎵᏍᏔᏂ ᎠᏓᏎᎮᎯ ᎣᏂ ᎢᏴᏛ ᎠᎢᏒ ᎢᏴᏛ ᎠᎴ ᎠᏍᏆᏂᎪᏙᏗ Ꮭ ᎠᏛᏅᎢᏍᏔᏅ ᏗᎦᏟᎶᏍᏗ ᎾᏍᎩ N/A.\n\nWindows: ᎯᏑᏰᏍᏓ ᎬᏙᏗ ᎠᎴᏱ ᎠᏁᏦᏗ ᎠᏛᏁᎵᏙᎲ ᎾᎿ ᎯᎠ PC, ᎿᏉ ᎭᎴᏂᏍᎩ ᎪᎵᏰᏍᏗ. ᎢᏳᏃ ᎠᏛᏁᎵᏙᎲ ᎠᏄᎪᏗ, ᎪᎵᏰᏍᏗ ᎢᏳᏟᎶᏛ ᎠᎴᏫᏍᏙᏗ ᎠᎴᏱ ᏄᎵᏍᏔᏂᏙᎸ ᎪᏪᎵ ᎯᎳᏏ ᎠᏓᏲᏍᏓᏁᎸᎩ.\n\nAndroid: ᎭᎴᏂᏍᎩ Developer ᏗᏑᏰᏓ ᎠᎴ USB ᎤᏲ ᎠᏩᏛᏗ ᎾᎿ ᎦᏃᎯᎵᏙᎯ, ᎠᎵᏍᎪᏟᏙᏗᎢ ᎯᎠ PC, ᎭᏍᏚᎢ ᎬᏙᏗ ᏂᎯ ᎣᏏ ᏱᏣᏰᎸᏍᏗ ᎾᎿ ᎪᎵᏰᏍᏗ, ᎿᏉ ᎭᏐᏅᏍᏓ ᎭᎴᏂᏍᎩ ᎪᎵᏰᏍᏗ. LumaTrace ᎠᏩᏛᏗ ᎢᎬᏱ ᎢᎬᎾᏕᎾ ᎦᏅᏗ ᎠᏍᏆᏛ ᎤᏩᏒ ᏂᎬᏁᎲ.\n\nᎯᏑᏰᏍᏓ ᎪᎵᏰᏍᏗ ᎾᏍᎩ ᎬᏩᏓᎴᏅᏓ ᎾᎿ ᎠᎪᎵᏰᏗ FPS, 1% ᎡᎳᏗ, ᎦᏘᏅᏛᏙᏗ ᎢᏳᏟᎶᏛ, CPU, ᎠᏅᏓᏗᏍᏙ, ᎠᎴ ᏗᏅᏛ ᎧᏃᎮᏓ.\n\nAndroid ᎠᏍᏆᏂᎪᏙᏗ ᎤᏕᎵᏛ ᎠᎲᎯ ADB logcat ᎾᎿ ᎬᏙᏗ ᎪᎵᏰᏍᏗ ᎢᏳᏟᎶᏛ. Windows ᎠᏍᏆᏂᎪᏙᏗ ᎢᏳᏟᎶᏛ ᎪᏪᎳᏅᎯ LumaTrace ᎪᎵᏰᏍᏗ ᎢᏳᏟᎶᏛ ᏄᎵᏍᏔᏂᏙᎸ ᎪᏪᎵ.\n\nᏝ ᎠᏯᎢ ᎠᎬᏩᏛᏗ ᎠᏍᏆᏂᎪᏙᏗ N/A ᎠᎴ ᎨᏒ ᎥᏝ ᎢᎸᎯᏳ ᎠᎧᎵᏨᎯ ᎠᏁᎳᏗᏍᏗ 0.\n\nᎥᏝ ᎠᏏᎳᏕᏫᏒᎢ ᏗᏅᏗ",
+  "features": [
+    "ᎾᎿ ᎨᏒ ᎦᏟᏌᏅᎢ",
+    "ᎥᏝ ᎠᏏᎳᏕᏫᏒᎢ ᏗᏅᏗ",
+    "ᏌᏊ-ᎭᏐᏅᏍᏓ ᎧᏃᎮᏓ",
+    "ᎤᎬᏫᏳᎯ ᎦᏟᎶᏍᏗ ᏗᏟᎶᏍᏗ ᎧᏃᎮᏢᏍᎩ",
+    "ᏗᏅᏗ"
+  ],
+  "keywords": [
+    "ᏗᎦᏟᎶᏍᏗ",
+    "ᎤᏠᏱ ᎢᎦᏛ FPS",
+    "ᎤᏠᏱ ᎢᎦᏛ CPU",
+    "ᎤᏠᏱ ᎢᎦᏛ ᎠᏅᏓᏗᏍᏙ",
+    "Android",
+    "Windows",
+    "ᎧᏃᎮᏓ"
+  ],
+  "screenshotCaptions": [
+    "ᎾᎦᎵᏍᏓᏁᎲ ᎬᏂᎨᏒ ᎯᎪᏩᏘ.",
+    "ᎯᏑᏰᏍᏓ ᎦᏙ ᎾᎿ ᎪᎵᏰᏍᏗ",
+    "ᎪᎵᏰᏍᏗ ᎭᏫᏂ ᎾᏛᏁᎲ",
+    "ᎪᎵᏰᏍᏗ ᎾᏍᎩ ᎬᏩᏓᎴᏅᏓ"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

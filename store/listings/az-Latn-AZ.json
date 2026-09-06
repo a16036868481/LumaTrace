@@ -1,0 +1,34 @@
+{
+  "locale": "az-Latn-AZ",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Performansı aydın görün. Sınaqdan keçirmək istədiyiniz platformadan başlayın. LumaTrace növbəti addımı göstərəcək və əlçatan olmayan göstəriciləri N/A saxlayacaq.",
+  "description": "Performansı aydın görün.\n\nSınaqdan keçirmək istədiyiniz platformadan başlayın. LumaTrace növbəti addımı göstərəcək və əlçatan olmayan göstəriciləri N/A saxlayacaq.\n\nWindows: Bu PC-də tətbiq və ya oyun prosesini seçin, sonra sınağa başlayın. Proses bağlanarsa, seans dayanacaq və ya aydın bir kəsinti qeydi yaradacaq.\n\nAndroid: Telefonda Tərtibatçı seçimlərini və USB sazlamanı aktiv edin, bu PC-yə icazə verin, sınaqdan keçirmək istədiyiniz tətbiqi açın, sonra Sınağa başla düyməsini basın. LumaTrace ön plandakı paketi avtomatik aşkarlayır.\n\nFPS, 1% Low, kadr vaxtı, CPU, yaddaş və ixrac edilmiş hesabatlara baxmaq üçün sınaq nəticəsi seçin.\n\nAndroid sınaq müddəti üçün məxfiliyi qorunmuş ADB logcat saxlayır. Windows vaxt nişanlı LumaTrace seans qeydlərini saxlayır.\n\nÇatışmayan dəyərlər N/A qalır və heç vaxt 0-la doldurulmur.\n\nBuluda yükləmə yoxdur",
+  "features": [
+    "Yerli toplama",
+    "Buluda yükləmə yoxdur",
+    "Bir kliklə hesabatlar",
+    "Əsas göstərici qrafikləri",
+    "İxraclar"
+  ],
+  "keywords": [
+    "göstəricilər",
+    "Orta FPS",
+    "Orta CPU",
+    "Orta yaddaş",
+    "Android",
+    "Windows",
+    "Hesabatlar"
+  ],
+  "screenshotCaptions": [
+    "Performansı aydın görün.",
+    "Nəyi sınaqdan keçirəcəyinizi seçin",
+    "Sınaq davam edir",
+    "Sınaq nəticələri"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

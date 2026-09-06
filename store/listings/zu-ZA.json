@@ -1,0 +1,34 @@
+{
+  "locale": "zu-ZA",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Bona ukusebenza ngokucacile. Qala ngenkundla ofuna ukuyihlola. I-LumaTrace izokuqondisa esinyathelweni esilandelayo futhi igcine amamethrikhi angatholakali njenge-N/A.",
+  "description": "Bona ukusebenza ngokucacile.\n\nQala ngenkundla ofuna ukuyihlola. I-LumaTrace izokuqondisa esinyathelweni esilandelayo futhi igcine amamethrikhi angatholakali njenge-N/A.\n\nWindows: Khetha inqubo yohlelo lokusebenza noma igeyimu kule khompyutha, bese uqala ukuhlola. Uma inqubo iphuma, ukuhlola kuyama noma kurekhodwe ukuphazamiseka okucacile.\n\nAndroid: Vula izinketho zonjiniyela nokulungisa amaphutha nge-USB efonini, ugunyaze le khompyutha, uvule uhlelo lokusebenza ofuna ukulihlola, bese uchofoza Qala Ukuhlola. I-LumaTrace ithola ngokuzenzakalela iphakheji elingaphambili.\n\nKhetha umphumela ukuze ubuke i-FPS, i-1% Low, isikhathi sozimele, i-CPU, imemori nemibiko ekhishiwe.\n\nI-Android igcina i-ADB logcat ehlanziwe yesikhathi sokuhlola. I-Windows igcina amarekhodi eseshini ye-LumaTrace anezikhathi.\n\nAmanani angekho ahlala eyi-N/A futhi awagcwaliswa ngo-0.\n\nAkukho ukulayisha efwini",
+  "features": [
+    "Ukuqoqa endaweni",
+    "Akukho ukulayisha efwini",
+    "Imibiko ngokuchofoza okukodwa",
+    "Amagrafu amamethrikhi abalulekile",
+    "Okukhishiwe"
+  ],
+  "keywords": [
+    "amamethrikhi",
+    "Isilinganiso se-FPS",
+    "Isilinganiso se-CPU",
+    "Isilinganiso sememori",
+    "Android",
+    "Windows",
+    "Imibiko"
+  ],
+  "screenshotCaptions": [
+    "Bona ukusebenza ngokucacile.",
+    "Khetha okuzohlolwa",
+    "Ukuhlola kuyaqhubeka",
+    "Imiphumela Yokuhlola"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

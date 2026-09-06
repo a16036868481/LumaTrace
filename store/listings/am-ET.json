@@ -1,0 +1,34 @@
+{
+  "locale": "am-ET",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "አፈፃፀሙን በግልፅ ይመልከቱ። መሞከር ከሚፈልጉት መድረክ ይጀምሩ። LumaTrace ቀጣዩን ደረጃ ይመራዋል እና የማይገኙ መለኪያዎችን እንደ N/A ያስቀምጣል።",
+  "description": "አፈፃፀሙን በግልፅ ይመልከቱ።\n\nመሞከር ከሚፈልጉት መድረክ ይጀምሩ። LumaTrace ቀጣዩን ደረጃ ይመራዋል እና የማይገኙ መለኪያዎችን እንደ N/A ያስቀምጣል።\n\nWindows: በዚህ ፒሲ ላይ መተግበሪያ ወይም የጨዋታ ሂደት ይምረጡ እና ከዚያ መሞከር ይጀምሩ። ሂደቱ ከወጣ, ክፍለ-ጊዜው ይቆማል ወይም ግልጽ የሆነ መቆራረጥን ይመዘግባል.\n\nAndroid: የገንቢ አማራጮችን አንቃ እና USB ስልኩ ላይ ማረም ፣ለዚህ ፒሲ ፍቃድ ይስጡ ፣መሞከር የሚፈልጉትን መተግበሪያ ይክፈቱ እና የጀምር ሙከራን ጠቅ ያድርጉ። LumaTrace የፊት እሽግ በራስ-ሰር ያገኛል።\n\nFPS፣ 1% low፣ የፍሬም ጊዜ፣ CPU፣ ማህደረ ትውስታ እና ወደ ውጭ የተላኩ ሪፖርቶችን ለማየት የሙከራ ውጤት ይምረጡ።\n\nAndroid ለሙከራ ጊዜ የጸዳ ADB logcat ያስቀምጣል። Windows በጊዜ ማህተም የተደረደሩ የLumaTrace ክፍለ ጊዜ መዝገቦችን ያስቀምጣል።\n\nየጎደሉ እሴቶች N/A ይቆያሉ እና በጭራሽ በ0 አይሞሉም።\n\nምንም የደመና ጭነት የለም።",
+  "features": [
+    "የአካባቢ ስብስብ",
+    "ምንም የደመና ጭነት የለም።",
+    "አንድ ጠቅታ ሪፖርቶች",
+    "የኮር ሜትሪክ ገበታዎች",
+    "ወደ ውጭ መላክ"
+  ],
+  "keywords": [
+    "መለኪያዎች",
+    "አማካይ FPS",
+    "አማካይ CPU",
+    "አማካይ ማህደረ ትውስታ",
+    "Android",
+    "Windows",
+    "ሪፖርቶች"
+  ],
+  "screenshotCaptions": [
+    "አፈፃፀሙን በግልፅ ይመልከቱ።",
+    "ምን እንደሚሞከር ይምረጡ",
+    "ሙከራ በሂደት ላይ",
+    "የፈተና ውጤቶች"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

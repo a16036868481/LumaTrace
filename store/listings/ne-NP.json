@@ -1,0 +1,34 @@
+{
+  "locale": "ne-NP",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "कार्यसम्पादन स्पष्ट रूपमा हेर्नुहोस्। परीक्षण गर्न चाहेको प्लेटफर्मबाट सुरु गर्नुहोस्। LumaTrace ले अर्को चरणमा मार्गदर्शन गर्छ र उपलब्ध नभएका मेट्रिकलाई N/A नै राख्छ।",
+  "description": "कार्यसम्पादन स्पष्ट रूपमा हेर्नुहोस्।\n\nपरीक्षण गर्न चाहेको प्लेटफर्मबाट सुरु गर्नुहोस्। LumaTrace ले अर्को चरणमा मार्गदर्शन गर्छ र उपलब्ध नभएका मेट्रिकलाई N/A नै राख्छ।\n\nWindows: यो PC मा एप वा खेल प्रक्रिया रोजेर परीक्षण सुरु गर्नुहोस्। प्रक्रिया बन्द भएमा सत्र रोकिन्छ वा स्पष्ट अवरोध रेकर्ड हुन्छ।\n\nAndroid: फोनमा Developer options र USB debugging सक्षम गर्नुहोस्, यो PC लाई अनुमति दिनुहोस्, परीक्षण गर्न चाहेको एप खोल्नुहोस्, अनि परीक्षण सुरु गर्नुहोस् क्लिक गर्नुहोस्। LumaTrace ले अग्रभूमि प्याकेज स्वतः पत्ता लगाउँछ।\n\nFPS, 1% Low, फ्रेम समय, CPU, मेमोरी र निर्यात गरिएका रिपोर्ट हेर्न एउटा परीक्षण नतिजा रोज्नुहोस्।\n\nAndroid ले परीक्षण अवधिको गोपनीयता-सुरक्षित ADB logcat सुरक्षित गर्छ। Windows ले समयचिह्नसहितका LumaTrace सत्र रेकर्ड सुरक्षित गर्छ।\n\nहराएका मान N/A नै रहन्छन् र कहिल्यै 0 भरिँदैनन्।\n\nक्लाउडमा अपलोड हुँदैन",
+  "features": [
+    "स्थानीय सङ्कलन",
+    "क्लाउडमा अपलोड हुँदैन",
+    "एक-क्लिक रिपोर्ट",
+    "मुख्य मेट्रिक चार्ट",
+    "निर्यातहरू"
+  ],
+  "keywords": [
+    "मेट्रिकहरू",
+    "औसत FPS",
+    "औसत CPU",
+    "औसत मेमोरी",
+    "Android",
+    "Windows",
+    "रिपोर्टहरू"
+  ],
+  "screenshotCaptions": [
+    "कार्यसम्पादन स्पष्ट रूपमा हेर्नुहोस्।",
+    "के परीक्षण गर्ने रोज्नुहोस्",
+    "परीक्षण चलिरहेको छ",
+    "परीक्षण नतिजाहरू"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

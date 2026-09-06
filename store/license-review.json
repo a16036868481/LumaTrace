@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 2,
+  "evidenceKind": "lumatrace-store-license-review",
+  "reviewedAt": "2026-08-18T04:00:00.000Z",
+  "status": "complete_for_store_review",
+  "completeForStoreReview": true,
+  "productionReadyChanged": false,
+  "legalWarranty": false,
+  "reviewCharacter": "Engineering compliance evidence only; this is not legal advice, a legal opinion, or a legal warranty.",
+  "scope": {
+    "artifactKind": "microsoft-store-msix-with-self-contained-windows-sidecar",
+    "platform": "win32-x64",
+    "msixFile": "apps/desktop/src-tauri/target/store-msix/output/LumaTracePerformanceLab_1.0.2.0_x64.msix",
+    "packagingNoticesFile": "apps/desktop/src-tauri/binaries/packaging-notices.json",
+    "thirdPartyNoticesFile": "apps/desktop/src-tauri/binaries/THIRD-PARTY-NOTICES.md",
+    "runtimeDirectory": "apps/desktop/src-tauri/binaries/lumatrace-local-server-runtime"
+  },
+  "artifactBindings": {
+    "msixSizeBytes": 41916962,
+    "msixSha256": "b617599a0c7114497c172c0973d6341a8c4babacc9e3edde590298252de85c11",
+    "sidecarFile": "lumatrace-local-server-x86_64-pc-windows-msvc.exe",
+    "sidecarSha256": "470a0f44e6a0f8274504f49cd8c8c1fba20cc6dceaff019f1b041e6ff2c70569",
+    "sidecarManifestSha256": "3c4de6c161ec68ebde844e23c4c8cf6d488e2df8dff256d17366b499e34babf6",
+    "packagingNoticesSha256": "13b5160fb5f1d39a4b0fc01895818d01591498e64a6455a983a25617c1ab0975",
+    "thirdPartyNoticesSha256": "717a3b515b156950b00caa3b10c3adefda1251dd7b36d88d8085fec07c662849",
+    "bundledNodeSha256": "63c259c81e5d472b5f11c8d506070130cb04a1ecf84b80377a34ed6ec9048088",
+    "nodeLicenseSha256": "4573185d56580da2b890ba34a85a409257640f1c5632eade4300137266194d18",
+    "abstractLoggingLicenseSha256": "51d42d5384ab02fd8210ae3547fc0a8af7a385d2ac8f12685a6d3146fc2adafe"
+  },
+  "nodeRuntimeReview": {
+    "version": "v24.14.0",
+    "primaryLicense": "MIT",
+    "authenticodeStatus": "Valid",
+    "authenticodeSigner": "CN=OpenJS Foundation, O=OpenJS Foundation, L=San Francisco, S=California, C=US",
+    "authenticodeThumbprint": "1E5F84AB818EBC0E2ABD161659EF6DF5E9203773",
+    "officialLicenseSource": "https://raw.githubusercontent.com/nodejs/node/f657bb8ed86365ff3fdbe32e27563e778b41486a/LICENSE",
+    "officialTag": "v24.14.0",
+    "officialTagCommit": "f657bb8ed86365ff3fdbe32e27563e778b41486a",
+    "officialLicenseIncludesBundledDependencyTerms": true,
+    "officialLicenseBundledBesideNodeExecutable": true,
+    "sourceAndMsixLicenseHashesMatch": true,
+    "decision": "complete_for_store_review",
+    "note": "The exact commit-pinned Node.js v24.14.0 LICENSE is shipped beside node.exe and its hash is bound by packaging-notices.json and THIRD-PARTY-NOTICES.md."
+  },
+  "npmInventoryReview": {
+    "manifestPackageEntries": 97,
+    "observedPackageRootsInSourceRuntime": 97,
+    "observedPackageRootsInMsixRuntime": 97,
+    "observedPrivateLumaTracePackageRoots": 6,
+    "observedThirdPartyPackageRoots": 91,
+    "observedThirdPartyPackageRootsWithPackageLocalLicenseFile": 90,
+    "observedThirdPartyPackageRootsUsingPinnedSupplementalLicense": 1,
+    "missingManifestPackageRoots": 0,
+    "phantomManifestPackageRoots": 0,
+    "packageMetadataMismatches": 0,
+    "unknownLicenseIdentifiers": 0,
+    "thirdPartyComponentsWithoutRetainedNotice": 0,
+    "uniqueDeclaredLicenses": [
+      {
+        "license": "MIT",
+        "thirdPartyPackageRoots": 74
+      },
+      {
+        "license": "ISC",
+        "thirdPartyPackageRoots": 8
+      },
+      {
+        "license": "BSD-3-Clause",
+        "thirdPartyPackageRoots": 5
+      },
+      {
+        "license": "Apache-2.0",
+        "thirdPartyPackageRoots": 2
+      },
+      {
+        "license": "(MIT OR WTFPL)",
+        "thirdPartyPackageRoots": 1,
+        "distributionChoice": "The retained package license file supplies the MIT terms used for distribution."
+      },
+      {
+        "license": "(BSD-2-Clause OR MIT OR Apache-2.0)",
+        "thirdPartyPackageRoots": 1,
+        "distributionChoice": "The retained package license file supplies the MIT terms used for distribution."
+      }
+    ],
+    "copyleftOrRestrictiveIdentifiersFoundInNpmPackageMetadata": [],
+    "previouslyOmittedNestedPackages": [
+      {
+        "name": "fast-uri",
+        "version": "3.1.5",
+        "packagePath": "node_modules/ajv/node_modules/fast-uri",
+        "nowCovered": true
+      },
+      {
+        "name": "process-warning",
+        "version": "4.0.1",
+        "packagePath": "node_modules/light-my-request/node_modules/process-warning",
+        "nowCovered": true
+      },
+      {
+        "name": "real-require",
+        "version": "1.0.0",
+        "packagePath": "node_modules/thread-stream/node_modules/real-require",
+        "nowCovered": true
+      }
+    ],
+    "supplementalLicenseNotices": [
+      {
+        "name": "abstract-logging",
+        "version": "2.0.1",
+        "declaredLicense": "MIT",
+        "distributionPath": "lumatrace-local-server-runtime/THIRD-PARTY-LICENSES/abstract-logging-2.0.1-LICENSE.txt",
+        "provenanceFile": "legal/third-party/provenance.json",
+        "hashVerifiedInSourceAndMsix": true
+      }
+    ]
+  },
+  "noticeReview": {
+    "manifestTotalComponents": 98,
+    "manifestRuntimeComponents": 1,
+    "manifestPackageComponents": 97,
+    "manifestMissingLicenseCount": 0,
+    "manifestMissingNoticeFileCount": 0,
+    "allNonPrivateNoticePathsExistInMsix": true,
+    "allNoticeFileSizesMatchManifest": true,
+    "allNoticeFileHashesMatchManifest": true,
+    "allNoticeBindingsAppearInThirdPartyNotices": true,
+    "thirdPartyNoticesContainsMissingMarker": false,
+    "sourceAndMsixNoticesAreIdentical": true,
+    "sourceAndMsixThirdPartyNoticesAreIdentical": true,
+    "noticeModel": "THIRD-PARTY-NOTICES.md is a distributable index that explicitly binds each component to the exact full license file retained in the package by relative path, byte size, and SHA-256."
+  },
+  "noticeObligations": [
+    {
+      "licenseFamily": "MIT and ISC",
+      "requirement": "Retain the applicable copyright and permission notice with redistributed copies or substantial portions.",
+      "satisfiedByReviewedArtifact": true
+    },
+    {
+      "licenseFamily": "BSD-3-Clause and BSD-2-Clause",
+      "requirement": "Reproduce the applicable copyright notice, conditions, and disclaimer in the binary distribution documentation or other supplied materials; do not imply endorsement.",
+      "satisfiedByReviewedArtifact": true
+    },
+    {
+      "licenseFamily": "Apache-2.0",
+      "requirement": "Distribute the license, retain attribution notices, mark modified files when applicable, and reproduce an upstream NOTICE if one is supplied. The two reviewed package roots supplied LICENSE files and no standalone NOTICE file.",
+      "satisfiedByReviewedArtifact": true
+    },
+    {
+      "licenseFamily": "Node.js bundled components",
+      "requirement": "Distribute the exact upstream Node.js v24.14.0 LICENSE containing the primary Node.js terms and compiled third-party attributions.",
+      "satisfiedByReviewedArtifact": true
+    }
+  ],
+  "resolvedBlockers": [
+    {
+      "id": "NODE-LICENSE-NOT-DISTRIBUTED",
+      "resolution": "The exact Node.js v24.14.0 LICENSE is present beside node.exe in both the source runtime and MSIX, with the pinned SHA-256."
+    },
+    {
+      "id": "NESTED-PACKAGES-OMITTED-FROM-NOTICE-INVENTORY",
+      "resolution": "All 97 actual package roots are represented exactly once; the three previously omitted nested versions are present with exact nested paths and retained license hashes."
+    },
+    {
+      "id": "ABSTRACT-LOGGING-LICENSE-TEXT-MISSING",
+      "resolution": "A version-specific MIT notice from verified upstream provenance is included in the runtime and MSIX and is bound by hash."
+    },
+    {
+      "id": "TOP-LEVEL-NOTICE-NOT-STANDALONE",
+      "resolution": "THIRD-PARTY-NOTICES.md now explicitly binds all complete retained license files by distribution path, size, and SHA-256; no MISSING marker remains."
+    }
+  ],
+  "remainingLicenseBlockers": [],
+  "validation": {
+    "directMsixZipEntryCount": 907,
+    "sourceRuntimeFileCount": 888,
+    "msixRuntimeFileCount": 888,
+    "wholeMsixUnpackedFileCount": 906,
+    "sourceRuntimeSizeBytes": 96410356,
+    "msixRuntimeSizeBytes": 96410356,
+    "sourceAndMsixPackageInventoriesMatch": true,
+    "msixHashMatchesBuildManifest": true,
+    "criticalLicenseAndNoticeEntriesReadDirectlyFromMsix": true,
+    "makeAppxUnpackAndPackageVerification": "passed",
+    "localServerLint": "passed",
+    "localServerTypecheck": "passed",
+    "targetedLicenseTests": "20/20 passed"
+  },
+  "nonLicenseReleaseState": {
+    "sidecarProductionReady": false,
+    "sidecarLicenseReviewStatus": "draft_requires_review",
+    "msixUnsigned": true,
+    "storeUploadPerformed": false,
+    "storeUploadEligibleAccordingToBuildManifest": true,
+    "certificationEligible": false,
+    "note": "This evidence closes the four reviewed engineering license blockers only. It deliberately does not change productionReady, the guarded sidecar review field, signing policy, installed-package GUI QA, Partner Center forms, submission, or certification state."
+  },
+  "caveats": [
+    "This is a reproducible engineering review of the bound artifact, not legal advice or a legal guarantee.",
+    "Any rebuild or package-content change invalidates these artifact hashes and requires a new review.",
+    "Microsoft Store submission, listing forms, privacy declarations, age ratings, pricing, and certification remain separate release work."
+  ]
+}

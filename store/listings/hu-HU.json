@@ -1,0 +1,34 @@
+{
+  "locale": "hu-HU",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Lásd tisztán a teljesítményt. Kezdje a tesztelni kívánt platformról. A LumaTrace irányítja a következő lépést, és a nem elérhető mutatókat N/A formában tartja.",
+  "description": "Lásd tisztán a teljesítményt.\n\nKezdje a tesztelni kívánt platformról. A LumaTrace irányítja a következő lépést, és a nem elérhető mutatókat N/A formában tartja.\n\nWindows: Válasszon egy alkalmazást vagy játékfolyamatot ezen a számítógépen, majd kezdje el a tesztelést. Ha a folyamat kilép, a munkamenet leáll, vagy egyértelmű megszakítást rögzít.\n\nAndroid: Engedélyezze a fejlesztői beállításokat és a USB hibakeresést a telefonon, engedélyezze a számítógépet, nyissa meg a tesztelni kívánt alkalmazást, majd kattintson a Teszt indítása gombra. A LumaTrace automatikusan észleli az előtérben lévő csomagot.\n\nVálassza ki a teszt eredményét a FPS, 1% low, a képkockaidő, a CPU, a memória és az exportált jelentések megtekintéséhez.\n\nA Android megtakarít egy fertőtlenített ADB logcat készüléket a tesztidőszakra. A Windows elmenti az időbélyegzett LumaTrace munkamenetrekordokat.\n\nA hiányzó értékek N/A maradnak, és soha nem töltik be 0-val.\n\nNincs felhőfeltöltés",
+  "features": [
+    "Helyi gyűjtemény",
+    "Nincs felhőfeltöltés",
+    "Jelentések egy kattintással",
+    "Alapvető metrikus diagramok",
+    "Export"
+  ],
+  "keywords": [
+    "mérőszámok",
+    "Átlagos FPS",
+    "Átlagos CPU",
+    "Átlagos memória",
+    "Android",
+    "Windows",
+    "Jelentések"
+  ],
+  "screenshotCaptions": [
+    "Lásd tisztán a teljesítményt.",
+    "Válassza ki, mit szeretne tesztelni",
+    "Teszt folyamatban",
+    "Teszt eredményei"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

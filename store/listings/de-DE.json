@@ -1,0 +1,34 @@
+{
+  "locale": "de-DE",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Leistung deutlich anzeigen. Beginnen Sie mit der Plattform, die Sie testen möchten. LumaTrace leitet den nächsten Schritt und speichert nicht verfügbare Metriken als N/A.",
+  "description": "Leistung deutlich anzeigen.\n\nBeginnen Sie mit der Plattform, die Sie testen möchten. LumaTrace leitet den nächsten Schritt und speichert nicht verfügbare Metriken als N/A.\n\nWindows: Wählen Sie eine Anwendung oder einen Spielprozess auf diesem PC aus und beginnen Sie dann mit dem Testen. Wenn der Prozess beendet wird, stoppt die Sitzung oder zeichnet eine eindeutige Unterbrechung auf.\n\nAndroid: Aktivieren Sie Entwickleroptionen und USB-Debugging auf dem Telefon, autorisieren Sie diesen PC, öffnen Sie die App, die Sie testen möchten, und klicken Sie dann auf Test starten. LumaTrace erkennt das Vordergrundpaket automatisch.\n\nWählen Sie ein aktuelles Testergebnis aus, um FPS, 1 % niedrig, Frametime, CPU, Speicher und exportierte Berichte anzuzeigen.\n\nAndroid speichert ein bereinigtes ADB-logcat für den Testzeitraum. Windows speichert LumaTrace-Erfassungsereignisse mit Zeitstempel.\n\nFehlende Werte bleiben N/A und werden nie mit 0 aufgefüllt.\n\nKein Cloud-Upload",
+  "features": [
+    "Lokale Sammlung",
+    "Kein Cloud-Upload",
+    "Ein-Klick-Berichte",
+    "Kernmetrikdiagramme",
+    "Exporte"
+  ],
+  "keywords": [
+    "Metriken",
+    "Durchschnittliche FPS",
+    "Durchschnittliche CPU",
+    "Durchschnittlicher Speicher",
+    "Android",
+    "Windows",
+    "Berichte"
+  ],
+  "screenshotCaptions": [
+    "Leistung deutlich anzeigen.",
+    "Wählen Sie aus, was getestet werden soll",
+    "Test läuft",
+    "Test Ergebnisse"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

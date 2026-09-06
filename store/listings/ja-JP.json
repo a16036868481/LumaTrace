@@ -1,0 +1,34 @@
+{
+  "locale": "ja-JP",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "パフォーマンスを明確に確認します。 テストするプラットフォームから開始します。 LumaTrace は次のステップをガイドし、使用できないメトリックは N/A として保持します。",
+  "description": "パフォーマンスを明確に確認します。\n\nテストするプラットフォームから開始します。 LumaTrace は次のステップをガイドし、使用できないメトリックは N/A として保持します。\n\nWindows: この PC 上のアプリケーションまたはゲーム プロセスを選択して、テストを開始します。プロセスが終了すると、セッションが停止するか、明らかな中断が記録されます。\n\nAndroid: 携帯電話で開発者向けオプションと USB デバッグを有効にし、この PC を認証し、テストするアプリを開いて、[テストの開始] をクリックします。 LumaTrace はフォアグラウンド パッケージを自動的に検出します。\n\n最近のテスト結果を選択すると、FPS、1% 低、フレーム時間、CPU、メモリ、およびエクスポートされたレポートが表示されます。\n\nAndroid はテスト期間の匿名化済み ADB logcat を保存し、Windows は時刻付きの LumaTrace 収集記録を保存します。\n\n欠損値は N/A のままで、0 で埋められることはありません。\n\nクラウドアップロードなし",
+  "features": [
+    "ローカルコレクション",
+    "クラウドアップロードなし",
+    "ワンクリックレポート",
+    "コア メトリクス チャート",
+    "エクスポート"
+  ],
+  "keywords": [
+    "指標",
+    "平均 FPS",
+    "平均 CPU",
+    "平均メモリ",
+    "Android",
+    "Windows",
+    "レポート"
+  ],
+  "screenshotCaptions": [
+    "パフォーマンスを明確に確認します。",
+    "テスト対象を選択してください",
+    "テストが進行中",
+    "テスト結果"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

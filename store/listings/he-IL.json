@@ -1,0 +1,34 @@
+{
+  "locale": "he-IL",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "ראה ביצועים בבירור. התחל מהפלטפורמה שברצונך לבדוק. LumaTrace ינחה את השלב הבא וישמור על מדדים לא זמינים כמו N/A.",
+  "description": "ראה ביצועים בבירור.\n\nהתחל מהפלטפורמה שברצונך לבדוק. LumaTrace ינחה את השלב הבא וישמור על מדדים לא זמינים כמו N/A.\n\nWindows: בחר יישום או תהליך משחק במחשב זה, ולאחר מכן התחל בבדיקה. אם התהליך יוצא, ההפעלה נעצרת או מתעדת הפרעה ברורה.\n\nAndroid: אפשר אפשרויות מפתחים וניפוי באגים USB בטלפון, אשר את המחשב האישי הזה, פתח את האפליקציה שברצונך לבדוק ולאחר מכן לחץ על התחל בדיקה. LumaTrace מזהה את חבילת החזית באופן אוטומטי.\n\nבחר תוצאת בדיקה כדי להציג את FPS, 1% low, זמן מסגרת, CPU, זיכרון ודוחות מיוצאים.\n\nAndroid שומר ADB logcat מחוטא לתקופת הבדיקה. Windows שומר רשומות הפעלה עם חותמת זמן של LumaTrace.\n\nערכים חסרים נשארים N/A ולעולם לא מתמלאים ב-0.\n\nאין העלאת ענן",
+  "features": [
+    "אוסף מקומי",
+    "אין העלאת ענן",
+    "דוחות בלחיצה אחת",
+    "תרשימים מדדי ליבה",
+    "יצוא"
+  ],
+  "keywords": [
+    "מדדים",
+    "ממוצע FPS",
+    "ממוצע CPU",
+    "זיכרון ממוצע",
+    "Android",
+    "Windows",
+    "דוחות"
+  ],
+  "screenshotCaptions": [
+    "ראה ביצועים בבירור.",
+    "בחר מה לבדוק",
+    "בדיקה בעיצומה",
+    "תוצאות בדיקה"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

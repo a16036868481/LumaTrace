@@ -1,0 +1,34 @@
+{
+  "locale": "ca",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Observa el rendiment amb claredat. Comença per la plataforma que vols provar. LumaTrace et guiarà en el pas següent i mantindrà les mètriques no disponibles com a N/A.",
+  "description": "Observa el rendiment amb claredat.\n\nComença per la plataforma que vols provar. LumaTrace et guiarà en el pas següent i mantindrà les mètriques no disponibles com a N/A.\n\nWindows: Tria un procés d'aplicació o joc d'aquest PC i comença la prova. Si el procés acaba, la sessió s'atura o registra una interrupció clara.\n\nAndroid: Activa les opcions de desenvolupador i la depuració USB al telèfon, autoritza aquest PC, obre l'aplicació que vols provar i fes clic a Inicia la prova. LumaTrace detecta automàticament el paquet en primer pla.\n\nTria un resultat de prova per veure l'FPS, l'1% low, el temps de fotograma, la CPU, la memòria i els informes exportats.\n\nAndroid desa un ADB logcat sanejat del període de prova. Windows desa registres de sessió de LumaTrace amb marca de temps.\n\nEls valors absents continuen sent N/A i mai no s'omplen amb 0.\n\nSense càrrega al núvol",
+  "features": [
+    "Recollida local",
+    "Sense càrrega al núvol",
+    "Informes amb un clic",
+    "Gràfics de mètriques principals",
+    "Exportacions"
+  ],
+  "keywords": [
+    "mètriques",
+    "FPS mitjà",
+    "CPU mitjana",
+    "Memòria mitjana",
+    "Android",
+    "Windows",
+    "Informes"
+  ],
+  "screenshotCaptions": [
+    "Observa el rendiment amb claredat.",
+    "Tria què vols provar",
+    "Prova en curs",
+    "Resultats de la prova"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

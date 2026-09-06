@@ -1,0 +1,34 @@
+{
+  "locale": "lo-LA",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "ເຫັນປະສິດທິພາບຢ່າງຊັດເຈນ. ເລີ່ມຈາກແພລດຟອມທີ່ຈະທົດສອບ. LumaTrace ຈະນຳທາງຂັ້ນຕໍ່ໄປ ແລະ ຮັກສາຄ່າທີ່ບໍ່ພ້ອມເປັນ N/A.",
+  "description": "ເຫັນປະສິດທິພາບຢ່າງຊັດເຈນ.\n\nເລີ່ມຈາກແພລດຟອມທີ່ຈະທົດສອບ. LumaTrace ຈະນຳທາງຂັ້ນຕໍ່ໄປ ແລະ ຮັກສາຄ່າທີ່ບໍ່ພ້ອມເປັນ N/A.\n\nWindows: ເລືອກໂປຣເຊສແອັບ ຫຼື ເກມໃນ PC ນີ້ ແລ້ວເລີ່ມທົດສອບ. ຖ້າໂປຣເຊສຈົບ ເຊສຊັນຈະຢຸດ ຫຼື ບັນທຶກການຂັດຈັງຫວະຢ່າງຊັດເຈນ.\n\nAndroid: ໃນໂທລະສັບ ເປີດ Developer options ແລະ USB debugging, ອະນຸຍາດ PC ນີ້, ເປີດແອັບທົດສອບ ແລ້ວກົດເລີ່ມທົດສອບ. LumaTrace ຈະຄົ້ນຫາ package ດ້ານໜ້າອັດຕະໂນມັດ.\n\nເລືອກຜົນການທົດສອບເພື່ອເບິ່ງ FPS, 1% low, frame time, CPU, ໜ່ວຍຄວາມຈຳ ແລະ ລາຍງານທີ່ສົ່ງອອກ.\n\nAndroid ເກັບ ADB logcat ທີ່ລ້າງແລ້ວໃນຊ່ວງທົດສອບ. Windows ເກັບບັນທຶກເຊສຊັນ LumaTrace ທີ່ມີເວລາ.\n\nຄ່າທີ່ບໍ່ມີຈະເປັນ N/A ແລະ ບໍ່ເຄີຍຖືກຕື່ມດ້ວຍ 0.\n\nບໍ່ອັບໂຫຼດຄລາວ",
+  "features": [
+    "ເກັບຂໍ້ມູນໃນເຄື່ອງ",
+    "ບໍ່ອັບໂຫຼດຄລາວ",
+    "ລາຍງານໃນຄລິກດຽວ",
+    "ກຣາຟຄ່າວັດຫຼັກ",
+    "ການສົ່ງອອກ"
+  ],
+  "keywords": [
+    "ຄ່າວັດ",
+    "FPS ສະເລ່ຍ",
+    "CPU ສະເລ່ຍ",
+    "ໜ່ວຍຄວາມຈຳສະເລ່ຍ",
+    "Android",
+    "Windows",
+    "ລາຍງານ"
+  ],
+  "screenshotCaptions": [
+    "ເຫັນປະສິດທິພາບຢ່າງຊັດເຈນ.",
+    "ເລືອກສິ່ງທີ່ຈະທົດສອບ",
+    "ການທົດສອບກຳລັງດຳເນີນ",
+    "ຜົນການທົດສອບ"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

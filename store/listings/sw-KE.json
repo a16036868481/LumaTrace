@@ -1,0 +1,34 @@
+{
+  "locale": "sw-KE",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Tazama utendaji wazi. Anza kutoka kwa jukwaa unalotaka kujaribu. LumaTrace itaelekeza hatua inayofuata na kuweka vipimo visivyopatikana kama N/A.",
+  "description": "Tazama utendaji wazi.\n\nAnza kutoka kwa jukwaa unalotaka kujaribu. LumaTrace itaelekeza hatua inayofuata na kuweka vipimo visivyopatikana kama N/A.\n\nWindows: Chagua mchakato wa programu au mchezo kwenye Kompyuta hii, kisha uanze kujaribu. Mchakato ukitoka, kipindi huacha au kurekodi usumbufu wazi.\n\nAndroid: Washa chaguo za Wasanidi Programu na utatuzi wa USB kwenye simu, idhinisha Kompyuta hii, fungua programu unayotaka kujaribu, kisha ubofye Anza Jaribio. LumaTrace hutambua kifurushi cha mbele kiotomatiki.\n\nChagua matokeo ya jaribio ili kuona FPS, 1% low, muda wa fremu, CPU, kumbukumbu, na ripoti zilizohamishwa.\n\nAndroid huhifadhi ADB logcat iliyosafishwa kwa kipindi cha majaribio. Windows huhifadhi rekodi za kipindi cha LumaTrace zilizowekwa alama.\n\nThamani zinazokosekana hukaa N/A na hazijazwa kamwe na 0.\n\nHakuna upakiaji wa wingu",
+  "features": [
+    "Mkusanyiko wa ndani",
+    "Hakuna upakiaji wa wingu",
+    "Ripoti za mbofyo mmoja",
+    "Chati za Msingi za Metric",
+    "Mauzo nje"
+  ],
+  "keywords": [
+    "vipimo",
+    "Wastani wa FPS",
+    "Wastani wa CPU",
+    "Kumbukumbu ya wastani",
+    "Android",
+    "Windows",
+    "Ripoti"
+  ],
+  "screenshotCaptions": [
+    "Tazama utendaji wazi.",
+    "Chagua cha kujaribu",
+    "Mtihani unaendelea",
+    "Matokeo ya Mtihani"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

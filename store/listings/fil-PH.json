@@ -1,0 +1,34 @@
+{
+  "locale": "fil-PH",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Tingnan nang malinaw ang pagganap. Magsimula sa platform na gusto mong subukan. Gagabayan ng LumaTrace ang susunod na hakbang at panatilihin ang mga hindi available na sukatan bilang N/A.",
+  "description": "Tingnan nang malinaw ang pagganap.\n\nMagsimula sa platform na gusto mong subukan. Gagabayan ng LumaTrace ang susunod na hakbang at panatilihin ang mga hindi available na sukatan bilang N/A.\n\nWindows: Pumili ng application o proseso ng laro sa PC na ito, pagkatapos ay simulan ang pagsubok. Kung lalabas ang proseso, hihinto ang session o magtatala ng malinaw na pagkaantala.\n\nAndroid: I-enable ang Developer options at USB debugging sa telepono, pahintulutan ang PC na ito, buksan ang app na gusto mong subukan, pagkatapos ay i-click ang Start Test. Awtomatikong nakikita ng LumaTrace ang foreground package.\n\nPumili ng resulta ng pagsubok para tingnan ang FPS, 1% low, frame time, CPU, memory, at mga na-export na ulat.\n\nAng Android ay nagse-save ng isang sanitized na ADB logcat para sa panahon ng pagsubok. Ang Windows ay nagse-save ng timestamped na LumaTrace na mga talaan ng session.\n\nAng mga nawawalang value ay mananatiling N/A at hindi kailanman napupunan ng 0.\n\nWalang cloud upload",
+  "features": [
+    "Lokal na koleksyon",
+    "Walang cloud upload",
+    "Isang-click na ulat",
+    "Mga Pangunahing Chart ng Sukatan",
+    "Mga pag-export"
+  ],
+  "keywords": [
+    "mga sukatan",
+    "Average na FPS",
+    "Average na CPU",
+    "Average na Memorya",
+    "Android",
+    "Windows",
+    "Mga ulat"
+  ],
+  "screenshotCaptions": [
+    "Tingnan nang malinaw ang pagganap.",
+    "Piliin kung ano ang susuriin",
+    "Kasalukuyang pagsubok",
+    "Mga Resulta ng Pagsusulit"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

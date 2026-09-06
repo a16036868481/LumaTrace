@@ -1,0 +1,34 @@
+{
+  "locale": "or-IN",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "କାର୍ଯ୍ୟଦକ୍ଷତାକୁ ସ୍ପଷ୍ଟ ଭାବେ ଦେଖନ୍ତୁ। ପରୀକ୍ଷା କରିବାକୁ ଥିବା ପ୍ଲାଟଫର୍ମରୁ ଆରମ୍ଭ କରନ୍ତୁ। LumaTrace ପରବର୍ତ୍ତୀ ପଦକ୍ଷେପ ଦେଖାଇବ ଓ ଅନୁପଲବ୍ଧ ମାପକକୁ N/A ଭାବେ ରଖିବ।",
+  "description": "କାର୍ଯ୍ୟଦକ୍ଷତାକୁ ସ୍ପଷ୍ଟ ଭାବେ ଦେଖନ୍ତୁ।\n\nପରୀକ୍ଷା କରିବାକୁ ଥିବା ପ୍ଲାଟଫର୍ମରୁ ଆରମ୍ଭ କରନ୍ତୁ। LumaTrace ପରବର୍ତ୍ତୀ ପଦକ୍ଷେପ ଦେଖାଇବ ଓ ଅନୁପଲବ୍ଧ ମାପକକୁ N/A ଭାବେ ରଖିବ।\n\nWindows: ଏହି PCରେ ଆପ୍ କିମ୍ବା ଗେମ୍ ପ୍ରକ୍ରିୟା ବାଛି ପରୀକ୍ଷା ଆରମ୍ଭ କରନ୍ତୁ। ପ୍ରକ୍ରିୟା ବନ୍ଦ ହେଲେ ସେସନ୍ ବନ୍ଦ ହେବ କିମ୍ବା ସ୍ପଷ୍ଟ ବାଧା ରେକର୍ଡ କରିବ।\n\nAndroid: ଫୋନ୍‌ରେ Developer options ଓ USB debugging ସକ୍ରିୟ କରି ଏହି PCକୁ ଅନୁମତି ଦିଅନ୍ତୁ, ପରୀକ୍ଷା ଆପ୍ ଖୋଲି ପରୀକ୍ଷା ଆରମ୍ଭ କରନ୍ତୁ। LumaTrace ସାମ୍ନାର package ସ୍ୱୟଂ ଚିହ୍ନଟ କରେ।\n\nFPS, 1% Low, frame time, CPU, ମେମୋରି ଓ export ରିପୋର୍ଟ ଦେଖିବାକୁ ପରୀକ୍ଷା ଫଳ ବାଛନ୍ତୁ।\n\nAndroid ପରୀକ୍ଷା ସମୟର ସଫା ADB logcat ସଞ୍ଚୟ କରେ। Windows ସମୟଚିହ୍ନିତ LumaTrace ସେସନ୍ ରେକର୍ଡ ସଞ୍ଚୟ କରେ।\n\nଅନୁପସ୍ଥିତ ମୂଲ୍ୟ N/A ରହେ, କେବେ 0ରେ ପୂରଣ ହୁଏନାହିଁ।\n\nକ୍ଲାଉଡ୍ ଅପଲୋଡ୍ ନାହିଁ",
+  "features": [
+    "ସ୍ଥାନୀୟ ସଂଗ୍ରହ",
+    "କ୍ଲାଉଡ୍ ଅପଲୋଡ୍ ନାହିଁ",
+    "ଗୋଟିଏ କ୍ଲିକ୍‌ରେ ରିପୋର୍ଟ",
+    "ମୁଖ୍ୟ ମାପକ ଚାର୍ଟ",
+    "Export"
+  ],
+  "keywords": [
+    "ମାପକ",
+    "ହାରାହାରି FPS",
+    "ହାରାହାରି CPU",
+    "ହାରାହାରି ମେମୋରି",
+    "Android",
+    "Windows",
+    "ରିପୋର୍ଟ"
+  ],
+  "screenshotCaptions": [
+    "କାର୍ଯ୍ୟଦକ୍ଷତାକୁ ସ୍ପଷ୍ଟ ଭାବେ ଦେଖନ୍ତୁ।",
+    "କଣ ପରୀକ୍ଷା କରିବେ ବାଛନ୍ତୁ",
+    "ପରୀକ୍ଷା ଚାଲିଛି",
+    "ପରୀକ୍ଷା ଫଳାଫଳ"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

@@ -1,0 +1,34 @@
+{
+  "locale": "ms-MY",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Lihat prestasi dengan jelas. Mulakan dari platform yang anda ingin uji. LumaTrace akan membimbing langkah seterusnya dan mengekalkan metrik yang tidak tersedia sebagai N/A.",
+  "description": "Lihat prestasi dengan jelas.\n\nMulakan dari platform yang anda ingin uji. LumaTrace akan membimbing langkah seterusnya dan mengekalkan metrik yang tidak tersedia sebagai N/A.\n\nWindows: Pilih aplikasi atau proses permainan pada PC ini, kemudian mulakan ujian. Jika proses keluar, sesi berhenti atau merekodkan gangguan yang jelas.\n\nAndroid: Dayakan pilihan Pembangun dan penyahpepijatan USB pada telefon, benarkan PC ini, buka apl yang ingin anda uji, kemudian klik Mulakan Ujian. LumaTrace mengesan pakej latar depan secara automatik.\n\nPilih keputusan ujian untuk melihat FPS, 1% low, masa bingkai, CPU, memori dan laporan yang dieksport.\n\nAndroid menyimpan ADB logcat yang telah dibersihkan untuk tempoh ujian. Windows menyimpan rekod sesi LumaTrace yang dicap masa.\n\nNilai yang hilang kekal N/A dan tidak pernah diisi dengan 0.\n\nTiada muat naik awan",
+  "features": [
+    "Koleksi tempatan",
+    "Tiada muat naik awan",
+    "Laporan satu klik",
+    "Carta Metrik Teras",
+    "Eksport"
+  ],
+  "keywords": [
+    "metrik",
+    "Purata FPS",
+    "Purata CPU",
+    "Memori Purata",
+    "Android",
+    "Windows",
+    "Laporan"
+  ],
+  "screenshotCaptions": [
+    "Lihat prestasi dengan jelas.",
+    "Pilih perkara yang hendak diuji",
+    "Ujian sedang dijalankan",
+    "Keputusan Ujian"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

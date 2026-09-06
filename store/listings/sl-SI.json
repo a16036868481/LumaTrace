@@ -1,0 +1,34 @@
+{
+  "locale": "sl-SI",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Jasen vpogled v zmogljivost. Začnite s platformo, ki jo želite preizkusiti. LumaTrace vas bo vodil skozi naslednji korak in nedostopne meritve pustil kot N/A.",
+  "description": "Jasen vpogled v zmogljivost.\n\nZačnite s platformo, ki jo želite preizkusiti. LumaTrace vas bo vodil skozi naslednji korak in nedostopne meritve pustil kot N/A.\n\nWindows: Izberite proces aplikacije ali igre v tem računalniku in zaženite preizkus. Če se proces konča, se seja ustavi ali zabeleži jasno prekinitev.\n\nAndroid: V telefonu omogočite Možnosti za razvijalce in razhroščevanje USB, odobrite ta računalnik, odprite aplikacijo, ki jo želite preizkusiti, in kliknite Začni preizkus. LumaTrace samodejno zazna paket aplikacije v ospredju.\n\nIzberite rezultat preizkusa ter si oglejte FPS, 1% Low, čas sličice, CPU, pomnilnik in izvožena poročila.\n\nAndroid shrani očiščeni ADB logcat za čas preizkusa. Windows shrani dogodke seje LumaTrace s časovnimi žigi.\n\nManjkajoče vrednosti ostanejo N/A in se nikoli ne nadomestijo z ničlo.\n\nBrez nalaganja v oblak",
+  "features": [
+    "Lokalno merjenje",
+    "Brez nalaganja v oblak",
+    "Poročila z enim klikom",
+    "Grafi ključnih meritev",
+    "Izvozi"
+  ],
+  "keywords": [
+    "meritve",
+    "Povprečni FPS",
+    "Povprečni CPU",
+    "Povprečni pomnilnik",
+    "Android",
+    "Windows",
+    "Poročila"
+  ],
+  "screenshotCaptions": [
+    "Jasen vpogled v zmogljivost.",
+    "Izberite, kaj želite preizkusiti",
+    "Preizkus se izvaja",
+    "Rezultati preizkusov"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

@@ -1,0 +1,34 @@
+{
+  "locale": "nl-NL",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Zie de prestaties duidelijk. Begin vanaf het platform dat u wilt testen. LumaTrace zal de volgende stap begeleiden en niet-beschikbare statistieken behouden als N/A.",
+  "description": "Zie de prestaties duidelijk.\n\nBegin vanaf het platform dat u wilt testen. LumaTrace zal de volgende stap begeleiden en niet-beschikbare statistieken behouden als N/A.\n\nWindows: Kies een applicatie of gameproces op deze pc en begin met testen. Als het proces wordt afgesloten, stopt de sessie of wordt er een duidelijke onderbreking geregistreerd.\n\nAndroid: Schakel ontwikkelaarsopties en USB-foutopsporing in op de telefoon, autoriseer deze pc, open de app die u wilt testen en klik vervolgens op Test starten. LumaTrace detecteert het voorgrondpakket automatisch.\n\nKies een testresultaat om FPS, 1% low, frametijd, CPU, geheugen en geëxporteerde rapporten te bekijken.\n\nAndroid bewaart een gezuiverde ADB logcat voor de testperiode. Windows slaat LumaTrace-sessierecords met tijdstempel op.\n\nOntbrekende waarden blijven N/A en worden nooit gevuld met 0.\n\nGeen cloud-upload",
+  "features": [
+    "Lokale collectie",
+    "Geen cloud-upload",
+    "Rapporten met één klik",
+    "Kernmetrische grafieken",
+    "Exporteert"
+  ],
+  "keywords": [
+    "statistieken",
+    "Gemiddeld FPS",
+    "Gemiddelde CPU",
+    "Gemiddeld geheugen",
+    "Android",
+    "Windows",
+    "Rapporten"
+  ],
+  "screenshotCaptions": [
+    "Zie de prestaties duidelijk.",
+    "Kies wat u wilt testen",
+    "Test bezig",
+    "Testresultaten"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

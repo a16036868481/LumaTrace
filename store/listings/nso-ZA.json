@@ -1,0 +1,34 @@
+{
+  "locale": "nso-ZA",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Bona tshebetšo gabotse. Thoma sethaleng seo o nyakago go se leka. LumaTrace e tla go hlahla kgatong ye e latelago gomme e boloke dimethara tše di sego gona bjalo ka N/A.",
+  "description": "Bona tshebetšo gabotse.\n\nThoma sethaleng seo o nyakago go se leka. LumaTrace e tla go hlahla kgatong ye e latelago gomme e boloke dimethara tše di sego gona bjalo ka N/A.\n\nWindows: Kgetha porosese ya tirišo goba papadi go PC ye, gomme o thome teko. Ge porosese e tšwa, sesene e a ema goba e ngwala tšhitišo ye e bonagalago.\n\nAndroid: Šomiša Dikgetho tša Mohlabolli le USB debugging founong, dumelela PC ye, bula tirišo ye o nyakago go e leka, gomme o kgotle Thoma Teko. LumaTrace e hwetša phuthelo ye e lego ka pele ka go itiriša.\n\nKgetha poelo ya teko go bona FPS, 1% Low, nako ya frame, CPU, memori le dipego tše di rometšwego ntle.\n\nAndroid e boloka ADB logcat ye e hlwekišitšwego ya nako ya teko. Windows e boloka dilog tša sesene ya LumaTrace tše di nago le nako.\n\nBoleng bjo bo sego gona bo dula N/A gomme ga bo tlatšwe ka 0.\n\nGa go romelwe lerung",
+  "features": [
+    "Kgoboketšo sedirišweng",
+    "Ga go romelwe lerung",
+    "Dipego ka go kgotla gatee",
+    "Digerafo tša Dimethara tša Bohlokwa",
+    "Ditšweletšwa"
+  ],
+  "keywords": [
+    "dimethara",
+    "Palogare ya FPS",
+    "Palogare ya CPU",
+    "Palogare ya Memori",
+    "Android",
+    "Windows",
+    "Dipego"
+  ],
+  "screenshotCaptions": [
+    "Bona tshebetšo gabotse.",
+    "Kgetha seo se tlago lekwa",
+    "Teko e a šoma",
+    "Dipoelo tša Teko"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

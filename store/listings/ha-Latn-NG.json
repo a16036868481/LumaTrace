@@ -1,0 +1,34 @@
+{
+  "locale": "ha-Latn-NG",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Ga aikin a sarari. Fara daga dandalin da kake son gwadawa. LumaTrace zai jagorance ka zuwa mataki na gaba kuma ya bar ma'aunan da ba su samuwa a matsayin N/A.",
+  "description": "Ga aikin a sarari.\n\nFara daga dandalin da kake son gwadawa. LumaTrace zai jagorance ka zuwa mataki na gaba kuma ya bar ma'aunan da ba su samuwa a matsayin N/A.\n\nWindows: Zaɓi tsarin manhaja ko wasa a wannan PC, sannan fara gwaji. Idan tsarin ya fita, zaman gwajin zai tsaya ko ya rubuta bayyanannen katsewa.\n\nAndroid: Kunna zaɓuɓɓukan Mai Haɓakawa da gyaran kuskure ta USB a wayar, ba wannan PC izini, buɗe manhajar da kake son gwadawa, sannan danna Fara Gwaji. LumaTrace yana gano fakitin manhajar gaba ta atomatik.\n\nZaɓi sakamakon gwaji don ganin FPS, 1% Low, lokacin firam, CPU, ƙwaƙwalwa da rahotannin da aka fitar.\n\nAndroid yana adana ADB logcat da aka tsaftace na lokacin gwaji. Windows yana adana bayanan zaman LumaTrace masu hatimin lokaci.\n\nƘimomin da suka ɓace suna kasancewa N/A kuma ba a cika su da 0 ba.\n\nBa a lodawa zuwa gajimare",
+  "features": [
+    "Tattara bayanai a gida",
+    "Ba a lodawa zuwa gajimare",
+    "Rahoto da dannawa ɗaya",
+    "Zane-zanen Muhimman Ma'aunai",
+    "Fitarwa"
+  ],
+  "keywords": [
+    "ma'aunai",
+    "Matsakaicin FPS",
+    "Matsakaicin CPU",
+    "Matsakaicin Ƙwaƙwalwa",
+    "Android",
+    "Windows",
+    "Rahotanni"
+  ],
+  "screenshotCaptions": [
+    "Ga aikin a sarari.",
+    "Zaɓi abin da za a gwada",
+    "Ana gudanar da gwaji",
+    "Sakamakon Gwaji"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

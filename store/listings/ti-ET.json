@@ -1,0 +1,34 @@
+{
+  "locale": "ti-ET",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "ኣፈጻጽማ ብንጹር ርአ። ካብቲ ክትፍትሾ እትደሊ መድረኽ ጀምር። LumaTrace ዝቕጽል ደረጃ ይመርሕ፣ ዘይርከቡ መለክዒታት ድማ N/A ይቕጽሉ።",
+  "description": "ኣፈጻጽማ ብንጹር ርአ።\n\nካብቲ ክትፍትሾ እትደሊ መድረኽ ጀምር። LumaTrace ዝቕጽል ደረጃ ይመርሕ፣ ዘይርከቡ መለክዒታት ድማ N/A ይቕጽሉ።\n\nWindows: ኣብዚ PC ዘሎ app ወይ game process ምረጽ፣ ድሕሪኡ መርመራ ጀምር። process እንተተዓጽዩ session ይቋረጽ ወይ ግልጺ ምቁራጽ ይምዝገብ።\n\nAndroid: ኣብ ተሌፎን Developer optionsን USB debuggingን ኣንቀሳቕስ፣ ነዚ PC ፍቓድ ሃብ፣ እትፍትሾ app ክፈት፣ ድሕሪኡ መርመራ ጀምር ጠውቕ። LumaTrace ኣብ ቅድሚት ዘሎ package ባዕሉ የለሊ።\n\nFPS፣ 1% low፣ frame time፣ CPU፣ memoryን ዝተላእኩ reportsን ንምርኣይ ውጽኢት መርመራ ምረጽ።\n\nAndroid ናይ ግዜ መርመራ ዝጸረየ ADB logcat ይዕቅብ። Windows ናይ ግዜ ማህተም ዘለዎ LumaTrace session records ይዕቅብ።\n\nዝጎደሉ ዋጋታት N/A ይቕጽሉ፣ ብ0 ፈጺሞም ኣይምልኡን።\n\nናብ cloud ኣይስደድን",
+  "features": [
+    "ናይ ከባቢ ምእካብ",
+    "ናብ cloud ኣይስደድን",
+    "ብሓደ ጠውቂ ጸብጻብ",
+    "ቀንዲ Metric Charts",
+    "ዝተላእኩ ፋይላት"
+  ],
+  "keywords": [
+    "መለክዒታት",
+    "ማእከላይ FPS",
+    "ማእከላይ CPU",
+    "ማእከላይ Memory",
+    "Android",
+    "Windows",
+    "ጸብጻባት"
+  ],
+  "screenshotCaptions": [
+    "ኣፈጻጽማ ብንጹር ርአ።",
+    "እትፍትሾ ምረጽ",
+    "መርመራ ይካየድ ኣሎ",
+    "ውጽኢታት መርመራ"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

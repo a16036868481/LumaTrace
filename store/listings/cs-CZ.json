@@ -1,0 +1,34 @@
+{
+  "locale": "cs-CZ",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Jasně vidět výkon. Začněte na platformě, kterou chcete testovat. LumaTrace provede další krok a ponechá nedostupné metriky jako N/A.",
+  "description": "Jasně vidět výkon.\n\nZačněte na platformě, kterou chcete testovat. LumaTrace provede další krok a ponechá nedostupné metriky jako N/A.\n\nWindows: Vyberte aplikaci nebo herní proces na tomto počítači a začněte testovat. Pokud proces skončí, relace se zastaví nebo zaznamená jasné přerušení.\n\nAndroid: Povolte v telefonu možnosti vývojáře a ladění USB, autorizujte tento počítač, otevřete aplikaci, kterou chcete otestovat, a klikněte na Spustit test. LumaTrace automaticky detekuje balíček v popředí.\n\nVýběrem výsledku testu zobrazíte FPS, 1% low, čas snímku, CPU, paměť a exportované zprávy.\n\nAndroid uloží dezinfikovaný ADB logcat pro testovací období. Windows ukládá záznamy relací LumaTrace s časovým razítkem.\n\nChybějící hodnoty zůstávají N/A a nikdy se nevyplní 0.\n\nŽádné nahrávání do cloudu",
+  "features": [
+    "Místní sběr",
+    "Žádné nahrávání do cloudu",
+    "Přehledy na jedno kliknutí",
+    "Základní metrické grafy",
+    "Vývoz"
+  ],
+  "keywords": [
+    "metriky",
+    "Průměr FPS",
+    "Průměr CPU",
+    "Průměrná paměť",
+    "Android",
+    "Windows",
+    "Zprávy"
+  ],
+  "screenshotCaptions": [
+    "Jasně vidět výkon.",
+    "Vyberte, co chcete testovat",
+    "Probíhá test",
+    "Výsledky testu"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

@@ -1,0 +1,34 @@
+{
+  "locale": "kn-IN",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "ಕಾರ್ಯಕ್ಷಮತೆಯನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ನೋಡಿ. ಪರೀಕ್ಷಿಸಬೇಕಾದ ವೇದಿಕೆಯಿಂದ ಆರಂಭಿಸಿ. LumaTrace ಮುಂದಿನ ಹಂತಕ್ಕೆ ಮಾರ್ಗದರ್ಶನ ನೀಡಿ, ಲಭ್ಯವಿಲ್ಲದ ಮಾಪಕಗಳನ್ನು N/A ಆಗಿಯೇ ಉಳಿಸುತ್ತದೆ.",
+  "description": "ಕಾರ್ಯಕ್ಷಮತೆಯನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ನೋಡಿ.\n\nಪರೀಕ್ಷಿಸಬೇಕಾದ ವೇದಿಕೆಯಿಂದ ಆರಂಭಿಸಿ. LumaTrace ಮುಂದಿನ ಹಂತಕ್ಕೆ ಮಾರ್ಗದರ್ಶನ ನೀಡಿ, ಲಭ್ಯವಿಲ್ಲದ ಮಾಪಕಗಳನ್ನು N/A ಆಗಿಯೇ ಉಳಿಸುತ್ತದೆ.\n\nWindows: ಈ PC ಯಲ್ಲಿ ಆ್ಯಪ್ ಅಥವಾ ಆಟದ ಪ್ರಕ್ರಿಯೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ, ನಂತರ ಪರೀಕ್ಷೆ ಆರಂಭಿಸಿ. ಪ್ರಕ್ರಿಯೆ ಮುಗಿದರೆ ಸೆಷನ್ ನಿಲ್ಲುತ್ತದೆ ಅಥವಾ ಸ್ಪಷ್ಟ ಅಡಚಣೆಯನ್ನು ದಾಖಲಿಸುತ್ತದೆ.\n\nAndroid: ಫೋನ್‌ನಲ್ಲಿ Developer options ಮತ್ತು USB debugging ಸಕ್ರಿಯಗೊಳಿಸಿ, ಈ PC ಗೆ ಅನುಮತಿ ನೀಡಿ, ಪರೀಕ್ಷಿಸಬೇಕಾದ ಆ್ಯಪ್ ತೆರೆಯಿರಿ, ನಂತರ ಪರೀಕ್ಷೆ ಆರಂಭಿಸಿ ಕ್ಲಿಕ್ ಮಾಡಿ. LumaTrace ಮುಂಭಾಗದ package ಅನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಪತ್ತೆಮಾಡುತ್ತದೆ.\n\nFPS, 1% Low, frame time, CPU, ಮೆಮೊರಿ ಮತ್ತು ರಫ್ತು ಮಾಡಿದ ವರದಿಗಳನ್ನು ನೋಡಲು ಪರೀಕ್ಷಾ ಫಲಿತಾಂಶ ಆಯ್ಕೆಮಾಡಿ.\n\nAndroid ಪರೀಕ್ಷಾ ಅವಧಿಯ ಶುದ್ಧೀಕರಿಸಿದ ADB logcat ಅನ್ನು ಉಳಿಸುತ್ತದೆ. Windows ಸಮಯಮುದ್ರೆಯ LumaTrace ಸೆಷನ್ ದಾಖಲೆಗಳನ್ನು ಉಳಿಸುತ್ತದೆ.\n\nಕಾಣೆಯಾದ ಮೌಲ್ಯಗಳು N/A ಆಗಿಯೇ ಉಳಿಯುತ್ತವೆ ಮತ್ತು ಎಂದಿಗೂ 0 ನಿಂದ ತುಂಬುವುದಿಲ್ಲ.\n\nಕ್ಲೌಡ್‌ಗೆ ಅಪ್‌ಲೋಡ್ ಇಲ್ಲ",
+  "features": [
+    "ಸ್ಥಳೀಯ ಸಂಗ್ರಹಣೆ",
+    "ಕ್ಲೌಡ್‌ಗೆ ಅಪ್‌ಲೋಡ್ ಇಲ್ಲ",
+    "ಒಂದೇ ಕ್ಲಿಕ್‌ನ ವರದಿಗಳು",
+    "ಮುಖ್ಯ ಮಾಪಕ ಚಾರ್ಟ್‌ಗಳು",
+    "ರಫ್ತುಗಳು"
+  ],
+  "keywords": [
+    "ಮಾಪಕಗಳು",
+    "ಸರಾಸರಿ FPS",
+    "ಸರಾಸರಿ CPU",
+    "ಸರಾಸರಿ ಮೆಮೊರಿ",
+    "Android",
+    "Windows",
+    "ವರದಿಗಳು"
+  ],
+  "screenshotCaptions": [
+    "ಕಾರ್ಯಕ್ಷಮತೆಯನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ನೋಡಿ.",
+    "ಏನನ್ನು ಪರೀಕ್ಷಿಸಬೇಕೆಂದು ಆಯ್ಕೆಮಾಡಿ",
+    "ಪರೀಕ್ಷೆ ನಡೆಯುತ್ತಿದೆ",
+    "ಪರೀಕ್ಷಾ ಫಲಿತಾಂಶಗಳು"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

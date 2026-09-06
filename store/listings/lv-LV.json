@@ -1,0 +1,34 @@
+{
+  "locale": "lv-LV",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Skaidri redziet veiktspēju. Sāciet ar testējamo platformu. LumaTrace parādīs nākamo soli un atstās nepieejamos rādītājus kā N/A.",
+  "description": "Skaidri redziet veiktspēju.\n\nSāciet ar testējamo platformu. LumaTrace parādīs nākamo soli un atstās nepieejamos rādītājus kā N/A.\n\nWindows: Izvēlieties lietotnes vai spēles procesu šajā PC un sāciet testēšanu. Ja process beidzas, sesija tiek apturēta vai skaidri reģistrē pārtraukumu.\n\nAndroid: Tālrunī iespējojiet Izstrādātāja opcijas un USB atkļūdošanu, pilnvarojiet šo PC, atveriet testējamo lietotni un noklikšķiniet uz “Sākt testu”. LumaTrace automātiski nosaka priekšplāna pakotni.\n\nIzvēlieties testa rezultātu, lai skatītu FPS, 1% Low, kadra laiku, CPU, atmiņu un eksportētos pārskatus.\n\nAndroid saglabā sanitizētu ADB logcat par testa periodu. Windows saglabā LumaTrace sesijas ierakstus ar laika zīmogiem.\n\nTrūkstošās vērtības paliek N/A un nekad netiek aizpildītas ar 0.\n\nBez augšupielādes mākonī",
+  "features": [
+    "Lokāla datu vākšana",
+    "Bez augšupielādes mākonī",
+    "Pārskati ar vienu klikšķi",
+    "Galveno rādītāju diagrammas",
+    "Eksporti"
+  ],
+  "keywords": [
+    "rādītāji",
+    "Vidējais FPS",
+    "Vidējais CPU",
+    "Vidējais atmiņas lietojums",
+    "Android",
+    "Windows",
+    "Pārskati"
+  ],
+  "screenshotCaptions": [
+    "Skaidri redziet veiktspēju.",
+    "Izvēlieties testējamo mērķi",
+    "Notiek tests",
+    "Testa rezultāti"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

@@ -1,0 +1,34 @@
+{
+  "locale": "lt-LT",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Aiškiai matykite našumą. Pradėkite nuo platformos, kurią norite testuoti. LumaTrace padės atlikti kitą veiksmą, o nepasiekiami rodikliai liks N/A.",
+  "description": "Aiškiai matykite našumą.\n\nPradėkite nuo platformos, kurią norite testuoti. LumaTrace padės atlikti kitą veiksmą, o nepasiekiami rodikliai liks N/A.\n\nWindows: Pasirinkite programos arba žaidimo procesą šiame PC, tada pradėkite testą. Jei procesas baigsis, sesija bus sustabdyta arba bus aiškiai užregistruotas nutrūkimas.\n\nAndroid: Telefone įjunkite Kūrėjo parinktis ir USB derinimą, suteikite leidimą šiam PC, atidarykite testuojamą programą ir spustelėkite Pradėti testą. LumaTrace automatiškai aptinka programos paketą priekiniame plane.\n\nPasirinkite testo rezultatą ir peržiūrėkite FPS, 1% žemiausią FPS, kadro laiką, CPU, atmintį bei eksportuotas ataskaitas.\n\nAndroid išsaugo išvalytą ADB logcat testo laikotarpiui. Windows išsaugo LumaTrace sesijos įrašus su laiko žymomis.\n\nTrūkstamos reikšmės lieka N/A ir niekada neužpildomos 0.\n\nNesiunčiama į debesiją",
+  "features": [
+    "Vietinis rinkimas",
+    "Nesiunčiama į debesiją",
+    "Ataskaitos vienu spustelėjimu",
+    "Pagrindinių rodiklių diagramos",
+    "Eksportai"
+  ],
+  "keywords": [
+    "rodikliai",
+    "Vidutinis FPS",
+    "Vidutinis CPU",
+    "Vidutinė atmintis",
+    "Android",
+    "Windows",
+    "Ataskaitos"
+  ],
+  "screenshotCaptions": [
+    "Aiškiai matykite našumą.",
+    "Pasirinkite, ką testuoti",
+    "Vyksta testas",
+    "Testų rezultatai"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

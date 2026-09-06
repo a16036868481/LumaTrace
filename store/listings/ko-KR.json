@@ -1,0 +1,34 @@
+{
+  "locale": "ko-KR",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "성능을 명확하게 확인하세요. 테스트하려는 플랫폼에서 시작합니다. LumaTrace는 다음 단계를 안내하고 사용할 수 없는 측정항목을 N/A로 유지합니다.",
+  "description": "성능을 명확하게 확인하세요.\n\n테스트하려는 플랫폼에서 시작합니다. LumaTrace는 다음 단계를 안내하고 사용할 수 없는 측정항목을 N/A로 유지합니다.\n\nWindows: 이 PC에서 애플리케이션 또는 게임 프로세스를 선택한 다음 테스트를 시작합니다. 프로세스가 종료되면 세션이 중지되거나 명확한 중단이 기록됩니다.\n\nAndroid: 휴대전화에서 개발자 옵션 및 USB 디버깅을 활성화하고 이 PC를 인증한 다음 테스트하려는 앱을 연 다음 테스트 시작을 클릭하세요. LumaTrace는 전경 패키지를 자동으로 감지합니다.\n\nFPS, 1% 낮음, 프레임 시간, CPU, 메모리 및 내보낸 보고서를 보려면 최근 테스트 결과를 선택하세요.\n\nAndroid는 테스트 기간의 민감 정보를 제거한 ADB logcat을 저장하고, Windows는 시간 정보가 포함된 LumaTrace 수집 기록을 저장합니다.\n\n누락된 값은 N/A로 유지되며 0으로 채워지지 않습니다.\n\n클라우드 업로드 없음",
+  "features": [
+    "로컬 수집",
+    "클라우드 업로드 없음",
+    "원클릭 보고서",
+    "핵심 측정항목 차트",
+    "내보내기"
+  ],
+  "keywords": [
+    "측정항목",
+    "평균 FPS",
+    "평균 CPU",
+    "평균 메모리",
+    "Android",
+    "Windows",
+    "보고서"
+  ],
+  "screenshotCaptions": [
+    "성능을 명확하게 확인하세요.",
+    "테스트 대상 선택",
+    "테스트 진행 중",
+    "테스트 결과"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

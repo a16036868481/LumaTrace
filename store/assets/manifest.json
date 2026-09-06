@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "submissionRoute": "msix",
+  "target": "Microsoft Store desktop listing",
+  "capture": {
+    "source": "current-source-tree-build",
+    "releaseExecutable": false,
+    "locales": [
+      "en-US",
+      "zh-CN"
+    ],
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dataDisclosure": "For each locale, screenshots 02 through 04 use the built-in mock collector. Screenshot 03 visibly identifies the source as mock."
+  },
+  "requirements": {
+    "desktopScreenshot": {
+      "requiredCount": 1,
+      "recommendedCount": 4,
+      "maximumCount": 10,
+      "minimumWidth": 1366,
+      "minimumHeight": 768,
+      "format": "png",
+      "maximumBytes": 52428800
+    },
+    "appTileIcon": {
+      "requiredForNonGameDesktopMsix": false,
+      "recommended": true,
+      "width": 300,
+      "height": 300,
+      "format": "png",
+      "maximumBytes": 52428800
+    }
+  },
+  "assets": [
+    {
+      "path": "icons/app-tile-icon-300x300.png",
+      "role": "app-tile-icon",
+      "width": 300,
+      "height": 300,
+      "format": "png",
+      "source": "apps/desktop/src-tauri/icons/icon.png",
+      "transformation": "mechanical high-quality resize from 512x512; no redesign",
+      "fromCurrentBuild": false
+    },
+    {
+      "path": "screenshots/en-US/01-home.png",
+      "role": "desktop-screenshot",
+      "width": 1440,
+      "height": 900,
+      "format": "png",
+      "content": "Home page and Windows/Android platform choices",
+      "fromCurrentBuild": true
+    },
+    {
+      "path": "screenshots/en-US/02-select-target.png",
+      "role": "desktop-screenshot",
+      "width": 1440,
+      "height": 900,
+      "format": "png",
+      "content": "Windows target selection with built-in mock targets",
+      "fromCurrentBuild": true
+    },
+    {
+      "path": "screenshots/en-US/03-live-metrics.png",
+      "role": "desktop-screenshot",
+      "width": 1440,
+      "height": 900,
+      "format": "png",
+      "content": "Realtime FPS, CPU, GPU, and memory charts; mock source is visibly labeled",
+      "fromCurrentBuild": true
+    },
+    {
+      "path": "screenshots/en-US/04-results.png",
+      "role": "desktop-screenshot",
+      "width": 1440,
+      "height": 900,
+      "format": "png",
+      "content": "Test results overview and core metrics from the same mock session",
+      "fromCurrentBuild": true
+    },
+    {
+      "path": "screenshots/zh-CN/01-home.png",
+      "role": "desktop-screenshot",
+      "width": 1440,
+      "height": 900,
+      "format": "png",
+      "content": "Simplified Chinese home page and Windows/Android platform choices",
+      "fromCurrentBuild": true
+    },
+    {
+      "path": "screenshots/zh-CN/02-select-target.png",
+      "role": "desktop-screenshot",
+      "width": 1440,
+      "height": 900,
+      "format": "png",
+      "content": "Simplified Chinese Windows target selection with built-in mock targets",
+      "fromCurrentBuild": true
+    },
+    {
+      "path": "screenshots/zh-CN/03-live-metrics.png",
+      "role": "desktop-screenshot",
+      "width": 1440,
+      "height": 900,
+      "format": "png",
+      "content": "Simplified Chinese realtime FPS, CPU, GPU, and memory charts; mock source is visibly labeled",
+      "fromCurrentBuild": true
+    },
+    {
+      "path": "screenshots/zh-CN/04-results.png",
+      "role": "desktop-screenshot",
+      "width": 1440,
+      "height": 900,
+      "format": "png",
+      "content": "Simplified Chinese test results overview and core metrics from the same mock session",
+      "fromCurrentBuild": true
+    }
+  ],
+  "officialReferences": [
+    "https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/add-and-edit-store-listing-info",
+    "https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/screenshots-and-images"
+  ]
+}

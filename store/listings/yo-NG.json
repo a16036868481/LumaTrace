@@ -1,0 +1,34 @@
+{
+  "locale": "yo-NG",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Wo ìṣiṣẹ́ ní kedere. Bẹ̀rẹ̀ láti pẹpẹ tí o fẹ́ dánwò. LumaTrace yóò tọ́ ọ sí ìgbésẹ̀ tó kàn, yóò sì fi àwọn ìwọ̀n tí kò sí sí N/A.",
+  "description": "Wo ìṣiṣẹ́ ní kedere.\n\nBẹ̀rẹ̀ láti pẹpẹ tí o fẹ́ dánwò. LumaTrace yóò tọ́ ọ sí ìgbésẹ̀ tó kàn, yóò sì fi àwọn ìwọ̀n tí kò sí sí N/A.\n\nWindows: Yan ìlànà ìṣàfilọ́lẹ̀ tàbí eré lórí PC yìí, lẹ́yìn náà bẹ̀rẹ̀ ìdánwò. Tí ìlànà bá parí, àkókò yóò dá dúró tàbí kọ ìdádúró kedere sílẹ̀.\n\nAndroid: Mú àwọn àṣàyàn Olùgbéejáde àti USB debugging ṣiṣẹ́ lórí fóònù, fún PC yìí láṣẹ, ṣí ìṣàfilọ́lẹ̀ tí o fẹ́ dánwò, lẹ́yìn náà tẹ Bẹ̀rẹ̀ ìdánwò. LumaTrace máa ń ṣàwárí àpò tó wà níwájú laifọwọyi.\n\nYan àbájáde ìdánwò láti wo FPS, 1% Low, àkókò férémù, CPU, ìrántí àti àwọn ìròyìn tí a gbé jáde.\n\nAndroid máa ń fi ADB logcat tí a ti sọ di mímọ́ pamọ́ fún àkókò ìdánwò. Windows máa ń fi àwọn àkọsílẹ̀ àkókò LumaTrace pẹ̀lú àmì-àkókò pamọ́.\n\nÀwọn iye tó sọnù máa dúró sí N/A, a kì yóò sì fi 0 kún wọn láéláé.\n\nKò sí ìrùsókè sí awọsánmà",
+  "features": [
+    "Ìkójọpọ̀ lórí ẹ̀rọ",
+    "Kò sí ìrùsókè sí awọsánmà",
+    "Àwọn ìròyìn pẹ̀lú títẹ̀ kan",
+    "Àwọn àwòrán ìwọ̀n pàtàkì",
+    "Àwọn àgbéjáde"
+  ],
+  "keywords": [
+    "àwọn ìwọ̀n",
+    "FPS àárín",
+    "CPU àárín",
+    "Ìrántí àárín",
+    "Android",
+    "Windows",
+    "Àwọn ìròyìn"
+  ],
+  "screenshotCaptions": [
+    "Wo ìṣiṣẹ́ ní kedere.",
+    "Yan ohun tí a ó dánwò",
+    "Ìdánwò ń lọ",
+    "Àwọn àbájáde ìdánwò"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

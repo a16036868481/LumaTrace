@@ -5,16 +5,16 @@
 - Availability: all possible Microsoft Store markets supported by Partner Center.
 - Pricing: Free.
 - Discoverability: available and discoverable in the Microsoft Store.
-- Listing languages: English (United States) and Chinese (Simplified) only.
+- Listing languages: exactly the same 101 Microsoft Store-supported locales as the packaged desktop UI and exported reports.
 - Publish timing: submit only after the production package, current assets, policy URLs, declarations, and certification notes have passed final review.
 
 Listing language and market availability are separate. Do not restrict a country merely because it does not have a dedicated localized listing; Microsoft Store can use a fallback listing. Likewise, adding a language does not by itself limit or enable a market.
 
-## Held languages
+## Language source of truth
 
-Chinese (Traditional) is intentionally held until a reviewer approves dedicated Traditional Chinese Store copy and screenshots. Other runtime UI dictionaries must not be added as Store listing languages until their marketing copy, privacy wording, screenshots, and product terminology receive native-speaker review.
+`apps/desktop/src/i18n/localeCatalog.ts` is the source of truth for the 101 supported Store locales. Runtime dictionaries, localized reports, the MSIX resource declaration, and Partner Center listing columns must remain in exact one-to-one parity.
 
-Do not add Esperanto, Latin, or Cantonese as independent Store listing languages because Microsoft Store does not expose those listing languages. A future Hong Kong Traditional Chinese listing may use `zh-HK` only after editorial review; it must not be described as an independent Cantonese Store localization.
+The CSV builder fails closed when Partner Center exports fewer or more than those 101 locale columns. Languages that Microsoft Store does not expose as listing languages are not added under an inaccurate substitute locale.
 
 ## Market review notes
 
@@ -23,12 +23,6 @@ Do not add Esperanto, Latin, or Cantonese as independent Store listing languages
 - Recheck sanctions, export-control, local-law, tax, and consumer-contact requirements immediately before submission.
 - Age-rating answers and product declarations must describe the actual production package, not this metadata draft.
 
-## Localization rollout gate
+## Localization gate
 
-Add another listing language only when all of the following are complete:
-
-1. a dedicated short description, full description, features, keywords, privacy policy, and certification notes exist;
-2. terminology matches the runtime UI and exported report language;
-3. current screenshots in that language have been visually reviewed;
-4. a native or professionally qualified reviewer has approved the text; and
-5. the language code is supported by Microsoft Store.
+Before import, every listing language must have a non-empty localized description, short description, captions, features, and search terms derived from the same complete runtime/report dictionary. The generator also enforces Store field limits and requires screenshots for every language column.

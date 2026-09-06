@@ -1,0 +1,34 @@
+{
+  "locale": "pa-IN",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "ਕਾਰਗੁਜ਼ਾਰੀ ਨੂੰ ਸਾਫ਼ ਵੇਖੋ। ਜਿਹੜਾ ਪਲੇਟਫਾਰਮ ਟੈਸਟ ਕਰਨਾ ਹੈ ਉਹ ਚੁਣੋ। LumaTrace ਅਗਲੇ ਪੜਾਅ ਦੀ ਮਾਰਗਦਰਸ਼ਨ ਕਰੇਗਾ ਅਤੇ ਉਪਲਬਧ ਨਾ ਹੋਣ ਵਾਲੇ ਮਾਪ N/A ਰੱਖੇਗਾ।",
+  "description": "ਕਾਰਗੁਜ਼ਾਰੀ ਨੂੰ ਸਾਫ਼ ਵੇਖੋ।\n\nਜਿਹੜਾ ਪਲੇਟਫਾਰਮ ਟੈਸਟ ਕਰਨਾ ਹੈ ਉਹ ਚੁਣੋ। LumaTrace ਅਗਲੇ ਪੜਾਅ ਦੀ ਮਾਰਗਦਰਸ਼ਨ ਕਰੇਗਾ ਅਤੇ ਉਪਲਬਧ ਨਾ ਹੋਣ ਵਾਲੇ ਮਾਪ N/A ਰੱਖੇਗਾ।\n\nWindows: ਇਸ PC ਉੱਤੇ ਐਪ ਜਾਂ ਗੇਮ ਦੀ ਪ੍ਰਕਿਰਿਆ ਚੁਣੋ, ਫਿਰ ਟੈਸਟ ਸ਼ੁਰੂ ਕਰੋ। ਜੇ ਪ੍ਰਕਿਰਿਆ ਬੰਦ ਹੋ ਜਾਵੇ, ਸੈਸ਼ਨ ਰੁਕ ਜਾਵੇਗਾ ਜਾਂ ਰੁਕਾਵਟ ਸਾਫ਼ ਤੌਰ ਉੱਤੇ ਦਰਜ ਕਰੇਗਾ।\n\nAndroid: ਫੋਨ ਉੱਤੇ Developer options ਅਤੇ USB debugging ਚਾਲੂ ਕਰੋ, ਇਸ PC ਨੂੰ ਇਜਾਜ਼ਤ ਦਿਓ, ਟੈਸਟ ਵਾਲੀ ਐਪ ਖੋਲ੍ਹੋ, ਫਿਰ Start Test ਦਬਾਓ। LumaTrace ਸਾਹਮਣੇ ਚੱਲਦੇ package ਨੂੰ ਆਪੇ ਪਛਾਣ ਲੈਂਦਾ ਹੈ।\n\nFPS, 1% low, frame time, CPU, ਮੈਮੋਰੀ ਅਤੇ ਐਕਸਪੋਰਟ ਕੀਤੀਆਂ ਰਿਪੋਰਟਾਂ ਵੇਖਣ ਲਈ ਇੱਕ ਟੈਸਟ ਨਤੀਜਾ ਚੁਣੋ।\n\nAndroid ਟੈਸਟ ਦੇ ਮਿਆਦ ਦਾ ਸੰਵੇਦਨਸ਼ੀਲ ਜਾਣਕਾਰੀ ਤੋਂ ਸਾਫ਼ ADB logcat ਸੁਰੱਖਿਅਤ ਕਰਦਾ ਹੈ। Windows ਸਮੇਂ ਦੀ ਮੋਹਰ ਵਾਲੇ LumaTrace ਸੈਸ਼ਨ ਰਿਕਾਰਡ ਸੁਰੱਖਿਅਤ ਕਰਦਾ ਹੈ।\n\nਗੁੰਮ ਮੁੱਲ N/A ਰਹਿੰਦੀਆਂ ਹਨ ਅਤੇ ਉਹਨਾਂ ਵਿੱਚ ਕਦੇ 0 ਨਹੀਂ ਭਰਿਆ ਜਾਂਦਾ।\n\nਕਲਾਊਡ ਉੱਤੇ ਅੱਪਲੋਡ ਨਹੀਂ",
+  "features": [
+    "ਸਥਾਨਕ ਡਾਟਾ ਇਕੱਠਾ ਕਰਨਾ",
+    "ਕਲਾਊਡ ਉੱਤੇ ਅੱਪਲੋਡ ਨਹੀਂ",
+    "ਇੱਕ ਕਲਿੱਕ ਨਾਲ ਰਿਪੋਰਟਾਂ",
+    "ਮੁੱਖ ਮਾਪ ਦੇ ਚਾਰਟ",
+    "ਐਕਸਪੋਰਟਾਂ"
+  ],
+  "keywords": [
+    "ਮਾਪ",
+    "ਔਸਤ FPS",
+    "ਔਸਤ CPU",
+    "ਔਸਤ ਮੈਮੋਰੀ",
+    "Android",
+    "Windows",
+    "ਰਿਪੋਰਟਾਂ"
+  ],
+  "screenshotCaptions": [
+    "ਕਾਰਗੁਜ਼ਾਰੀ ਨੂੰ ਸਾਫ਼ ਵੇਖੋ।",
+    "ਟੈਸਟ ਕਰਨ ਵਾਲੀ ਚੀਜ਼ ਚੁਣੋ",
+    "ਟੈਸਟ ਚੱਲ ਰਿਹਾ ਹੈ",
+    "ਟੈਸਟ ਦੇ ਨਤੀਜੇ"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

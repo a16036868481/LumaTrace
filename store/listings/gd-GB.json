@@ -1,0 +1,34 @@
+{
+  "locale": "gd-GB",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Faic coileanadh gu soilleir. Tòisich leis an àrd-ùrlar a tha thu airson deuchainn. Stiùiridh LumaTrace thu tron ath cheum agus cumaidh e meatraigean nach eil ri fhaighinn mar N/A.",
+  "description": "Faic coileanadh gu soilleir.\n\nTòisich leis an àrd-ùrlar a tha thu airson deuchainn. Stiùiridh LumaTrace thu tron ath cheum agus cumaidh e meatraigean nach eil ri fhaighinn mar N/A.\n\nWindows: Tagh pròiseas aplacaid no geama air a' PC seo agus tòisich deuchainn. Ma thig am pròiseas gu crìch, stadaidh an seisean no clàraichidh e briseadh soilleir.\n\nAndroid: Cuir roghainnean Leasaiche agus USB debugging an comas air an fhòn, ùghdarraich am PC seo, fosgail an aplacaid ri deuchainn agus briog air Tòisich deuchainn. Lorgaidh LumaTrace a' phacaid air a' bheulaibh gu fèin-obrachail.\n\nTagh toradh deuchainn gus FPS, 1% Low, àm frèama, CPU, cuimhne agus aithisgean às-phortaichte fhaicinn.\n\nSàbhalaidh Android ADB logcat glanaichte airson ùine na deuchainn. Sàbhalaidh Windows clàran seisein LumaTrace le stampaichean-ama.\n\nFuirichidh luachan a tha a dhìth mar N/A agus cha tèid an lìonadh le 0 a-chaoidh.\n\nGun luchdadh suas dhan sgòth",
+  "features": [
+    "Cruinneachadh ionadail",
+    "Gun luchdadh suas dhan sgòth",
+    "Aithisgean le aon bhriogadh",
+    "Cairtean nam prìomh mheatraigean",
+    "Às-phortaidhean"
+  ],
+  "keywords": [
+    "meatraigean",
+    "FPS cuibheasach",
+    "CPU cuibheasach",
+    "Cuimhne chuibheasach",
+    "Android",
+    "Windows",
+    "Aithisgean"
+  ],
+  "screenshotCaptions": [
+    "Faic coileanadh gu soilleir.",
+    "Tagh na tha ri dheuchainn",
+    "Deuchainn a' dol",
+    "Toraidhean deuchainn"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

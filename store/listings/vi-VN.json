@@ -1,0 +1,34 @@
+{
+  "locale": "vi-VN",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Xem hiệu suất rõ ràng. Bắt đầu từ nền tảng bạn muốn thử nghiệm. LumaTrace sẽ hướng dẫn bước tiếp theo và giữ các số liệu không có sẵn ở dạng N/A.",
+  "description": "Xem hiệu suất rõ ràng.\n\nBắt đầu từ nền tảng bạn muốn thử nghiệm. LumaTrace sẽ hướng dẫn bước tiếp theo và giữ các số liệu không có sẵn ở dạng N/A.\n\nWindows: Chọn một ứng dụng hoặc quy trình trò chơi trên PC này, sau đó bắt đầu thử nghiệm. Nếu quá trình thoát, phiên sẽ dừng hoặc ghi lại sự gián đoạn rõ ràng.\n\nAndroid: Bật tùy chọn Nhà phát triển và gỡ lỗi USB trên điện thoại, cấp phép cho PC này, mở ứng dụng bạn muốn kiểm tra, sau đó nhấp vào Bắt đầu kiểm tra. LumaTrace tự động phát hiện gói tiền cảnh.\n\nChọn kết quả kiểm tra gần đây để xem FPS, 1% báo cáo thấp, thời gian khung hình, CPU, bộ nhớ và đã xuất.\n\nAndroid lưu ADB logcat đã khử thông tin nhạy cảm trong thời gian kiểm thử. Windows lưu các bản ghi thu thập LumaTrace có thời gian.\n\nCác giá trị bị thiếu vẫn không được áp dụng và không bao giờ được lấp đầy với 0.\n\nKhông tải lên đám mây",
+  "features": [
+    "Bộ sưu tập cục bộ",
+    "Không tải lên đám mây",
+    "Báo cáo bằng một cú nhấp chuột",
+    "Biểu đồ chỉ số cốt lõi",
+    "Xuất"
+  ],
+  "keywords": [
+    "số liệu",
+    "FPS trung bình",
+    "CPU trung bình",
+    "Bộ nhớ trung bình",
+    "Android",
+    "Windows",
+    "Báo cáo"
+  ],
+  "screenshotCaptions": [
+    "Xem hiệu suất rõ ràng.",
+    "Chọn nội dung cần kiểm tra",
+    "Đang thử nghiệm",
+    "Kết quả kiểm tra"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

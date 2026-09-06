@@ -1,0 +1,34 @@
+{
+  "locale": "pl-PL",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Zobacz wyraźnie wydajność. Zacznij od platformy, którą chcesz przetestować. LumaTrace poprowadzi następny krok i zachowa niedostępne dane jako N/A.",
+  "description": "Zobacz wyraźnie wydajność.\n\nZacznij od platformy, którą chcesz przetestować. LumaTrace poprowadzi następny krok i zachowa niedostępne dane jako N/A.\n\nWindows: Wybierz aplikację lub proces gry na tym komputerze, a następnie rozpocznij testowanie. Jeśli proces zakończy się, sesja zostanie zatrzymana lub zostanie zarejestrowana wyraźna przerwa.\n\nAndroid: Włącz opcje programistyczne i debugowanie USB w telefonie, autoryzuj ten komputer, otwórz aplikację, którą chcesz przetestować, a następnie kliknij Rozpocznij test. LumaTrace automatycznie wykrywa pakiet na pierwszym planie.\n\nWybierz wynik testu, aby wyświetlić FPS, 1% low, czas ramki, CPU, pamięć i wyeksportowane raporty.\n\nAndroid zapisuje odkażoną ADB logcat na okres testowy. Windows zapisuje rekordy sesji LumaTrace ze znacznikiem czasu.\n\nBrakujące wartości pozostają N/A i nigdy nie są wypełniane wartością 0.\n\nBrak przesyłania do chmury",
+  "features": [
+    "Lokalna kolekcja",
+    "Brak przesyłania do chmury",
+    "Raporty jednym kliknięciem",
+    "Podstawowe wykresy metryczne",
+    "Eksport"
+  ],
+  "keywords": [
+    "metryki",
+    "Średni FPS",
+    "Średni CPU",
+    "Przeciętna pamięć",
+    "Android",
+    "Windows",
+    "Raporty"
+  ],
+  "screenshotCaptions": [
+    "Zobacz wyraźnie wydajność.",
+    "Wybierz, co chcesz przetestować",
+    "Test w toku",
+    "Wyniki testu"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

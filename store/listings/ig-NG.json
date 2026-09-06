@@ -1,0 +1,34 @@
+{
+  "locale": "ig-NG",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Hụ arụmọrụ nke ọma. Bido site na ikpo okwu ịchọrọ ịnwale. LumaTrace ga-eduzi nzọụkwụ ọzọ ma debe ihe nlele ndị na-adịghị ka N/A.",
+  "description": "Hụ arụmọrụ nke ọma.\n\nBido site na ikpo okwu ịchọrọ ịnwale. LumaTrace ga-eduzi nzọụkwụ ọzọ ma debe ihe nlele ndị na-adịghị ka N/A.\n\nWindows: Họrọ usoro ngwa ma ọ bụ egwuregwu na PC a, wee bido nnwale. Ọ bụrụ na usoro ahụ apụọ, nnọkọ ahụ ga-akwụsị ma ọ bụ dekọọ nkwụsị doro anya.\n\nAndroid: Mee ka Nhọrọ Onye Mmepe na USB debugging rụọ ọrụ na ekwentị, nye PC a ikike, mepee ngwa ịchọrọ ịnwale, wee pịa Bido Nnwale. LumaTrace na-achọpụta ngwugwu dị n'ihu na akpaghị aka.\n\nHọrọ nsonaazụ nnwale iji lelee FPS, 1% Low, oge frame, CPU, nchekwa, na akụkọ ebupụrụ.\n\nAndroid na-echekwa ADB logcat e sachara maka oge nnwale. Windows na-echekwa ndekọ nnọkọ LumaTrace nwere akara oge.\n\nUru na-efu na-anọ N/A, a naghịkwa etinye 0 n'ọnọdụ ha.\n\nEnweghị mbulite igwe ojii",
+  "features": [
+    "Nchịkọta na ngwaọrụ",
+    "Enweghị mbulite igwe ojii",
+    "Akụkọ otu-pịa",
+    "Eserese Ihe Nlele Ndị Bụ Isi",
+    "Mbupụ"
+  ],
+  "keywords": [
+    "ihe nlele",
+    "Nkezi FPS",
+    "Nkezi CPU",
+    "Nkezi Nchekwa",
+    "Android",
+    "Windows",
+    "Akụkọ"
+  ],
+  "screenshotCaptions": [
+    "Hụ arụmọrụ nke ọma.",
+    "Họrọ ihe a ga-anwale",
+    "Nnwale na-aga n'ihu",
+    "Nsonaazụ Nnwale"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}

@@ -1,0 +1,34 @@
+{
+  "locale": "xh-ZA",
+  "productName": "LumaTrace Performance Lab",
+  "editorialStatus": "direct_runtime_localization",
+  "shortDescription": "Bona ukusebenza ngokucacileyo. Qalisa ngenkundla ofuna ukuyivavanya. I-LumaTrace izokuqondisa esinyathelweni esilandelayo kwaye igcine iimethrikhi angenakufumaneka njenge-N/A.",
+  "description": "Bona ukusebenza ngokucacileyo.\n\nQalisa ngenkundla ofuna ukuyivavanya. I-LumaTrace izokuqondisa esinyathelweni esilandelayo kwaye igcine iimethrikhi angenakufumaneka njenge-N/A.\n\nWindows: Khetha inkqubo yosetyenziso losetyenziso okanye umdlalo kule khompyutha, emva koko uqala uvavanyo. Ukuba inkqubo iphuma, uvavanyo kuyama okanye kurekhodwe ukuphazamiseka okucacileyo.\n\nAndroid: Vula iinketho zomphuhlisi nokulungisa iimpazamo nge-USB efowunini, ugunyazise le khompyutha, uvule usetyenziso ofuna ukuluvavanya, emva koko uchofoza Qalisa Uvavanyo. I-LumaTrace ithola ngokuzenzekelayo iphakheji elingaphambili.\n\nKhetha isiphumo ukuze ujonge i-FPS, i-1% Low, ixesha besakhelo, i-CPU, imemori nemibiko ekhishiwe.\n\nI-Android igcina i-ADB logcat ehlanziwe yesikhathi sovavanyo. I-Windows igcina iirekhodi eseshini ye-LumaTrace anezikhathi.\n\nAmanani angekhoyo ahlala eyi-N/A kwaye awazaliswa ngo-0.\n\nAkukho kulayisha efini",
+  "features": [
+    "Ukuqokelela ekuhlaleni",
+    "Akukho kulayisha efini",
+    "Iingxelo ngokucofa kube kanye",
+    "Iigrafu iimethrikhi abalulekile",
+    "Okukhishiwe"
+  ],
+  "keywords": [
+    "iimethrikhi",
+    "Umndilili se-FPS",
+    "Umndilili se-CPU",
+    "Umndilili sememori",
+    "Android",
+    "Windows",
+    "Iingxelo"
+  ],
+  "screenshotCaptions": [
+    "Bona ukusebenza ngokucacileyo.",
+    "Khetha ithagethi yovavanyo",
+    "Uvavanyo luyaqhubeka",
+    "Iziphumo Zovavanyo"
+  ],
+  "screenshotSourceLocale": "en-US",
+  "releaseNotes": "",
+  "privacyPolicyUrlCandidate": "https://github.com/a16036868481/LumaTrace/blob/main/store/privacy-policy.md",
+  "supportUrl": "https://github.com/a16036868481/LumaTrace/issues",
+  "licenseTermsUrl": "https://github.com/a16036868481/LumaTrace/blob/main/LICENSE"
+}
