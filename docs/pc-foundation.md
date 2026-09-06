@@ -25,7 +25,7 @@ Milestone 3A added the first PC collector foundation for Windows local process s
 - PresentMon capture is explicit and experimental in 3B.
 - LumaTrace does not implement an ETW SDK consumer, PresentMon Service API, overlay, or GPU telemetry.
 - PresentMon missing, permission-limited, failed, unmatched, or ambiguous capture does not block CPU/memory.
-- GPU, macOS, Linux, and iOS collectors are outside this batch.
+- GPU, macOS, and Linux collectors are outside this batch.
 
 ## Metrics
 

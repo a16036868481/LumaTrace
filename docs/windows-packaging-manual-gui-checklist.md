@@ -10,7 +10,7 @@ Use this checklist after the automated Windows packaging smokes pass and before 
 - Confirm basic mock session and report flows work from the installed app.
 - Confirm diagnostics and reports do not expose auth tokens, raw logs, stack traces, full user paths, or command lines.
 
-This checklist does not cover production code signing, updater behavior, notarization, store distribution, iOS, Android device hardware QA, PC/PresentMon hardware QA, or new metrics.
+This checklist does not cover production code signing, updater behavior, notarization, store distribution, Android device hardware QA, PC/PresentMon hardware QA, or new metrics.
 
 ## Preparation
 

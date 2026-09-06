@@ -1,6 +1,6 @@
 ﻿# Third-Party Licenses
 
-This is an MVP-A license inventory. A stricter automated license checker is planned for Milestone 4.
+Current distributable notices are in [desktop-third-party-notices.md](../legal/desktop-third-party-notices.md) for the desktop executable/frontend and [THIRD-PARTY-NOTICES.md](../apps/desktop/src-tauri/binaries/THIRD-PARTY-NOTICES.md) for the self-contained sidecar. Packages retain the corresponding license texts and version-specific source references. The table below is the historical MVP-A inventory, not the full current distribution manifest.
 
 | Name | Usage | Package type | License | Distribution note | MVP-A bundled |
 | --- | --- | --- | --- | --- | --- |
@@ -20,4 +20,4 @@ This is an MVP-A license inventory. A stricter automated license checker is plan
 | @playwright/test | Browser-level MVP-B smoke test and screenshot capture | dev npm dependency | Apache-2.0 | Development tool only; browser binaries are not bundled by LumaTrace packages in this milestone | No |
 | Android SDK Platform Tools / adb | Optional external CLI for Android discovery, CPU/memory/battery/network sampling, and experimental 2D FPS probe commands | external cli | Android SDK License | Not bundled. Users install it separately from Android SDK Platform Tools. | No |
 
-No external CLI binaries such as adb, xcrun, ideviceinfo, or PresentMon are bundled.
+No external CLI binaries such as adb or PresentMon are bundled.

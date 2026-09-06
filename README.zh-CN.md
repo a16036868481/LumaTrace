@@ -1,107 +1,84 @@
-# LumaTrace 中文说明
+# LumaTrace 性能测试工具
 
-> English is the primary documentation language. This page is a Chinese companion overview for Chinese readers.
+**看见性能，优化体验。** 选择 Windows 应用/游戏进程或 Android 手机 App，即可查看实时性能曲线，并把测试报告保存在自己的电脑上。
 
-LumaTrace 是一个开源、本地优先、clean-room 的跨平台性能测试工具。它面向 Windows、Android 和 iOS 的应用或游戏测试流程，重点是让用户能够开始测试、查看实时指标、结束测试并生成报告。所有指标都会保留 `source`、`precision`、`confidence` 和 availability 信息；无法采集的指标显示 `N/A`，不会填 0 或伪造。
+[下载 Windows 预览版](https://github.com/a16036868481/LumaTrace/releases/tag/v1.0.3-preview.1) · [微软商店](https://apps.microsoft.com/detail/9P3KNQZMFBM8) · [详细使用说明](docs/user-guide.zh-CN.md) · [English](README.md)
 
-## 下载
+## 下载与安装
 
-当前 Windows 预览版安装包在 GitHub Releases：
+**1.0.3 预览版**面向 **Windows 11 x64**，已包含软件自身的运行环境，普通用户无需安装 Node.js 或 pnpm。GitHub 版本是未签名预览版，Windows 可能提示未知发布者或 SmartScreen 警告；运行前请核对下载来源和版本，不要关闭系统防护。
 
-[下载最新 Windows 预览版](https://github.com/a16036868481/LumaTrace/releases/latest)
+| 下载文件 | 使用方法 |
+| --- | --- |
+| [安装版](https://github.com/a16036868481/LumaTrace/releases/download/v1.0.3-preview.1/LumaTrace-1.0.3-windows-x64-setup.exe) | 下载并运行安装程序，完成后打开 LumaTrace。 |
+| [便携版 ZIP](https://github.com/a16036868481/LumaTrace/releases/download/v1.0.3-preview.1/LumaTrace-1.0.3-windows-x64-portable.zip) | 完整解压到可写的文件夹，运行 `lumatrace-desktop.exe`；让 `binaries` 文件夹保持在它旁边。 |
+| [SHA256 校验文件](https://github.com/a16036868481/LumaTrace/releases/download/v1.0.3-preview.1/SHA256SUMS.txt) | 用于核对下载文件是否与发布文件一致。 |
+| [微软商店](https://apps.microsoft.com/detail/9P3KNQZMFBM8) | 安装当前地区提供的版本。商店审核和分发独立于本次 GitHub 预览版发布。 |
 
-注意：当前安装包仍是未签名预览版，`productionReady=false`，Windows 可能会显示 SmartScreen 提示。它不是正式生产发布。
+[完整发布页](https://github.com/a16036868481/LumaTrace/releases/tag/v1.0.3-preview.1)提供版本说明及全部附件。GitHub 自动生成的 **Source code** 压缩包供开发者使用，不是可直接运行的软件。
 
-## 界面截图
+电脑缺少 Microsoft WebView2 Runtime 时，安装版会联网下载；便携版用户需要先从[微软官方页面](https://developer.microsoft.com/microsoft-edge/webview2/)安装 WebView2 Runtime，再启动软件。
 
-| 仪表盘 | 进行测试 | 测试报告 |
-| --- | --- | --- |
-| ![仪表盘](docs/screenshots/dashboard.png) | ![进行测试](docs/screenshots/test-session-running.png) | ![测试报告](docs/screenshots/report.png) |
+Android 测试需要在 Windows 电脑上运行 LumaTrace，并连接手机或兼容 ADB 的设备。**ADB、PresentMon 是单独安装的可选工具，未随软件打包。** 当前不支持 iOS。
 
-## 当前能力
+## 第一次使用
 
-- Windows：发现本机进程，选择应用或游戏进程后采集 CPU、内存；PresentMon 可用且用户显式启用时，尝试采集 FPS 和帧时间。
-- Android：通过 adb 发现设备和应用，采集 CPU、内存、电池、网络；支持 App lifecycle、PID rebind 和诊断时间线；FPS/帧时间仍是实验能力。
-- iOS：提供 Xcode/xcrun/xctrace 检测、模拟器目标解析、手动 xctrace CSV 导入和显式 xctrace capture 基础能力；稳定实时 iOS 采集仍未完成。
-- 报告：测试结束后可导出 HTML、JSON、CSV；报告保留指标来源、精度和置信度，并对敏感信息做脱敏。
-- 打包：Tauri 桌面宿主、local-server sidecar、本地 token 鉴权、日志/诊断脱敏和 Windows 预览安装包流程已经建立。
+1. 打开 LumaTrace，在左下角 **Language** 中选择 **简体中文**。首次启动默认为英文，之后会记住你的选择。
+2. 点击左侧 **设置报告目录**，选择测试结果的保存位置。
+3. 在首页选择 **Windows 本机** 或 **Android 手机**。
+4. Windows：先打开应用或游戏，再选择对应进程；如果是后打开的，点击刷新按钮。Android：连接并授权手机，在手机上打开待测 App，等待识别名称或包名。
+5. 点击 **开始测试**，正常使用应用；完成测试场景后点击 **结束测试**，到 **测试结果** 或报告目录查看结果。
 
-## 暂未实现
+开始后会自动采集。每个指标在第一条真实数据到达前显示加载效果，有数据后显示折线图；勾选框用于选择要看的曲线。一般不需要调整高级设置。
 
-- 正式生产安装包签名、自动更新和商店发布。
-- production-ready 的完全自包含 sidecar。
-- 稳定 Android FPS/帧时间。
-- 稳定 iOS 实时采集。
-- GPU telemetry、ETW SDK consumer、overlay、云端同步。
-- 默认采集 logcat、bugreport、syslog 或其他隐私日志。
+连接手机、FPS 权限及常见问题见[完整使用说明](docs/user-guide.zh-CN.md)。
 
-## 快速开始
+## 可以测试什么
 
-开发模式需要分别启动后端和前端：
+| 测试对象 | 指标与条件 |
+| --- | --- |
+| Windows 应用/游戏 | 进程 CPU、内存；PresentMon 可用且权限满足时采集 FPS、帧时间；Windows GPU 计数器可用时采集进程 GPU 使用率。 |
+| Windows 显卡 | 驱动或传感器支持时采集 GPU 功耗、GPU 温度。这是显卡设备级数据，不是某个程序的独占功耗，也不是整机功耗。 |
+| Android App | CPU、内存，以及设备能提供的 FPS、帧时间。FPS 支持情况受 Android 版本、App 和渲染方式影响。 |
+| Android 手机 | 设备可提供的电量、电池温度和网络数据。网络退回整台设备统计时，指标详情会说明。 |
+
+采不到的指标保持 **N/A / 未采集**，不会填成 0。部分指标需要工具、驱动或 Windows 权限。当前不显示 CPU 温度；指标详情保留来源、测量范围、精度和可信度。
+
+## 报告、语言与日志
+
+- **一次测试一个文件夹：** HTML、CSV、JSON 和可选日志放在一起，以测试名称、时间和唯一后缀命名。
+- **结果更容易读：** 可查看平均 FPS、1% Low FPS、帧时间、资源占用、曲线和性能总结。FPS 分档是参考，不是硬件跑分。
+- **101 种语言/地区选项：** 测试前选择语言，新生成的报告会使用该语言。全部选项见[语言列表](apps/desktop/src/i18n/localeCatalog.ts)。
+- **日志默认关闭：** 开始前可勾选 **输出日志到报告目录**。Android 保存测试期间经脱敏的 ADB logcat；Windows 保存带时间的 LumaTrace 采集记录，不是被测程序自身的私有日志。
+- **数据保存在本机：** 默认不上传云端。报告及日志会脱敏设备序列号、用户路径、邮箱、token 等敏感内容；分享前仍请检查文件。
+
+## 遇到问题
+
+在软件的 **修复/提交BUG** 页面，可一键修复本地采集服务，或打开 GitHub 提交问题。如果测试仍在进行，请先结束测试。
+
+[提交 Bug](https://github.com/a16036868481/LumaTrace/issues/new?template=bug_report.yml) · [提出建议](https://github.com/a16036868481/LumaTrace/issues/new?template=feature_request.yml)
+
+请附上软件版本、Windows/Android 版本、设备型号、复现步骤，以及检查过的截图或脱敏报告。不要公开密码、token、账号信息、原始隐私日志或完整设备标识。
+
+## 开发与贡献
+
+开发环境使用 **Node.js 24**（见 [`.node-version`](.node-version)）和 **pnpm 9.15.4**。构建 Tauri 桌面程序还需要 Rust 和 Windows 构建环境，详见[打包文档](docs/tauri-packaging.md)。
 
 ```bash
-pnpm install
-pnpm dev:server
-pnpm dev:desktop
-```
-
-常用验证：
-
-```bash
-pnpm test
-pnpm typecheck
+git clone https://github.com/a16036868481/LumaTrace.git
+cd LumaTrace
+pnpm install --frozen-lockfile
 pnpm lint
-pnpm build:desktop
-pnpm verify:android-beta
-pnpm verify:pc-beta
-pnpm verify:ios-beta
-pnpm verify:packaging-hardening
+pnpm typecheck
+pnpm test
 ```
 
-Windows 预览版安装包会发布在 GitHub Releases。当前预览包仍是未签名构建，`productionReady=false`，不是正式生产发布。
+开发网页界面时，在两个终端分别运行 `pnpm dev:server` 和 `pnpm dev:desktop`，然后打开 `http://127.0.0.1:5173`。开发用 Mock 目标会明确标记，不代表真实设备的测量结果。
 
-## 怎么提交 Bug 或建议
+[贡献指南](CONTRIBUTING.md) · [开发文档](docs/development.md) · [架构](docs/architecture.md) · [指标定义](docs/metric-definitions.md) · [安全说明](SECURITY.md) · [第三方许可证](docs/third-party-licenses.md)
 
-请在 GitHub Issues 提交：
+部分开发文档记录的是早期里程碑，当前用户操作流程以本页和使用指南为准。
 
-[https://github.com/a16036868481/LumaTrace/issues](https://github.com/a16036868481/LumaTrace/issues)
+## 开源许可
 
-建议附上：
-
-- LumaTrace 版本；
-- Windows、Android 或 iOS 版本；
-- 设备型号或模拟器名称；
-- 你点击了什么、期望发生什么、实际发生什么；
-- 截图；
-- 软件导出的脱敏 diagnostics。
-
-请不要上传：
-
-- token、cookie、账号信息；
-- 完整本地路径；
-- 原始日志、raw CSV、logcat、bugreport；
-- 含隐私内容的截图；
-- 设备完整序列号或其他敏感标识。
-
-## 数据真实性和隐私原则
-
-- 不使用 ROOT、越狱或私有 API 作为默认方案。
-- 不绕过系统权限。
-- 不默认采集隐私日志。
-- 不上传云端。
-- 不把设备级指标伪装成 App 或进程级指标。
-- 不把缺失指标填成 0。
-- Mock 数据必须明确标记为 mock。
-
-## 相关文档
-
-- [Main README](README.md)
-- [Architecture](docs/architecture.md)
-- [Metric Definitions](docs/metric-definitions.md)
-- [Platform Limitations](docs/platform-limitations.md)
-- [Privacy and Security](docs/privacy-security.md)
-- [Android Beta](docs/android-beta.md)
-- [PC Beta](docs/pc-beta.md)
-- [iOS Beta](docs/ios-beta.md)
-- [Tauri Packaging](docs/tauri-packaging.md)
-- [Windows Preview Release](docs/windows-preview-release.md)
+项目采用 [MIT License](LICENSE)。LumaTrace 是 clean-room 实现，不复制商业工具的代码、界面、图标、协议或私有实现；采集不会绕过系统权限，也不要求 ROOT。第三方组件遵循各自的许可证。

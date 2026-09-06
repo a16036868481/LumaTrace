@@ -124,7 +124,7 @@ Packaged storage status reports DB existence, DB size, migration status, migrati
 
 ## Not In 4B
 
-No updater, no production code signing, no notarization, no store distribution, no iOS, no cloud, no production installer, no production-ready sidecar, and no new metrics are implemented in this milestone.
+No updater, no production code signing, no notarization, no store distribution, no cloud, no production installer, no production-ready sidecar, and no new metrics are implemented in this milestone.
 
 `pnpm verify:windows-packaging-release-readiness` is a release gate, not a release approval. It summarizes the sidecar manifest, QA evidence, notice manifest, Windows bundle draft, and installer draft using file names, hashes, sizes, and status booleans only. It deliberately keeps `releaseStatus: "blocked"` and records blockers for code signing, updater policy, release approval, sidecar production readiness, and manual GUI QA when applicable. It must not contain auth tokens, local paths, raw logs, command lines, stack traces, or `productionReady: true`.
 

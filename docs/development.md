@@ -11,7 +11,6 @@ packages/core
 packages/collectors/mock
 packages/collectors/android
 packages/collectors/pc
-packages/collectors/ios
 packages/storage
 packages/report
 ```
@@ -35,10 +34,6 @@ pnpm test:pc-collector
 pnpm verify:pc-foundation
 pnpm verify:presentmon-adapter
 pnpm verify:pc-beta
-pnpm test:ios-collector
-pnpm verify:ios-foundation
-pnpm verify:ios-trace-import
-pnpm verify:ios-beta
 pnpm build:sidecar
 pnpm build:self-contained-sidecar
 pnpm verify:packaging-notices
@@ -127,8 +122,6 @@ Use `createServer({ dbPath: ":memory:", enableLogger: false })` for integration 
 Android 2F closes the Android Beta with sanitized diagnostics timelines, command timeout/retry/abort policy, launcher/device info caches, report diagnostics notices, and fake long-session stability coverage. Network must prefer UID-level data when available and mark `/proc/net/dev` fallback as `device_level`. FPS work must keep `fps` and `frame_time_ms` `experimental`, require target layer matching, skip ambiguous/no-match cases, and never infer per-frame data from average FPS. Lifecycle work must avoid default force-stop or default auto-start, and PID-missing intervals must not emit fake CPU/memory. Android diagnostics exports must not include logcat, bugreport, raw stdout/stderr blocks, full serials, tokens, emails, or local user paths.
 
 PC Beta keeps `packages/collectors/pc` behind adapters and CommandRunner for external commands. Windows process listing and process CPU/memory remain the baseline path. PresentMon capture is explicit, default off, timed CSV-based, and experimental. Capture status, compatibility planning, CSV retention, permission hints, and sanitized report diagnostics are part of the Beta contract. Do not implement ETW SDK capture, GPU telemetry, overlay, process injection, permission bypass, or raw path/CSV exposure. No-match, ambiguous, permission-limited, failed, or aborted PresentMon captures must not emit FPS/frame-time metrics.
-
-iOS Beta keeps `packages/collectors/ios` conservative. It may use public Xcode command line tools (`xcrun`, `xctrace`, `simctl`) for discovery and simulator app target listing, but it must not use private APIs, jailbreak paths, syslog/log collection by default, or permission bypasses. Live iOS sessions remain unavailable. Manual xctrace CSV import is explicit, target-matched, sanitized, and does not start xctrace recording. iOS metrics availability remains `requires_manual_trace` or `unavailable`; missing values must display as `N/A`, not `0`. Tests must use fixtures and must not require a real iOS device or macOS host.
 
 Tauri 4A adds packaging foundation. Tauri 4B adds packaging hardening in small batches: Rust/Tauri toolchain detection, sidecar artifact manifests, packaging notice manifests, unsigned portable bundle draft verification, log rotation, sanitized packaging diagnostics export, sidecar crash recovery status with restart cooldown/restart limit, packaged storage smoke, Windows installer draft docs, and macOS signing draft docs. Keep `pnpm dev:server` and `pnpm dev:desktop` working. Packaged local-server must bind to `127.0.0.1`, require a memory-only local auth token, and use AppLocalData/AppLog paths. Do not put the token in `VITE_`, localStorage, URLs, logs, reports, or diagnostics. Packaging diagnostics export is sanitized JSON; raw logs, raw CSV, logcat, bugreport data, full paths, command lines, and stack traces are omitted or redacted. `pnpm build:self-contained-sidecar` can build the current bundled Node runtime draft and writes `packaging-notices.json` plus `THIRD-PARTY-NOTICES.md`, but the sidecar manifest must keep `productionReady: false` until signing, installer QA, license notice review, and release smoke are complete. `pnpm verify:windows-bundle-draft` writes an unsigned portable release-directory manifest; it does not create a signed installer. `pnpm verify:windows-installer-draft` is an explicit unsigned NSIS QA probe using a temporary config override and must still keep `productionReady: false`. `pnpm smoke:windows-installer-draft` runs a temporary silent install/uninstall cycle and must not write to the desktop or claim release readiness. `pnpm check:tauri`, `pnpm dev:tauri`, and `pnpm build:tauri` require cargo and the Tauri CLI; if cargo is missing, do not claim Rust/Tauri build verification.
 

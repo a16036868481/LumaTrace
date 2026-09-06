@@ -49,7 +49,7 @@ Response:
 
 ## GET /api/devices
 
-Discovers mock devices, Android adb devices when available, the Local PC device, and iOS devices/simulators when Xcode `xcrun` discovery is available on macOS. Devices are stored locally.
+Discovers mock devices, Android adb devices when available, and the Local PC device. Devices are stored locally.
 
 ```bash
 curl http://127.0.0.1:3100/api/devices
@@ -59,7 +59,7 @@ Response data: `Device[]`.
 
 ## GET /api/devices/:id/targets
 
-Lists targets for a device and stores them locally. Android targets are packages. Windows PC targets are already-running processes and include PID/runtime metadata when available. iOS Foundation only lists simulator app targets when `xcrun simctl listapps` is available; physical iOS app target listing is not claimed.
+Lists targets for a device and stores them locally. Android targets are packages. Windows PC targets are already-running processes and include PID/runtime metadata when available.
 
 ```bash
 curl http://127.0.0.1:3100/api/devices/mock-local-device-1/targets
@@ -73,7 +73,7 @@ Errors: `DEVICE_NOT_FOUND`.
 
 Query params:
 
-- `platform`: optional `android`, `ios`, `windows`, `macos`, or `linux`.
+- `platform`: optional `android`, `windows`, `macos`, or `linux`.
 
 ```bash
 curl "http://127.0.0.1:3100/api/capabilities?platform=windows"
@@ -82,36 +82,6 @@ curl "http://127.0.0.1:3100/api/capabilities?platform=windows"
 Response data: `MetricAvailability[]`. Android returns availability for adb discovery, device info, package listing, PID helpers, CPU/memory/battery sampling, network sampling, and Milestone 2D experimental FPS/frame-time probe paths. Android network prefers UID-level `dumpsys netstats detail` and can fall back to `/proc/net/dev` with `device_level` precision. Android FPS and frame time remain `experimental`; layer matching failure or ambiguity produces no FPS metrics.
 
 Windows returns PC Foundation availability for local device discovery, process listing, process CPU/memory sampling, and explicit PresentMon-dependent FPS/frame-time capture. PresentMon missing is reported as `requires_tool` and does not block CPU/memory.
-
-iOS returns Beta/Foundation availability for Xcode/xcrun discovery, simulator app listing, manual xctrace CSV import, and explicit macOS/Xcode xctrace capture. iOS CPU, memory, FPS, and frame time are `requires_manual_trace`; `ios.xctrace_capture` is `experimental` when `xcrun` is available. Unavailable iOS metrics are not filled with zeros.
-
-## POST /api/sessions/:id/ios/trace-import
-
-Imports a user-provided xctrace CSV into an existing iOS session. This route does not start xctrace recording. It stores MetricEvents only when bundle id, pid, or process-name target matching succeeds.
-
-```bash
-curl -X POST http://127.0.0.1:3100/api/sessions/session_x/ios/trace-import \
-  -H "content-type: application/json" \
-  -d '{"csvText":"Time (s),Process,Bundle Identifier,PID,FPS,Frame Time (ms)\n0,Example,com.example,42,60,16.67","target":{"bundleId":"com.example"}}'
-```
-
-Response data includes `status`, `rawRowCount`, `matchedRowCount`, `metricCount`, `matchStatus`, `matchConfidence`, `reason`, `warnings`, and `diagnosticsId`.
-
-Raw CSV is not written to diagnostics or reports. No-match or ambiguous imports emit no iOS metrics.
-
-## POST /api/sessions/:id/ios/xctrace-capture
-
-Runs an explicit macOS/Xcode `xcrun xctrace record` capture for an existing iOS session. The route records a `.trace`, exports the table of contents, and can optionally export a configured XPath table for CSV-compatible metric mapping.
-
-```bash
-curl -X POST http://127.0.0.1:3100/api/sessions/session_x/ios/xctrace-capture \
-  -H "content-type: application/json" \
-  -d '{"durationMs":10000,"target":{"bundleId":"com.example"},"exportXPath":"/trace-toc/run/data/table"}'
-```
-
-Response data includes `status`, `rawRowCount`, `matchedRowCount`, `metricCount`, `matchStatus`, `matchConfidence`, `reason`, `warnings`, and `diagnosticsId`. `status` can be `success`, `trace_recorded`, `no_data`, `failed`, `unsupported`, or `aborted`.
-
-Metrics are written only when a configured export produces per-row data and bundle id, pid, or process-name target matching succeeds. Missing Xcode, missing XPath, empty exports, no-match, ambiguity, timeout, or abort emits no iOS FPS/frame-time metrics. Raw trace data, raw CSV, full UDID, local paths, command lines, tokens, and stack traces are excluded from diagnostics and reports.
 
 ## POST /api/sessions
 
@@ -778,7 +748,7 @@ Errors: `SESSION_NOT_FOUND`, `EXPORT_FORMAT_UNSUPPORTED`.
 
 ## GET /api/tools/status
 
-Returns tool status records. Android runs adb detection. PC Foundation reports PresentMon status when the PC collector is registered. iOS Foundation reports `xcrun` status when the iOS collector is registered. PresentMon missing or unsupported does not block Windows CPU/memory sampling; xcrun missing does not block Mock, Android, or PC collectors.
+Returns tool status records. Android runs adb detection. PC Foundation reports PresentMon status when the PC collector is registered. PresentMon missing or unsupported does not block Windows CPU/memory sampling.
 
 ```bash
 curl http://127.0.0.1:3100/api/tools/status

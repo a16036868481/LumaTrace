@@ -1,8 +1,10 @@
 # LumaTrace Documentation
 
+For current installation and testing instructions, see the [User guide](user-guide.md) or [中文使用说明](user-guide.zh-CN.md). The milestone documents below also retain historical architecture and QA notes.
+
 English is the primary documentation language. Chinese readers can start with [../README.zh-CN.md](../README.zh-CN.md), while the detailed docs in this directory remain English-first unless a document explicitly says otherwise.
 
-LumaTrace is a clean-room, local-first device metrics testing toolkit. MVP-A focuses on a reliable backend loop, MVP-B adds the first desktop web UI, Android Beta adds non-root Android metrics and diagnostics, PC Beta adds Windows process metrics plus explicit PresentMon CSV capture, Tauri packaging hardening adds sidecar/security checks, and iOS Beta adds Xcode/xcrun discovery plus explicit manual xctrace CSV import.
+LumaTrace is a clean-room, local-first device metrics testing toolkit. MVP-A focuses on a reliable backend loop, MVP-B adds the first desktop web UI, Android Beta adds non-root Android metrics and diagnostics, PC Beta adds Windows process metrics plus explicit PresentMon CSV capture, and Tauri packaging hardening adds sidecar/security checks.
 
 ## Project Goals
 
@@ -20,7 +22,6 @@ The monorepo currently contains:
 - `packages/collectors/mock`: deterministic mock collector and mock profiles.
 - `packages/collectors/android`: adb detection, Android discovery, package/PID/UID parsers, Android CPU/memory/battery/network sampling, Android FPS pre-research parsers/probe, and Android availability.
 - `packages/collectors/pc`: Windows process discovery, PID-bound CPU/memory sampling, PresentMon detection/capture adapter, and PC diagnostics.
-- `packages/collectors/ios`: Xcode/xcrun discovery, simulator app target parsing, manual xctrace CSV import parsing/mapping, and iOS availability.
 - `packages/storage`: SQLite schema, migrations, repositories, JSON serialization.
 - `packages/report`: summary generation and JSON, CSV, HTML exporters.
 - `apps/local-server`: Fastify REST API, WebSocket stream, runtime manager, services, MVP-A backend loop.
@@ -57,8 +58,6 @@ Android setup is documented in [android-setup.md](android-setup.md). Android Bet
 
 PC Beta supports Windows process CPU/memory and explicit PresentMon CSV capture. PresentMon is default off, missing/unmatched/ambiguous data does not produce FPS, and GPU/ETW SDK capture remains future work.
 
-iOS Beta is documented in [ios-beta.md](ios-beta.md). It uses public Xcode command line tools for discovery on macOS and supports explicit manual xctrace CSV import. It does not start xctrace recording, run live iOS sessions, collect syslog/logs, use private APIs, or fabricate missing metrics.
-
 ## Run
 
 ```bash
@@ -83,7 +82,6 @@ pnpm smoke:mvp-a
 pnpm verify:mvp-a
 pnpm verify:android-beta
 pnpm verify:pc-beta
-pnpm verify:ios-beta
 pnpm verify:packaging-hardening
 ```
 

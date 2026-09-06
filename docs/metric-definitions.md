@@ -19,10 +19,10 @@
 
 ## Metadata
 
-- `source`: where the metric came from, for example `mock`, `adb`, `xctrace`, or `PresentMon`.
+- `source`: where the metric came from, for example `mock`, `adb`, or `PresentMon`.
 - `precision`: `exact`, `estimated`, `device_level`, or `unavailable`.
 - `confidence`: `high`, `medium`, or `low`.
-- `MetricAvailability`: declares whether a metric is `available`, `unavailable`, `requires_tool`, `requires_permission`, `requires_xcode`, `requires_developer_signing`, `requires_manual_trace`, or `experimental`.
+- `MetricAvailability`: declares whether a metric is `available`, `unavailable`, `requires_tool`, `requires_permission`, or `experimental`.
 - Android diagnostics record parser warnings, fallback reasons, process missing/rebound, and command timeout events separately from metrics. These diagnostics explain data quality; they must not be converted into fake zero-valued metrics.
 
 ## Android 2E Availability And Metrics
@@ -104,16 +104,6 @@ PC process rules:
 - `frame_time_ms` comes from per-present fields such as `MsBetweenPresents`; average FPS is not used to fabricate frame-time samples.
 - CSV retention diagnostics explain whether CSV was deleted or retained; reports do not contain raw CSV content.
 - Missing PC fields remain undefined and display as `N/A`.
-
-## iOS Beta Availability
-
-- `ios.device_discovery`: Xcode/xcrun-backed discovery through `xcrun xctrace list devices`. It is `available` only when `xcrun` is available on macOS; otherwise it is `requires_xcode`.
-- `ios.simulator_app_list`: simulator app target listing through `xcrun simctl listapps <udid> --json`; physical device app target listing is not claimed in iOS Foundation.
-- `xcrun`: external tool status for Xcode command line tools.
-
-iOS live sessions do not emit stable realtime metrics. `cpu_percent`, `memory_mb`, `fps`, and `frame_time_ms` are `requires_manual_trace`; process network counters are `unavailable`. `ios.xctrace_capture` is `experimental` only when macOS/Xcode `xcrun` is available. Missing iOS metrics must display as `N/A` and must not be replaced with `0`.
-
-Manual iOS trace import and explicit automatic xctrace capture can map CSV-compatible per-row xctrace data to `fps`, `frame_time_ms`, `cpu_percent`, and `memory_mb` only after bundle id, pid, or process-name matching succeeds. Imported metrics use `source: "ios:xctrace-csv-import"`, `precision: "estimated"`, and `experimental: true`; manual imports tag `manualTrace: true`, while automatic captures tag their capture metadata. Average FPS is not used to fabricate `frame_time_ms`; no-match, ambiguous, missing XPath, empty export, timeout, or aborted captures emit no metrics.
 
 ## Mock Profiles
 

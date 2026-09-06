@@ -12,7 +12,7 @@ Production macOS distribution requires a Developer ID certificate, hardened runt
 
 ## Permissions
 
-LumaTrace does not use private APIs, root-only capabilities, or permission bypasses. Future iOS/Xcode workflows may require Xcode command line tools and explicit user/developer setup.
+LumaTrace does not use private APIs, root-only capabilities, or permission bypasses.
 
 ## Paths
 
@@ -23,4 +23,3 @@ Packaged macOS builds should use AppLocalData for SQLite, reports, and diagnosti
 Unsigned local builds may be quarantined by macOS. `xattr`/quarantine troubleshooting can be documented for development builds, but production users should receive signed and notarized builds in a later milestone.
 
 No updater and no notarization claim exists in 4B.
-

@@ -60,7 +60,7 @@ paths:
   /api/capabilities:
     get:
       summary: List metric capabilities
-      description: Android capabilities include adb discovery/package/PID availability, CPU/memory/battery sampling, Milestone 2C network sampling, and Milestone 2D experimental FPS/frame-time probe paths. Android network prefers UID-level netstats and can fall back to device-level /proc/net/dev. Android FPS remains experimental; missing or ambiguous target layers produce no FPS metric. Windows PC capabilities include Local PC discovery, process targets, PID-bound CPU/memory sampling, and PresentMon-dependent FPS/frame-time placeholders. iOS Foundation capabilities include Xcode/xcrun discovery, simulator app listing, and experimental explicit xctrace capture; iOS CPU/memory/FPS/frame-time remain requires_manual_trace and unavailable values are not filled with zero.
+      description: Android capabilities include adb discovery/package/PID availability, CPU/memory/battery sampling, network sampling, and experimental FPS/frame-time probe paths. Windows PC capabilities include Local PC discovery, process targets, PID-bound CPU/memory sampling, and PresentMon-dependent FPS/frame-time collection.
       parameters:
         - name: platform
           in: query
@@ -129,6 +129,29 @@ paths:
           $ref: "#/components/responses/ApiErrorResponse"
         "404":
           $ref: "#/components/responses/ApiErrorResponse"
+    delete:
+      summary: Delete all stored test results
+      description: Deletes completed, failed, created, and stopped local sessions with their stored metrics, markers, reports, and diagnostics. Running or paused sessions are preserved.
+      responses:
+        "200":
+          description: Deletion summary
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        required: [deletedCount, skippedSessionIds]
+                        properties:
+                          deletedCount:
+                            type: integer
+                          skippedSessionIds:
+                            type: array
+                            items:
+                              type: string
   /api/sessions/{id}:
     get:
       summary: Get a session
@@ -138,6 +161,34 @@ paths:
         "200":
           $ref: "#/components/responses/SessionResponse"
         "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+    delete:
+      summary: Delete one stored test result
+      description: Deletes the local session and its stored metrics, markers, report, and diagnostics. Running or paused sessions cannot be deleted.
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: Deleted session result
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        required: [sessionId, deleted]
+                        properties:
+                          sessionId:
+                            type: string
+                          deleted:
+                            type: boolean
+                            enum: [true]
+        "404":
+          $ref: "#/components/responses/ApiErrorResponse"
+        "409":
           $ref: "#/components/responses/ApiErrorResponse"
   /api/sessions/{id}/start:
     post:
@@ -378,64 +429,6 @@ paths:
           $ref: "#/components/responses/ApiErrorResponse"
         "404":
           $ref: "#/components/responses/ApiErrorResponse"
-  /api/sessions/{id}/ios/trace-import:
-    post:
-      summary: Import manual iOS xctrace CSV metrics
-      description: Parses user-provided xctrace CSV text and stores MetricEvents only when target matching succeeds. Does not start xctrace recording and does not include raw CSV in diagnostics.
-      parameters:
-        - $ref: "#/components/parameters/IdPath"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/IosTraceImportRequest"
-      responses:
-        "200":
-          description: iOS trace import result
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/ApiSuccess"
-                  - type: object
-                    properties:
-                      data:
-                        $ref: "#/components/schemas/IosTraceImportResult"
-        "400":
-          $ref: "#/components/responses/ApiErrorResponse"
-        "404":
-          $ref: "#/components/responses/ApiErrorResponse"
-  /api/sessions/{id}/ios/xctrace-capture:
-    post:
-      summary: Run explicit iOS xctrace capture
-      description: Runs macOS/Xcode xcrun xctrace record/export for an existing iOS session. Metrics are stored only when a configured export produces per-row data and target matching succeeds. Raw trace data and raw CSV are not included in diagnostics.
-      parameters:
-        - $ref: "#/components/parameters/IdPath"
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/IosXctraceCaptureRequest"
-      responses:
-        "200":
-          description: iOS xctrace capture result
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/ApiSuccess"
-                  - type: object
-                    properties:
-                      data:
-                        $ref: "#/components/schemas/IosXctraceCaptureResult"
-        "400":
-          $ref: "#/components/responses/ApiErrorResponse"
-        "404":
-          $ref: "#/components/responses/ApiErrorResponse"
-        "503":
-          $ref: "#/components/responses/ApiErrorResponse"
   /api/android/{deviceId}/apps/{packageName}/start:
     post:
       summary: Explicitly start an Android app
@@ -629,7 +622,7 @@ paths:
   /api/tools/status:
     get:
       summary: List tool status
-      description: Includes adb status for Android discovery and 2B/2C/2D sampling/probe paths, PresentMon status for PC Foundation, and xcrun status for iOS Foundation. PresentMon missing does not block PC CPU/memory, and xcrun missing does not block Mock, Android, or PC collectors.
+      description: Includes adb status for Android collection and PresentMon status for Windows collection. PresentMon missing does not block Windows CPU or memory sampling.
       responses:
         "200":
           description: Tool status records
@@ -870,7 +863,7 @@ components:
                   type: integer
     Platform:
       type: string
-      enum: [android, ios, windows, macos, linux]
+      enum: [android, windows, macos, linux]
     ConnectionType:
       type: string
       enum: [usb, network, local]
@@ -884,9 +877,6 @@ components:
         - unavailable
         - requires_tool
         - requires_permission
-        - requires_xcode
-        - requires_developer_signing
-        - requires_manual_trace
         - experimental
     Device:
       type: object
@@ -2313,130 +2303,3 @@ components:
           type: string
         tags:
           type: object
-    IosTraceImportRequest:
-      type: object
-      required: [csvText]
-      properties:
-        csvText:
-          type: string
-          description: User-provided xctrace CSV text. Raw CSV is not written to diagnostics.
-        target:
-          type: object
-          properties:
-            bundleId:
-              type: string
-            processName:
-              type: string
-            pid:
-              type: integer
-        traceStartedAtMs:
-          type: integer
-        captureId:
-          type: string
-    IosTraceImportResult:
-      type: object
-      required:
-        - status
-        - rawRowCount
-        - matchedRowCount
-        - metricCount
-        - matchStatus
-        - matchConfidence
-        - reason
-        - warnings
-        - diagnosticsId
-      properties:
-        status:
-          type: string
-          enum: [success, no_data]
-        rawRowCount:
-          type: integer
-        matchedRowCount:
-          type: integer
-        metricCount:
-          type: integer
-        matchStatus:
-          type: string
-          enum: [matched, no_match, ambiguous]
-        matchConfidence:
-          type: string
-          enum: [high, medium, low, none]
-        reason:
-          type: string
-        warnings:
-          type: array
-          items:
-            type: string
-        diagnosticsId:
-          type: string
-    IosTraceTarget:
-      type: object
-      properties:
-        bundleId:
-          type: string
-        processName:
-          type: string
-        pid:
-          type: integer
-    IosXctraceCaptureRequest:
-      type: object
-      properties:
-        target:
-          $ref: "#/components/schemas/IosTraceTarget"
-        durationMs:
-          type: integer
-          minimum: 1000
-          maximum: 120000
-          description: Timed capture duration. Values are clamped by the collector.
-        templateName:
-          type: string
-          description: xctrace template name. Defaults to the Xcode game trace template.
-        outputDir:
-          type: string
-          description: Optional output directory. Diagnostics sanitize this path.
-        exportXPath:
-          type: string
-          description: Optional xctrace export XPath for CSV-compatible metric rows.
-        keepTrace:
-          type: boolean
-          default: false
-        traceStartedAtMs:
-          type: integer
-        importedAtMs:
-          type: integer
-        captureId:
-          type: string
-    IosXctraceCaptureResult:
-      type: object
-      required:
-        - status
-        - rawRowCount
-        - matchedRowCount
-        - metricCount
-        - reason
-        - warnings
-        - diagnosticsId
-      properties:
-        status:
-          type: string
-          enum: [success, trace_recorded, no_data, failed, unsupported, aborted]
-        rawRowCount:
-          type: integer
-        matchedRowCount:
-          type: integer
-        metricCount:
-          type: integer
-        matchStatus:
-          type: string
-          enum: [matched, no_match, ambiguous]
-        matchConfidence:
-          type: string
-          enum: [high, medium, low, none]
-        reason:
-          type: string
-        warnings:
-          type: array
-          items:
-            type: string
-        diagnosticsId:
-          type: string

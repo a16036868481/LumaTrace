@@ -11,7 +11,6 @@ packages/
   collectors/mock/
   collectors/android/
   collectors/pc/
-  collectors/ios/
   storage/
   report/
 docs/
@@ -24,7 +23,6 @@ scripts/
 - `packages/collectors/mock`: a deterministic collector that emits mock FPS, frame time, CPU, and memory metrics.
 - `packages/collectors/android`: non-root Android ADB collector for discovery, package targets, CPU/memory/battery/network, app lifecycle, experimental FPS probe research, and sanitized diagnostics.
 - `packages/collectors/pc`: PC Foundation collector for Local PC discovery, Windows process targets, PID-bound CPU/memory sampling, process identity checks, PresentMon detection, and PresentMon CSV parsing.
-- `packages/collectors/ios`: iOS Foundation collector for Xcode/xcrun tool detection, `xctrace` device discovery parsing, simulator app target parsing, and honest iOS availability. It does not emit iOS metrics yet.
 - `packages/storage`: SQLite database lifecycle, migrations, and repositories.
 - `packages/report`: report summary generation and JSON, CSV, HTML export content.
 - `apps/local-server`: REST API, WebSocket stream, services, runtime management, packaged sidecar mode, local auth middleware, and process entrypoint.
@@ -109,7 +107,7 @@ The desktop report page keeps a small raw metric preview for source/precision no
 
 ## CollectorRegistry
 
-`CollectorRegistry` maps devices to collectors and hides collector-specific details from routes. Current local-server registration includes MockCollector, AndroidCollector when available, and PcCollector when available. Future iOS/macOS/Linux collectors will implement the same `MetricCollector` interface.
+`CollectorRegistry` maps devices to collectors and hides collector-specific details from routes. Current local-server registration includes MockCollector, AndroidCollector when available, and PcCollector when available. Future macOS/Linux collectors will implement the same `MetricCollector` interface.
 
 ## Why Mock First
 
@@ -117,14 +115,13 @@ MockCollector makes the backend testable without hardware, platform tools, permi
 
 ## Future Collector Integration
 
-iOS Foundation and future collectors should:
+Future collectors should:
 
 - Implement `MetricCollector`.
 - Return honest `MetricAvailability`.
 - Emit only unified `MetricEvent`.
 - Mark unavailable or experimental metrics explicitly.
 - Never require root, jailbreak, private APIs, or permission bypass as the default path.
-- Leave unsupported iOS metrics as `requires_xcode`, `requires_manual_trace`, `requires_developer_signing`, or `unavailable` instead of filling zeros.
 
 ## MVP-B UI Runtime Notes
 

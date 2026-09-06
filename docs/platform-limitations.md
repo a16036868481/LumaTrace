@@ -24,18 +24,6 @@ If Android network data is only device-level, it must be marked `precision: "dev
 
 Milestone 2F adds diagnostics timeline, sanitized diagnostics export, launcher/device metadata cache, and long-session fake stability coverage. Diagnostics exports do not include logcat or bugreport by default. Slow/timeout/retry/abort command events are diagnostics, not fabricated metrics.
 
-## iOS
-
-Non-jailbroken iOS has strict platform boundaries. LumaTrace will not use private APIs, jailbreak paths, or permission bypasses.
-
-Milestone 5A/5B adds iOS Beta foundation only. It registers `@lumatrace/collectors-ios`, detects Xcode command line tooling through `xcrun`, parses `xcrun xctrace list devices`, and lists simulator app targets with `xcrun simctl listapps <udid> --json` when available. On non-macOS hosts, iOS discovery reports Xcode requirements and returns no devices.
-
-Milestone 5B adds manual xctrace CSV import parsing and MetricEvent mapping. Milestone 5C adds explicit macOS/Xcode `xcrun xctrace record` capture with TOC export and optional configured XPath metric export. LumaTrace does not start xctrace recording by default. If an imported or automatically exported trace cannot be matched to the target bundle id, pid, or process name, no iOS metrics are emitted.
-
-Trace captures may require macOS, Xcode command line tools, and explicit user-driven `xcrun xctrace` workflows. Some capabilities may require developer signing, user permission, or manual trace workflows. iOS Beta does not start stable live iOS metric sessions and does not emit iOS metrics unless a CSV import or configured xctrace export is target-matched. Missing XPath, no match, ambiguity, timeout, abort, or missing Xcode leaves metrics as `N/A`.
-
-LumaTrace will not promise arbitrary app FPS, GPU, or process-level network metrics on non-jailbroken iOS.
-
 ## PC
 
 Milestone 3A adds PC Foundation for Windows local process CPU and memory. LumaTrace discovers a local PC device, lists Windows process targets, samples PID-bound CPU/memory, and detects process exit or PID reuse. It does not start, stop, inject into, or inspect target process window contents.
@@ -48,7 +36,7 @@ Milestone 3C adds PC Beta diagnostics and stability polish: capture status, Pres
 
 LumaTrace does not implement an ETW SDK consumer, PresentMon Service API, overlay, administrator bypass, process injection, or GPU telemetry in Milestone 3C. Raw PresentMon CSV content, full local output paths, full command lines, and stack traces are not included in reports by default.
 
-macOS process CPU and memory are future targets. Generic FPS is not promised. Instruments/xctrace may be used only where supported and allowed.
+macOS process CPU and memory are future targets. Generic FPS is not promised.
 
 Linux is a later extension path through `/proc`, safe kernel counters and similar safe system interfaces.
 

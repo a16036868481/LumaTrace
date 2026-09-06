@@ -35,7 +35,7 @@ Milestone 4A adds the desktop host foundation. Milestone 4B hardens packaging di
 - Log rotation metadata is available through `/api/packaged/status`.
 - Sidecar crash state, restart cooldown, restart limit, and packaged storage migration status are visible in Tools / Diagnostics and `/api/packaged/status`.
 
-This batch does not implement updater, code signing, installer publication, iOS, new metrics, cloud upload, or production store packaging.
+This batch does not implement updater, code signing, installer publication, new metrics, cloud upload, or production store packaging.
 
 ## Sidecar Artifact
 

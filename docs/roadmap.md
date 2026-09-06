@@ -6,7 +6,7 @@ Status: complete.
 
 Goal: build a local backend loop using mock data: core models, stats, mock collector, SQLite storage, reports, Fastify REST API, WebSocket stream, docs, smoke script, and acceptance checks.
 
-Boundary: no desktop UI, no Tauri packaging, no real Android/iOS/PC collection.
+Boundary: no desktop UI, no Tauri packaging, and no real Android or PC collection.
 
 ## Milestone 1B: Desktop UI
 
@@ -24,13 +24,13 @@ Status: Android Beta complete for the current scope. ADB tool detection, Android
 
 Boundary: no root, no logcat by default, no default app launch, and no default force-stop. Lifecycle operations are explicit or config gated. Network falls back to `device_level` when UID-level stats are unavailable. FPS remains experimental and off by default; layer matching failure or ambiguity produces no FPS metric. Unavailable metrics are displayed honestly.
 
-## Milestone 3: PC + iOS Foundation
+## Milestone 3: PC Foundation
 
-Goal: add Windows/macOS process foundations and compliant iOS discovery/trace paths.
+Goal: add Windows/macOS process foundations.
 
-Status: PC Beta is complete for the current scope. Windows local process discovery, PID-bound CPU/memory sampling, process exit/PID reuse detection, PresentMon tool detection, explicit PresentMon timed CSV capture, target matching, experimental FPS/frame-time MetricEvents, capture status, compatibility planning, CSV retention, permission diagnostics, sanitized report sections, and real Windows checklist docs are implemented. iOS Beta is complete for the current foundation scope: xcrun/xctrace discovery parsing, simulator app target parsing, honest availability, local-server registration, manual xctrace CSV import parsing/mapping, explicit macOS/Xcode xctrace record/export capture foundation, sanitized diagnostics, and real-device checklist docs. ETW SDK consumption, GPU telemetry, overlay, macOS/Linux collectors, stable realtime iOS metric sessions, and arbitrary iOS FPS remain future milestones.
+Status: PC Beta is complete for the current scope. Windows local process discovery, PID-bound CPU/memory sampling, process exit/PID reuse detection, PresentMon tool detection, explicit PresentMon timed CSV capture, target matching, experimental FPS/frame-time MetricEvents, capture status, compatibility planning, CSV retention, permission diagnostics, sanitized report sections, and real Windows checklist docs are implemented. ETW SDK consumption, GPU telemetry, overlay, and macOS/Linux collectors remain future milestones.
 
-Boundary: do not promise arbitrary iOS FPS/GPU/process network or generic macOS FPS.
+Boundary: do not promise generic macOS FPS.
 
 ## Milestone 4: Production Hardening
 
@@ -40,4 +40,4 @@ Status: Milestone 4A adds the Tauri packaging foundation: `src-tauri` scaffold, 
 
 Milestone 4B adds packaging hardening in small batches: Rust/Tauri toolchain detection, sidecar manifest validation, target-triple artifact naming, self-contained sidecar pipeline draft, log rotation metadata, sanitized packaging diagnostics export, sidecar crash recovery with restart cooldown/restart limit, packaged storage restart smoke, Tauri sidecar auth transport smoke, Windows installer draft, Windows packaging smoke suite, Windows manual GUI packaging checklist, macOS bundle/signing draft, and packaging QA checklist. The current Windows sidecar draft is self-contained for local QA and keeps `productionReady: false` until signing, installer QA, license review, updater policy, and release approval are complete.
 
-Boundary: no bundled binaries with unclear licenses, no arbitrary shell permission, no updater/code signing/notarization/store release in 4B, no iOS, no new metrics, and no cloud upload by default.
+Boundary: no bundled binaries with unclear licenses, no arbitrary shell permission, no updater/code signing/notarization/store release in 4B, no new metrics, and no cloud upload by default.

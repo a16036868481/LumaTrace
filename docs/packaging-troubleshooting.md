@@ -85,4 +85,4 @@ If `pnpm dev:tauri` rebuilds repeatedly after `pnpm build:self-contained-sidecar
 
 ## Current 4A Limits
 
-No updater, no code signing, no store installer, no iOS, no new metrics, and no cloud. The self-contained sidecar can be built as a draft, but production readiness remains false until signing, installer QA, license notice review, and release smoke are complete.
+No updater, no code signing, no store installer, no new metrics, and no cloud. The self-contained sidecar can be built as a draft, but production readiness remains false until signing, installer QA, license notice review, and release smoke are complete.

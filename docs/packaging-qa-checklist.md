@@ -126,5 +126,4 @@ Use this checklist before considering a packaged build for broader testing.
 - Code signing is not complete.
 - Updater is not configured.
 - Store distribution is not configured.
-- No iOS support is included.
 - No new metrics are added by packaging milestones.
