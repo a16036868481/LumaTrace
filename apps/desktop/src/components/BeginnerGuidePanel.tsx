@@ -12,7 +12,11 @@ export function BeginnerGuidePanel() {
           <h2>{t("guide.title")}</h2>
           <p>{t("guide.subtitle")}</p>
         </div>
-        <button className="button button-primary" type="button" onClick={() => navigateTo("/session")}>
+        <button
+          className="button button-primary"
+          type="button"
+          onClick={() => navigateTo("/session")}
+        >
           {t("guide.primaryAction")}
         </button>
       </div>
@@ -24,14 +28,11 @@ export function BeginnerGuidePanel() {
           <p>{t("guide.pcBody")}</p>
         </article>
         <article className="guide-card">
-          <span className="status-pill availability-badge--experimental">Android Beta</span>
+          <span className="status-pill availability-badge--experimental">
+            {t("guide.androidBadge")}
+          </span>
           <h3>{t("guide.androidTitle")}</h3>
           <p>{t("guide.androidBody")}</p>
-        </article>
-        <article className="guide-card">
-          <span className="status-pill availability-badge--requires-tool">iOS</span>
-          <h3>{t("guide.iosTitle")}</h3>
-          <p>{t("guide.iosBody")}</p>
         </article>
       </div>
 

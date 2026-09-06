@@ -1,5 +1,6 @@
 import { type RefObject, useState } from "react";
 import type { EventMarker } from "../api/types";
+import { useI18n } from "../i18n/I18nProvider";
 
 export interface EventMarkerPanelProps {
   disabled?: boolean;
@@ -8,6 +9,7 @@ export interface EventMarkerPanelProps {
 }
 
 export function EventMarkerPanel({ disabled = false, labelInputRef, onAdd }: EventMarkerPanelProps) {
+  const { t } = useI18n();
   const [label, setLabel] = useState("");
   const [description, setDescription] = useState("");
   const [markers, setMarkers] = useState<EventMarker[]>([]);
@@ -15,7 +17,7 @@ export function EventMarkerPanel({ disabled = false, labelInputRef, onAdd }: Eve
 
   async function handleSubmit(): Promise<void> {
     if (label.trim().length === 0) {
-      setError("Marker label is required.");
+      setError(t("marker.required"));
       return;
     }
     setError(null);
@@ -33,20 +35,20 @@ export function EventMarkerPanel({ disabled = false, labelInputRef, onAdd }: Eve
 
   return (
     <div className="marker-editor">
-      <h3>Event Markers</h3>
+      <h3>{t("marker.title")}</h3>
       <div className="form-grid">
         <label>
-          Label
+          {t("marker.label")}
           <input ref={labelInputRef} value={label} onChange={(event) => setLabel(event.target.value)} />
         </label>
         <label>
-          Description
+          {t("marker.description")}
           <input value={description} onChange={(event) => setDescription(event.target.value)} />
         </label>
       </div>
       {error !== null ? <p className="form-error">{error}</p> : null}
       <button className="button button-secondary" type="button" disabled={disabled} onClick={handleSubmit}>
-        Add Marker
+        {t("marker.add")}
       </button>
       {markers.length > 0 ? (
         <ul className="marker-list">

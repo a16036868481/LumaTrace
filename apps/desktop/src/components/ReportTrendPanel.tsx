@@ -33,7 +33,7 @@ export function ReportTrendPanel({ metrics, downsampledBuckets, metricPreview }:
     : hasNumericTrendMetrics(metrics);
 
   return (
-    <section className="panel">
+    <section className="panel report-trend-panel">
       <div className="chart-card__header">
         <div>
           <h2>{t("report.trendsTitle")}</h2>

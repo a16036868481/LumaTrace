@@ -1,4 +1,5 @@
 import { createApiClient } from "./client";
+import type { ReportLocalizationPayload } from "../i18n/reportLocalization";
 import type {
   CreateSessionInput,
   AndroidAppStartInput,
@@ -11,15 +12,13 @@ import type {
   DiagnosticsExportFormat,
   DiagnosticRecord,
   DiagnosticsQuery,
+  DeleteSessionResponse,
+  DeleteSessionsResponse,
   DownsampledMetricBucket,
   DownsampledMetricsQuery,
   EventMarker,
   ExportFormat,
   HealthResponse,
-  IosTraceImportInput,
-  IosTraceImportResponse,
-  IosXctraceCaptureInput,
-  IosXctraceCaptureResponse,
   MarkerInput,
   MetricAvailability,
   MetricEvent,
@@ -98,19 +97,29 @@ export function getAndroidForegroundApp(deviceId: string): Promise<Target> {
 }
 
 export function getAndroidCacheStatus(deviceId: string): Promise<AndroidCacheStatusResponse> {
-  return api.get<AndroidCacheStatusResponse>(`/api/android/${encodeURIComponent(deviceId)}/cache/status`);
+  return api.get<AndroidCacheStatusResponse>(
+    `/api/android/${encodeURIComponent(deviceId)}/cache/status`
+  );
 }
 
 export function refreshAndroidCache(deviceId: string): Promise<AndroidCacheStatusResponse> {
-  return api.post<AndroidCacheStatusResponse>(`/api/android/${encodeURIComponent(deviceId)}/cache/refresh`);
+  return api.post<AndroidCacheStatusResponse>(
+    `/api/android/${encodeURIComponent(deviceId)}/cache/refresh`
+  );
 }
 
 export function getPcPresentMonStatus(deviceId: string): Promise<PcPresentMonStatusResponse> {
-  return api.get<PcPresentMonStatusResponse>(`/api/pc/${encodeURIComponent(deviceId)}/presentmon/status`);
+  return api.get<PcPresentMonStatusResponse>(
+    `/api/pc/${encodeURIComponent(deviceId)}/presentmon/status`
+  );
 }
 
-export function getPresentMonCaptureStatus(sessionId: string): Promise<PresentMonCaptureStatusResponse> {
-  return api.get<PresentMonCaptureStatusResponse>(`/api/sessions/${encodeURIComponent(sessionId)}/presentmon/status`);
+export function getPresentMonCaptureStatus(
+  sessionId: string
+): Promise<PresentMonCaptureStatusResponse> {
+  return api.get<PresentMonCaptureStatusResponse>(
+    `/api/sessions/${encodeURIComponent(sessionId)}/presentmon/status`
+  );
 }
 
 export function getCapabilities(platform?: Platform): Promise<MetricAvailability[]> {
@@ -135,6 +144,14 @@ export function getSessions(query: SessionsQuery = {}): Promise<Session[]> {
 
 export function getSession(sessionId: string): Promise<Session> {
   return api.get<Session>(`/api/sessions/${encodeURIComponent(sessionId)}`);
+}
+
+export function deleteSession(sessionId: string): Promise<DeleteSessionResponse> {
+  return api.delete<DeleteSessionResponse>(`/api/sessions/${encodeURIComponent(sessionId)}`);
+}
+
+export function deleteSessions(): Promise<DeleteSessionsResponse> {
+  return api.delete<DeleteSessionsResponse>("/api/sessions");
 }
 
 export function startSession(sessionId: string): Promise<Session> {
@@ -162,12 +179,15 @@ export function getDownsampledMetrics(
   sessionId: string,
   query: DownsampledMetricsQuery = {}
 ): Promise<DownsampledMetricBucket[]> {
-  return api.get<DownsampledMetricBucket[]>(`/api/sessions/${encodeURIComponent(sessionId)}/metrics/downsampled`, {
-    query: {
-      ...query,
-      metricNames: query.metricNames
+  return api.get<DownsampledMetricBucket[]>(
+    `/api/sessions/${encodeURIComponent(sessionId)}/metrics/downsampled`,
+    {
+      query: {
+        ...query,
+        metricNames: query.metricNames
+      }
     }
-  });
+  );
 }
 
 export function addMarker(sessionId: string, input: MarkerInput): Promise<EventMarker> {
@@ -182,31 +202,22 @@ export function getReport(sessionId: string): Promise<SessionReportResponse> {
   return api.get<SessionReportResponse>(`/api/sessions/${encodeURIComponent(sessionId)}/report`);
 }
 
-export function importIosTraceCsv(
+export function exportSession(
   sessionId: string,
-  input: IosTraceImportInput
-): Promise<IosTraceImportResponse> {
-  return api.post<IosTraceImportResponse>(
-    `/api/sessions/${encodeURIComponent(sessionId)}/ios/trace-import`,
-    input
-  );
-}
+  format: ExportFormat,
+  localization?: ReportLocalizationPayload
+): Promise<string> {
+  if (localization === undefined || format !== "html") {
+    return api.getText(`/api/sessions/${encodeURIComponent(sessionId)}/export`, {
+      query: {
+        format
+      }
+    });
+  }
 
-export function captureIosXctrace(
-  sessionId: string,
-  input: IosXctraceCaptureInput
-): Promise<IosXctraceCaptureResponse> {
-  return api.post<IosXctraceCaptureResponse>(
-    `/api/sessions/${encodeURIComponent(sessionId)}/ios/xctrace-capture`,
-    input
-  );
-}
-
-export function exportSession(sessionId: string, format: ExportFormat): Promise<string> {
-  return api.getText(`/api/sessions/${encodeURIComponent(sessionId)}/export`, {
-    query: {
-      format
-    }
+  return api.postText(`/api/sessions/${encodeURIComponent(sessionId)}/export`, {
+    format,
+    localization
   });
 }
 

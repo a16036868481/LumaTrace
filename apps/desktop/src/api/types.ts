@@ -639,6 +639,16 @@ export interface SessionsQuery {
   limit?: number;
 }
 
+export interface DeleteSessionResponse {
+  sessionId: string;
+  deleted: true;
+}
+
+export interface DeleteSessionsResponse {
+  deletedCount: number;
+  skippedSessionIds: string[];
+}
+
 export interface MetricsQuery {
   fromTimestampMs?: number;
   toTimestampMs?: number;
@@ -678,55 +688,6 @@ export interface SessionReportResponse {
   summary: ReportSummary;
   cached: boolean;
   rawMetricCount: number;
-}
-
-export interface IosTraceImportInput {
-  csvText: string;
-  target?: {
-    bundleId?: string;
-    processName?: string;
-    pid?: number;
-  };
-  traceStartedAtMs?: number;
-  captureId?: string;
-}
-
-export interface IosTraceImportResponse {
-  status: "success" | "no_data";
-  rawRowCount: number;
-  matchedRowCount: number;
-  metricCount: number;
-  matchStatus: string;
-  matchConfidence: string;
-  reason: string;
-  warnings: string[];
-  diagnosticsId: string;
-}
-
-export interface IosXctraceCaptureInput {
-  target?: {
-    bundleId?: string;
-    processName?: string;
-    pid?: number;
-  };
-  durationMs?: number;
-  templateName?: string;
-  exportXPath?: string;
-  keepTrace?: boolean;
-  traceStartedAtMs?: number;
-  captureId?: string;
-}
-
-export interface IosXctraceCaptureResponse {
-  status: "success" | "trace_recorded" | "no_data" | "failed" | "unsupported" | "aborted";
-  rawRowCount: number;
-  matchedRowCount: number;
-  metricCount: number;
-  matchStatus?: string;
-  matchConfidence?: string;
-  reason: string;
-  warnings: string[];
-  diagnosticsId: string;
 }
 
 export type ExportFormat = "json" | "csv" | "html";

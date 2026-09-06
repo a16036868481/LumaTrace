@@ -50,11 +50,10 @@ describe("Dashboard session history", () => {
 
     render(<DashboardPage />);
 
-    expect(await screen.findByText("Recent Sessions")).toBeTruthy();
+    expect(await screen.findByText("Recent results")).toBeTruthy();
     expect(await screen.findByText("History Session")).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Resume" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "View Report" })).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "Copy sessionId" }));
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith("s-history");
+    fireEvent.click(screen.getByRole("button", { name: /History Session/ }));
+    expect(window.location.pathname).toBe("/session");
   });
 });

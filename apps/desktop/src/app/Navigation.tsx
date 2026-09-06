@@ -1,6 +1,8 @@
 ﻿import { navItems, navigateTo, type AppRoute } from "./routes";
 import { LanguageSelector } from "../components/LanguageSelector";
+import { ReportDirectorySelector } from "../components/ReportDirectorySelector";
 import { useI18n } from "../i18n/I18nProvider";
+import brandIcon from "../assets/lumatrace-mark.png";
 
 export function Navigation({ currentRoute }: { currentRoute: AppRoute }) {
   const { t } = useI18n();
@@ -8,8 +10,11 @@ export function Navigation({ currentRoute }: { currentRoute: AppRoute }) {
   return (
     <nav className="app-nav" aria-label={t("nav.dashboard")}>
       <div className="app-nav__brand">
-        <span>LumaTrace</span>
-        <small>Beta</small>
+        <img src={brandIcon} alt="" aria-hidden="true" />
+        <span>
+          <strong>LumaTrace</strong>
+          <small>{t("app.tagline")}</small>
+        </span>
       </div>
       {navItems.map((item) => (
         <a
@@ -24,7 +29,10 @@ export function Navigation({ currentRoute }: { currentRoute: AppRoute }) {
           {t(item.labelKey)}
         </a>
       ))}
-      <LanguageSelector />
+      <div className="app-nav__utilities">
+        <ReportDirectorySelector />
+        <LanguageSelector />
+      </div>
     </nav>
   );
 }

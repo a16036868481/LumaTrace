@@ -11,10 +11,30 @@ function isLocalPcDevice(device: Device): boolean {
   return device.name === "Local PC" || device.id.startsWith("pc-local");
 }
 
+function platformLabel(platform: Device["platform"]): string {
+  if (platform === "android") {
+    return "Android";
+  }
+  if (platform === "windows") {
+    return "Windows";
+  }
+  return platform;
+}
+
 export function DeviceCard({ device, href }: DeviceCardProps) {
   const { t } = useI18n();
   const mockDevice = isMockDevice(device);
   const localPcDevice = isLocalPcDevice(device);
+  let connectionLabel: string = device.connectionType;
+  if (device.connectionType === "usb") {
+    connectionLabel = t("device.connection.usb");
+  } else if (device.connectionType === "local") {
+    connectionLabel = t("device.connection.local");
+  } else if (device.connectionType === "network") {
+    connectionLabel = t("device.connection.network");
+  } else if (device.connectionType === "simulator") {
+    connectionLabel = t("device.connection.simulator");
+  }
   const displayName = mockDevice
     ? t("device.mockDisplayName")
     : localPcDevice
@@ -24,7 +44,7 @@ export function DeviceCard({ device, href }: DeviceCardProps) {
     ? t("device.mockDescription")
     : localPcDevice
       ? t("device.localPcDescription")
-      : `${device.platform} · ${device.connectionType}`;
+      : `${platformLabel(device.platform)} · ${connectionLabel}`;
 
   return (
     <article className="device-card">
@@ -33,11 +53,12 @@ export function DeviceCard({ device, href }: DeviceCardProps) {
           <h3>{displayName}</h3>
           {mockDevice ? <span className="status-pill">{t("guide.mockBadge")}</span> : null}
           {localPcDevice ? (
-            <span className="status-pill availability-badge--available">{t("guide.realBadge")}</span>
+            <span className="status-pill availability-badge--available">
+              {t("guide.realBadge")}
+            </span>
           ) : null}
         </div>
         <p>{description}</p>
-        {displayName !== device.name ? <p className="muted-text">{device.name}</p> : null}
       </div>
       <dl>
         <div>

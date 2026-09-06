@@ -54,6 +54,45 @@ describe("ApiClient", () => {
     await expect(client.getText("/api/sessions/one/export")).resolves.toBe("timestampMs\n");
   });
 
+  it("posts localized HTML export payloads and returns text", async () => {
+    const fetchImpl = vi.fn<typeof fetch>(async () => new Response("<!doctype html>", { status: 200 }));
+    const client = new ApiClient({ baseUrl: "http://server", fetchImpl });
+
+    await expect(
+      client.postText("/api/sessions/one/export", {
+        format: "html",
+        localization: { locale: "zh-CN" }
+      })
+    ).resolves.toBe("<!doctype html>");
+
+    const [, init] = fetchImpl.mock.calls[0] as Parameters<typeof fetch>;
+    expect(init?.method).toBe("POST");
+    expect(init?.body).toContain('"locale":"zh-CN"');
+  });
+
+  it("deletes a resource with local authentication headers", async () => {
+    const fetchImpl = vi.fn<typeof fetch>(async () =>
+      jsonResponse({
+        ok: true,
+        data: { sessionId: "session-one", deleted: true }
+      })
+    );
+    const client = new ApiClient({
+      baseUrl: "http://server",
+      authToken: "local-token",
+      fetchImpl
+    });
+
+    await expect(client.delete("/api/sessions/session-one")).resolves.toEqual({
+      sessionId: "session-one",
+      deleted: true
+    });
+
+    const [, init] = fetchImpl.mock.calls[0] as Parameters<typeof fetch>;
+    expect(init?.method).toBe("DELETE");
+    expect((init?.headers as Headers).get("Authorization")).toBe("Bearer local-token");
+  });
+
   it("builds query params", () => {
     expect(
       buildApiUrl("http://server", "/api/sessions/one/metrics", {
@@ -82,7 +121,7 @@ describe("ApiClient", () => {
         data: []
       })
     );
-    const invoke = <T,>(command: string): Promise<T> => {
+    const invoke = <T>(command: string): Promise<T> => {
       if (command === "get_local_server_info") {
         return Promise.resolve({
           mode: "packaged",

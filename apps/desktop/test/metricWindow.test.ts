@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { filterSeriesByWindow } from "../src/utils/metricWindow";
-import type { MetricSeriesPoint } from "../src/utils/metricSeries";
+import { filterSeriesByWindow, filterSeriesStateByWindow } from "../src/utils/metricWindow";
+import type { MetricSeriesPoint, MetricSeriesState } from "../src/utils/metricSeries";
 
 function point(timestampMs: number, value: number | null): MetricSeriesPoint {
   return {
@@ -41,5 +41,23 @@ describe("metricWindow", () => {
       1,
       2
     ]);
+  });
+
+  it("preserves and filters every live metric series", () => {
+    const state: MetricSeriesState = {
+      fps: [point(1_000, 60)],
+      cpu_percent: [point(1_000, 12)],
+      memory_mb: [point(1_000, 128)],
+      gpu_utilization: [point(1_000, 24), point(41_000, 36)],
+      power_w: [point(1_000, 55), point(41_000, 65)],
+      temperature_c: [point(1_000, 48), point(41_000, 52)]
+    };
+
+    const filtered = filterSeriesStateByWindow(state, "30s", 41_000);
+
+    expect(Object.keys(filtered)).toEqual(Object.keys(state));
+    expect(filtered.gpu_utilization?.map((item) => item.value)).toEqual([36]);
+    expect(filtered.power_w?.map((item) => item.value)).toEqual([65]);
+    expect(filtered.temperature_c?.map((item) => item.value)).toEqual([52]);
   });
 });

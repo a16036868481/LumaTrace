@@ -46,6 +46,7 @@ function resetBrowserState(): void {
   cleanup();
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
+  delete window.__TAURI__;
   sockets.length = 0;
   localStorage.clear();
   window.history.replaceState({}, "", "/session");
@@ -67,89 +68,105 @@ describe("TestSessionPage flow", () => {
   it("creates, starts, displays metrics, adds marker, and stops", async () => {
     vi.stubGlobal("WebSocket", FlowWebSocket);
     const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
-        const url = String(input);
-        if (url.includes("/api/devices/pc-local%3Awindows/targets")) {
-          return ok([{ id: "pc-process:123", name: "Example Game", type: "process", platform: "windows" }]);
-        }
-        if (url.includes("/api/devices")) {
-          return ok([
-            {
-              id: "pc-local:windows",
-              platform: "windows",
-              name: "Local PC",
-              connectionType: "local",
-              capabilities: []
-            }
-          ]);
-        }
-        if (url.endsWith("/api/sessions") && init?.method === "POST") {
-          return ok({
-            id: "session-ui",
-            name: "MVP-B UI Session",
-            deviceId: "pc-local:windows",
-            targetId: "pc-process:123",
-            sampleIntervalMs: 100,
-            status: "created"
-          });
-        }
-        if (url.includes("/start")) {
-          return ok({
-            id: "session-ui",
-            name: "MVP-B UI Session",
-            deviceId: "pc-local:windows",
-            targetId: "pc-process:123",
-            sampleIntervalMs: 100,
-            status: "running"
-          });
-        }
-        if (url.includes("/markers")) {
-          return ok({
-            id: "marker-1",
-            sessionId: "session-ui",
-            timestampMs: 1000,
-            label: "Boss fight"
-          });
-        }
-        if (url.includes("/stop")) {
-          return ok({
-            id: "session-ui",
-            name: "MVP-B UI Session",
-            deviceId: "pc-local:windows",
-            targetId: "pc-process:123",
-            sampleIntervalMs: 100,
-            status: "stopped"
-          });
-        }
-        if (url.includes("/api/sessions/session-ui/presentmon/status")) {
-          return ok({
-            status: "idle",
-            updatedAt: 1000,
-            warnings: [],
-            diagnostics: []
-          });
-        }
-        if (url.includes("/api/sessions/session-ui")) {
-          return ok({
-            id: "session-ui",
-            name: "MVP-B UI Session",
-            deviceId: "pc-local:windows",
-            targetId: "pc-process:123",
-            sampleIntervalMs: 100,
-            status: "running"
-          });
-        }
-        return ok([]);
-      });
+      const url = String(input);
+      if (url.includes("/api/devices/pc-local%3Awindows/targets")) {
+        return ok([
+          { id: "pc-process:123", name: "Example Game", type: "process", platform: "windows" }
+        ]);
+      }
+      if (url.includes("/api/devices")) {
+        return ok([
+          {
+            id: "pc-local:windows",
+            platform: "windows",
+            name: "Local PC",
+            connectionType: "local",
+            capabilities: []
+          }
+        ]);
+      }
+      if (url.endsWith("/api/sessions") && init?.method === "POST") {
+        return ok({
+          id: "session-ui",
+          name: "MVP-B UI Session",
+          deviceId: "pc-local:windows",
+          targetId: "pc-process:123",
+          sampleIntervalMs: 100,
+          status: "created"
+        });
+      }
+      if (url.includes("/start")) {
+        return ok({
+          id: "session-ui",
+          name: "MVP-B UI Session",
+          deviceId: "pc-local:windows",
+          targetId: "pc-process:123",
+          sampleIntervalMs: 100,
+          status: "running"
+        });
+      }
+      if (url.includes("/markers")) {
+        return ok({
+          id: "marker-1",
+          sessionId: "session-ui",
+          timestampMs: 1000,
+          label: "Boss fight"
+        });
+      }
+      if (url.includes("/stop")) {
+        sockets[0]?.message({
+          type: "session_status",
+          data: { sessionId: "session-ui", status: "stopped" }
+        });
+        await new Promise((resolve) => setTimeout(resolve, 0));
+        return ok({
+          id: "session-ui",
+          name: "MVP-B UI Session",
+          deviceId: "pc-local:windows",
+          targetId: "pc-process:123",
+          sampleIntervalMs: 100,
+          status: "stopped"
+        });
+      }
+      if (url.includes("/api/sessions/session-ui/presentmon/status")) {
+        return ok({
+          status: "idle",
+          updatedAt: 1000,
+          warnings: [],
+          diagnostics: []
+        });
+      }
+      if (url.includes("/api/sessions/session-ui")) {
+        return ok({
+          id: "session-ui",
+          name: "MVP-B UI Session",
+          deviceId: "pc-local:windows",
+          targetId: "pc-process:123",
+          sampleIntervalMs: 100,
+          status: "running"
+        });
+      }
+      return ok([]);
+    });
     vi.stubGlobal("fetch", fetchMock);
 
     render(<TestSessionPage />);
 
     fireEvent.click(await screen.findByText("Windows"));
     expect(screen.queryByLabelText("Device")).toBeNull();
-    expect(await screen.findByText("Example Game")).toBeTruthy();
+    fireEvent.click(await screen.findByRole("option", { name: /Example Game/ }));
     await waitFor(() =>
-      expect((screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement).disabled).toBe(false)
+      expect(
+        (screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement).disabled
+      ).toBe(false)
     );
+
+    const exportLogCheckbox = screen.getByRole("checkbox", {
+      name: "Save log to report folder"
+    }) as HTMLInputElement;
+    expect(exportLogCheckbox.checked).toBe(false);
+    fireEvent.click(exportLogCheckbox);
+    expect(exportLogCheckbox.checked).toBe(true);
 
     fireEvent.click(screen.getByRole("button", { name: "Start Test" }));
     await waitFor(
@@ -160,7 +177,26 @@ describe("TestSessionPage flow", () => {
         ),
       { timeout: 5000 }
     );
-    expect(await screen.findByText(/session-ui/, {}, { timeout: 5000 })).toBeTruthy();
+    const createCall = fetchMock.mock.calls.find(
+      ([input, init]) => String(input).endsWith("/api/sessions") && init?.method === "POST"
+    );
+    expect(JSON.parse(String(createCall?.[1]?.body))).toMatchObject({
+      config: {
+        exportLogsToReportDir: true
+      }
+    });
+    const startingCollection = await screen.findByText(
+      "Starting collection",
+      {},
+      { timeout: 5000 }
+    );
+    expect(startingCollection.closest("section")?.getAttribute("aria-busy")).toBe("true");
+    expect(
+      startingCollection.closest("section")?.classList.contains("collection-starting-panel")
+    ).toBe(true);
+    expect(screen.queryByRole("img", { name: "Realtime charts · FPS" })).toBeNull();
+    expect(screen.queryByLabelText("Notifications")).toBeNull();
+    expect(screen.queryByText(/session-ui/)).toBeNull();
     await waitFor(() => expect(sockets).toHaveLength(1));
 
     sockets[0]?.message({
@@ -179,39 +215,192 @@ describe("TestSessionPage flow", () => {
         confidence: "high"
       }
     });
-    sockets[0]?.message({
-      type: "metric",
-      data: {
-        sessionId: "session-ui",
-        timestampMs: 1000,
-        sequence: 2,
-        deviceId: "pc-local:windows",
-        targetId: "pc-process:123",
-        metricName: "network_rx_bytes",
-        value: 4096,
-        unit: "bytes",
-        source: "adb:/proc/net/dev",
-        precision: "device_level",
-        confidence: "low",
-        tags: {
-          scope: "device"
-        }
-      }
-    });
-
+    expect(
+      await screen.findByRole("img", { name: "Realtime charts · FPS" }, { timeout: 5000 })
+    ).toBeTruthy();
+    expect(document.querySelector(".collection-starting-panel")).toBeNull();
+    expect(screen.getAllByRole("progressbar").length).toBeGreaterThan(0);
     expect(await screen.findAllByText("58.0 FPS")).not.toHaveLength(0);
-    expect(await screen.findAllByText("4,096.0 bytes")).not.toHaveLength(0);
-    expect(screen.getByText(/Device-level network counters may include traffic from other apps/)).toBeTruthy();
+    expect(screen.queryByRole("heading", { name: "Recent Metrics" })).toBeNull();
     fireEvent.change(screen.getByLabelText("Label"), { target: { value: "Boss fight" } });
     fireEvent.click(screen.getByRole("button", { name: "Add Marker" }));
     expect(await screen.findAllByText("Boss fight")).not.toHaveLength(0);
 
     fireEvent.click(screen.getByRole("button", { name: "End Test" }));
     fireEvent.click(screen.getByRole("button", { name: "Stop Session" }));
-    expect(await screen.findByRole("link", { name: "View Report" }, { timeout: 3000 })).toBeTruthy();
+    expect(
+      await screen.findByRole("link", { name: "View Report" }, { timeout: 3000 })
+    ).toBeTruthy();
+    expect(screen.queryByText(/target app ended/i)).toBeNull();
+    expect(
+      fetchMock.mock.calls.filter(([input]) =>
+        String(input).includes("/api/sessions/session-ui/stop")
+      )
+    ).toHaveLength(1);
   }, 10000);
 
+  it("loads and displays the current Android foreground app before testing", async () => {
+    let releaseForegroundRequest: (() => void) | undefined;
+    const foregroundRequestGate = new Promise<void>((resolve) => {
+      releaseForegroundRequest = resolve;
+    });
+    let foregroundRequestCount = 0;
+    const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes("/api/android/android%3Atest-device/foreground-app")) {
+        foregroundRequestCount += 1;
+        if (foregroundRequestCount === 1) {
+          await foregroundRequestGate;
+        }
+        return ok({
+          id: "android-package:com.example.foreground",
+          name: "com.example.foreground",
+          type: "app",
+          packageName: "com.example.foreground",
+          platform: "android",
+          tags: {
+            source: "adb_foreground_app",
+            foregroundSource: "activity_top"
+          }
+        });
+      }
+      if (url.includes("/api/devices")) {
+        return ok([
+          {
+            id: "android:test-device",
+            platform: "android",
+            name: "Android Test Device",
+            connectionType: "usb",
+            capabilities: []
+          }
+        ]);
+      }
+      return ok([]);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<TestSessionPage />);
+
+    fireEvent.click(await screen.findByText("Android"));
+    expect(await screen.findByRole("progressbar", { name: "Current app on phone" })).toBeTruthy();
+    expect((screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement).disabled).toBe(
+      true
+    );
+
+    releaseForegroundRequest?.();
+
+    expect(await screen.findByText("com.example.foreground")).toBeTruthy();
+    expect(screen.queryByRole("progressbar", { name: "Current app on phone" })).toBeNull();
+    expect((screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement).disabled).toBe(
+      false
+    );
+  });
+
+  it("shows the log export option unchecked for Windows and Android", async () => {
+    const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes("/api/android/android%3Atest-device/foreground-app")) {
+        return ok({
+          id: "android-package:com.example.app",
+          name: "com.example.app",
+          type: "app",
+          packageName: "com.example.app",
+          platform: "android"
+        });
+      }
+      if (url.includes("/api/devices/pc-local%3Awindows/targets")) {
+        return ok([
+          { id: "pc-process:123", name: "Example Game", type: "process", platform: "windows" }
+        ]);
+      }
+      if (url.includes("/api/devices")) {
+        return ok([
+          {
+            id: "pc-local:windows",
+            platform: "windows",
+            name: "Local PC",
+            connectionType: "local",
+            capabilities: []
+          },
+          {
+            id: "android:test-device",
+            platform: "android",
+            name: "Android Test Device",
+            connectionType: "usb",
+            capabilities: []
+          }
+        ]);
+      }
+      return ok([]);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<TestSessionPage />);
+
+    for (const platform of ["Windows", "Android"]) {
+      fireEvent.click(await screen.findByRole("button", { name: new RegExp(platform, "i") }));
+      const checkbox = (await screen.findByRole("checkbox", {
+        name: "Save log to report folder"
+      })) as HTMLInputElement;
+      expect(checkbox.checked, platform).toBe(false);
+      fireEvent.click(screen.getByRole("button", { name: "Change platform" }));
+    }
+  }, 10000);
+
+  it("shows perceptible device discovery progress while Android devices load", async () => {
+    let releaseDevicesRequest: (() => void) | undefined;
+    const devicesRequestGate = new Promise<void>((resolve) => {
+      releaseDevicesRequest = resolve;
+    });
+    const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes("/api/android/android%3Atest-device/foreground-app")) {
+        return ok({
+          id: "android-package:com.example.foreground",
+          name: "com.example.foreground",
+          type: "app",
+          packageName: "com.example.foreground",
+          platform: "android"
+        });
+      }
+      if (url.includes("/api/devices")) {
+        await devicesRequestGate;
+        return ok([
+          {
+            id: "android:test-device",
+            platform: "android",
+            name: "Android Test Device",
+            connectionType: "usb",
+            capabilities: []
+          }
+        ]);
+      }
+      return ok([]);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<TestSessionPage />);
+
+    fireEvent.click(await screen.findByText("Android"));
+    expect(
+      await screen.findByRole("progressbar", { name: "Loading devices..." })
+    ).toBeTruthy();
+    expect(
+      screen
+        .getAllByText("Loading devices...")
+        .some((element) => element.getAttribute("aria-busy") === "true")
+    ).toBe(true);
+    expect(screen.queryByLabelText("Device")).toBeNull();
+
+    releaseDevicesRequest?.();
+
+    expect(await screen.findByLabelText("Device")).toBeTruthy();
+    expect(screen.queryByRole("progressbar", { name: "Loading devices..." })).toBeNull();
+    expect(await screen.findByText("Android Test Device")).toBeTruthy();
+  });
+
   it("keeps Android lifecycle and FPS options on safe defaults in the simple flow", async () => {
+    vi.stubGlobal("WebSocket", FlowWebSocket);
     const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
       const url = String(input);
       if (url.includes("/api/devices/android%3Atest-device/targets")) {
@@ -268,7 +457,7 @@ describe("TestSessionPage flow", () => {
             autoStartTarget: false,
             allowMonkeyFallback: false,
             stopTargetOnSessionStop: false,
-            processMissingPolicy: "fail_session",
+            processMissingPolicy: "pause_process_metrics_keep_device_metrics",
             launcherComponent: "com.example.app/.MainActivity"
           }
         });
@@ -288,7 +477,7 @@ describe("TestSessionPage flow", () => {
             autoStartTarget: false,
             allowMonkeyFallback: false,
             stopTargetOnSessionStop: false,
-            processMissingPolicy: "fail_session",
+            processMissingPolicy: "pause_process_metrics_keep_device_metrics",
             launcherComponent: "com.example.app/.MainActivity"
           }
         });
@@ -303,16 +492,22 @@ describe("TestSessionPage flow", () => {
     expect(await screen.findByText("Android Test Device")).toBeTruthy();
     expect(await screen.findByText("Current app on phone")).toBeTruthy();
     expect(screen.queryByText(/Android FPS is experimental/)).toBeNull();
-    expect(screen.queryByRole("checkbox", { name: /Enable stop-time experimental FPS probe/i })).toBeNull();
-    expect(screen.queryByRole("checkbox", { name: /Start App before session when PID is missing/i })).toBeNull();
+    expect(
+      screen.queryByRole("checkbox", { name: /Enable stop-time experimental FPS probe/i })
+    ).toBeNull();
+    expect(
+      screen.queryByRole("checkbox", { name: /Start App before session when PID is missing/i })
+    ).toBeNull();
     expect(screen.queryByLabelText("Process Missing Policy")).toBeNull();
     expect(screen.getByLabelText("Sample Interval")).toBeTruthy();
     await waitFor(() =>
-      expect((screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement).disabled).toBe(false)
+      expect(
+        (screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement).disabled
+      ).toBe(false)
     );
     fireEvent.click(screen.getByRole("button", { name: "Start Test" }));
 
-    expect(await screen.findByText("Detected package: com.example.app")).toBeTruthy();
+    expect(await screen.findByRole("heading", { name: "com.example.app" })).toBeTruthy();
 
     await waitFor(() =>
       expect(fetchMock).toHaveBeenCalledWith(
@@ -327,15 +522,44 @@ describe("TestSessionPage flow", () => {
     );
     expect(JSON.parse(String(createCall?.[1]?.body))).toMatchObject({
       config: {
+        reportLocalization: {
+          locale: "en-US",
+          strings: {
+            title: "Test Results"
+          }
+        },
+        exportLogsToReportDir: false,
         enableExperimentalFps: true,
         enableRealtimeFps: true,
         fpsSampleIntervalMs: 1000,
         autoStartTarget: false,
         allowMonkeyFallback: false,
         stopTargetOnSessionStop: false,
-        processMissingPolicy: "fail_session"
+        processMissingPolicy: "pause_process_metrics_keep_device_metrics"
       }
     });
+    await waitFor(() => expect(sockets).toHaveLength(1));
+    sockets[0]?.message({
+      type: "metric",
+      data: {
+        sessionId: "android-session",
+        timestampMs: 1000,
+        sequence: 1,
+        deviceId: "android:test-device",
+        targetId: "android-package:com.example.app",
+        metricName: "fps",
+        value: 59.5,
+        unit: "fps",
+        source: "adb:dumpsys-gfxinfo",
+        precision: "estimated",
+        confidence: "medium"
+      }
+    });
+    expect(await screen.findByRole("img", { name: "Realtime charts · FPS" })).toBeTruthy();
+    expect(screen.getAllByRole("checkbox")).toHaveLength(6);
+    expect(screen.getByRole("progressbar", { name: "Realtime charts · CPU" })).toBeTruthy();
+    expect(screen.getByRole("progressbar", { name: "Realtime charts · Battery" })).toBeTruthy();
+    expect(screen.queryByRole("heading", { name: "Recent Metrics" })).toBeNull();
   });
 
   it("uses simplified PC realtime FPS without showing advanced PresentMon controls", async () => {
@@ -413,7 +637,7 @@ describe("TestSessionPage flow", () => {
 
     fireEvent.click(await screen.findByText("Windows"));
     expect(screen.queryByLabelText("Device")).toBeNull();
-    expect(await screen.findByText("Game.exe (PID 4321)")).toBeTruthy();
+    fireEvent.click(await screen.findByRole("option", { name: /Game\.exe/ }));
     expect(screen.queryByText(/PresentMon availability: experimental/)).toBeNull();
     expect(screen.queryByRole("checkbox", { name: /Run explicit timed CSV capture/i })).toBeNull();
     expect(screen.queryByLabelText("PresentMon duration")).toBeNull();
@@ -421,7 +645,9 @@ describe("TestSessionPage flow", () => {
     expect(screen.queryByLabelText("CSV retention mode")).toBeNull();
     expect(screen.getByLabelText("Sample Interval")).toBeTruthy();
     await waitFor(() =>
-      expect((screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement).disabled).toBe(false)
+      expect(
+        (screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement).disabled
+      ).toBe(false)
     );
     fireEvent.click(screen.getByRole("button", { name: "Start Test" }));
 
@@ -438,6 +664,14 @@ describe("TestSessionPage flow", () => {
       config: {
         enablePresentMonCapture: false,
         enablePresentMonRealtime: true,
+        requestedMetrics: [
+          "fps",
+          "cpu_percent",
+          "gpu_utilization",
+          "memory_mb",
+          "power_w",
+          "gpu_temperature_c"
+        ],
         presentMonCaptureDurationMs: 10000,
         presentMonRealtimeChunkMs: 1000,
         presentMonTargetMode: "pid",
@@ -445,7 +679,213 @@ describe("TestSessionPage flow", () => {
         presentMonRetentionMode: "delete_after_parse"
       }
     });
+    expect(await screen.findByText("Starting collection")).toBeTruthy();
+    expect(screen.queryByRole("img", { name: "Realtime charts · FPS" })).toBeNull();
+    await waitFor(() => expect(sockets).toHaveLength(1));
+    sockets[0]?.message({
+      type: "metric",
+      data: {
+        sessionId: "pc-session",
+        timestampMs: 1000,
+        sequence: 1,
+        deviceId: "pc-local:windows",
+        targetId: "pc-windows-process:4321:4321-100",
+        metricName: "fps",
+        value: 60,
+        unit: "fps",
+        source: "presentmon",
+        precision: "estimated",
+        confidence: "medium"
+      }
+    });
+    const fpsChart = await screen.findByRole("img", { name: "Realtime charts · FPS" });
+    expect(fpsChart.getAttribute("viewBox")).toBe("0 0 640 180");
+    expect(screen.getByRole("progressbar", { name: "Realtime charts · CPU" })).toBeTruthy();
+    expect(screen.queryByRole("img", { name: "Realtime charts · CPU" })).toBeNull();
+    sockets[0]?.message({
+      type: "metric",
+      data: {
+        sessionId: "pc-session",
+        timestampMs: 1100,
+        sequence: 2,
+        deviceId: "pc-local:windows",
+        targetId: "pc-windows-process:4321:4321-100",
+        metricName: "cpu_percent",
+        value: 12.5,
+        unit: "%",
+        source: "windows:process-times",
+        precision: "estimated",
+        confidence: "medium"
+      }
+    });
+    expect(await screen.findByRole("img", { name: "Realtime charts · CPU" })).toBeTruthy();
+    expect(screen.queryByRole("progressbar", { name: "Realtime charts · CPU" })).toBeNull();
+    const metricCheckboxes = screen.getAllByRole("checkbox");
+    expect(metricCheckboxes).toHaveLength(6);
+    expect(metricCheckboxes.every((checkbox) => (checkbox as HTMLInputElement).checked)).toBe(true);
+    const gpuChart = screen.getByRole("img", { name: "Realtime charts · GPU" });
+    expect(gpuChart.getAttribute("viewBox")).toBe(fpsChart.getAttribute("viewBox"));
+    fireEvent.click(screen.getByRole("checkbox", { name: "GPU Unavailable" }));
+    expect(screen.queryByRole("img", { name: "Realtime charts · GPU" })).toBeNull();
+    expect(screen.queryByLabelText("Notifications")).toBeNull();
+    expect(screen.queryByText(/PresentMon availability:/)).toBeNull();
     expect(screen.queryByText(/PresentMon Capture Status/)).toBeNull();
+  });
+
+  it("enables FPS from Start Test without a choice dialog and requests every default Windows metric", async () => {
+    vi.stubGlobal("WebSocket", FlowWebSocket);
+    const invokeMock = vi.fn((command: string): Promise<unknown> => {
+      if (command === "get_local_server_info") {
+        return Promise.resolve({
+          mode: "packaged",
+          apiBaseUrl: "http://127.0.0.1:49152",
+          wsBaseUrl: "ws://127.0.0.1:49152"
+        });
+      }
+      if (command === "get_local_auth_token") {
+        return Promise.resolve("test-token");
+      }
+      if (command === "get_windows_fps_access_status") {
+        return Promise.resolve({
+          supported: true,
+          state: "needs_setup",
+          ready: false,
+          configured: false,
+          requiresSignOut: false,
+          canEnable: true
+        });
+      }
+      if (command === "enable_windows_fps_access") {
+        return Promise.resolve({
+          supported: true,
+          state: "restart_required",
+          ready: false,
+          configured: true,
+          requiresSignOut: true,
+          canEnable: false
+        });
+      }
+      return Promise.resolve({});
+    });
+    const invoke = <T,>(command: string, args?: Record<string, unknown>): Promise<T> => {
+      void args;
+      return invokeMock(command) as Promise<T>;
+    };
+    window.__TAURI__ = { core: { invoke } };
+
+    const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(input);
+      if (url.includes("/api/devices/pc-local%3Awindows/targets")) {
+        return ok([
+          {
+            id: "pc-windows-process:4321:4321-100",
+            name: "Game.exe",
+            type: "process",
+            platform: "windows",
+            pid: 4321,
+            tags: { runtimeId: "4321-100" }
+          }
+        ]);
+      }
+      if (url.includes("/api/devices")) {
+        return ok([
+          {
+            id: "pc-local:windows",
+            platform: "windows",
+            name: "Local PC",
+            connectionType: "local",
+            capabilities: []
+          }
+        ]);
+      }
+      if (url.endsWith("/api/sessions") && init?.method === "POST") {
+        return ok({
+          id: "pc-cpu-memory-session",
+          name: "MVP-B UI Session",
+          deviceId: "pc-local:windows",
+          targetId: "pc-windows-process:4321:4321-100",
+          sampleIntervalMs: 100,
+          status: "created",
+          config: JSON.parse(String(init.body)).config
+        });
+      }
+      if (url.includes("/start")) {
+        return ok({
+          id: "pc-cpu-memory-session",
+          name: "MVP-B UI Session",
+          deviceId: "pc-local:windows",
+          targetId: "pc-windows-process:4321:4321-100",
+          sampleIntervalMs: 100,
+          status: "running",
+          config: {}
+        });
+      }
+      return ok([]);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<TestSessionPage />);
+    fireEvent.click(await screen.findByText("Windows"));
+    fireEvent.click(await screen.findByRole("option", { name: /Game\.exe/ }));
+    await waitFor(() =>
+      expect(
+        (screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement).disabled
+      ).toBe(false)
+    );
+    expect(screen.queryByText("Enable realtime FPS")).toBeNull();
+    expect(screen.queryByRole("button", { name: "Enable FPS" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Start Test" }));
+
+    await waitFor(() => expect(invokeMock).toHaveBeenCalledWith("enable_windows_fps_access"));
+    await waitFor(() => {
+      const createCall = fetchMock.mock.calls.find(
+        ([input, init]) => String(input).endsWith("/api/sessions") && init?.method === "POST"
+      );
+      expect(createCall).toBeTruthy();
+    });
+    const createCall = fetchMock.mock.calls.find(
+      ([input, init]) => String(input).endsWith("/api/sessions") && init?.method === "POST"
+    );
+    expect(JSON.parse(String(createCall?.[1]?.body))).toMatchObject({
+      config: {
+        enablePresentMonRealtime: true,
+        requestedMetrics: [
+          "fps",
+          "cpu_percent",
+          "gpu_utilization",
+          "memory_mb",
+          "power_w",
+          "gpu_temperature_c"
+        ]
+      }
+    });
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(screen.queryByText("FPS access enabled")).toBeNull();
+    expect(await screen.findByText("Starting collection")).toBeTruthy();
+    expect(screen.queryAllByRole("checkbox")).toHaveLength(0);
+    await waitFor(() => expect(sockets).toHaveLength(1));
+    sockets[0]?.message({
+      type: "metric",
+      data: {
+        sessionId: "pc-cpu-memory-session",
+        timestampMs: 1000,
+        sequence: 1,
+        deviceId: "pc-local:windows",
+        targetId: "pc-windows-process:4321:4321-100",
+        metricName: "cpu_percent",
+        value: 12,
+        unit: "percent",
+        source: "windows:process-times",
+        precision: "estimated",
+        confidence: "medium"
+      }
+    });
+    await waitFor(() => expect(document.querySelector(".collection-starting-panel")).toBeNull());
+    expect(screen.getAllByRole("progressbar").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("checkbox")).toHaveLength(6);
+    expect(
+      screen.getAllByRole("checkbox").every((checkbox) => (checkbox as HTMLInputElement).checked)
+    ).toBe(true);
   });
 
   it("filters Windows process targets by name", async () => {
@@ -453,8 +893,20 @@ describe("TestSessionPage flow", () => {
       const url = String(input);
       if (url.includes("/api/devices/pc-local%3Awindows/targets")) {
         return ok([
-          { id: "pc-process:game", name: "Example Game", type: "process", platform: "windows" },
-          { id: "pc-process:java", name: "java.exe", type: "process", platform: "windows" }
+          {
+            id: "pc-process:game",
+            name: "Example Game",
+            type: "process",
+            platform: "windows",
+            tags: { hasMainWindow: true }
+          },
+          {
+            id: "pc-process:java",
+            name: "java.exe",
+            type: "process",
+            platform: "windows",
+            tags: { hasMainWindow: false }
+          }
         ]);
       }
       if (url.includes("/api/devices")) {
@@ -475,13 +927,94 @@ describe("TestSessionPage flow", () => {
     render(<TestSessionPage />);
 
     fireEvent.click(await screen.findByText("Windows"));
+    expect(await screen.findByRole("option", { name: /Example Game/ })).toBeTruthy();
+    expect(screen.queryByRole("option", { name: /java\.exe/ })).toBeNull();
     const search = await screen.findByLabelText("Search app/process");
     fireEvent.change(search, { target: { value: "java" } });
 
     await waitFor(() => {
       expect(screen.getByRole("listbox", { name: "Application process" })).toBeTruthy();
-      expect(screen.getByRole("option", { name: /java\.exe/ }).getAttribute("aria-selected")).toBe("true");
+      expect(screen.getByRole("option", { name: /java\.exe/ }).getAttribute("aria-selected")).toBe(
+        "false"
+      );
       expect(screen.queryByRole("option", { name: /Example Game/ })).toBeNull();
     });
+
+    expect((screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement).disabled).toBe(
+      true
+    );
+    fireEvent.click(screen.getByRole("option", { name: /java\.exe/ }));
+    expect(screen.getByRole("option", { name: /java\.exe/ }).getAttribute("aria-selected")).toBe(
+      "true"
+    );
+    expect((screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement).disabled).toBe(
+      false
+    );
+  });
+
+  it("refreshes Windows process targets without clearing the search", async () => {
+    let targetRequestCount = 0;
+    const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes("/api/devices/pc-local%3Awindows/targets")) {
+        targetRequestCount += 1;
+        return ok(
+          targetRequestCount === 1
+            ? [
+                {
+                  id: "pc-process:launcher",
+                  name: "Game Launcher",
+                  type: "process",
+                  platform: "windows",
+                  tags: { hasMainWindow: true }
+                }
+              ]
+            : [
+                {
+                  id: "pc-process:launcher",
+                  name: "Game Launcher",
+                  type: "process",
+                  platform: "windows",
+                  tags: { hasMainWindow: true }
+                },
+                {
+                  id: "pc-process:late-game",
+                  name: "Late Game.exe",
+                  type: "process",
+                  platform: "windows",
+                  tags: { hasMainWindow: true }
+                }
+              ]
+        );
+      }
+      if (url.includes("/api/devices")) {
+        return ok([
+          {
+            id: "pc-local:windows",
+            platform: "windows",
+            name: "Local PC",
+            connectionType: "local",
+            capabilities: []
+          }
+        ]);
+      }
+      return ok([]);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<TestSessionPage />);
+
+    fireEvent.click(await screen.findByText("Windows"));
+    expect(await screen.findByRole("option", { name: /Game Launcher/ })).toBeTruthy();
+
+    const search = screen.getByLabelText("Search app/process") as HTMLInputElement;
+    fireEvent.change(search, { target: { value: "late" } });
+    expect(await screen.findByText(/No Windows process matches/)).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: "Refresh targets" }));
+
+    expect(await screen.findByRole("option", { name: /Late Game\.exe/ })).toBeTruthy();
+    expect(search.value).toBe("late");
+    expect(targetRequestCount).toBe(2);
   });
 });

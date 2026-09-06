@@ -14,6 +14,13 @@ export interface ChooseReportOutputDirectoryResult {
   localServer?: LocalServerInfo;
 }
 
+export interface AppPaths {
+  dataDirSanitized: string;
+  logsDirSanitized: string;
+  reportsDirSanitized: string;
+  diagnosticsDirSanitized: string;
+}
+
 type InvokeFn = <T>(command: string, args?: Record<string, unknown>) => Promise<T>;
 
 declare global {
@@ -83,8 +90,23 @@ export async function openReportsDirectory(): Promise<void> {
   await invokeTauri<void>("open_reports_directory");
 }
 
+export async function openBugReportPage(): Promise<void> {
+  const issueUrl = "https://github.com/a16036868481/LumaTrace/issues/new?template=bug_report.yml";
+  if (!detectTauri()) {
+    window.open(issueUrl, "_blank", "noopener,noreferrer");
+    return;
+  }
+  await invokeTauri<void>("open_bug_report_page");
+}
+
+export async function getAppPaths(): Promise<AppPaths> {
+  return invokeTauri<AppPaths>("get_app_paths");
+}
+
 export async function chooseReportOutputDirectory(): Promise<ChooseReportOutputDirectoryResult> {
-  const result = await invokeTauri<ChooseReportOutputDirectoryResult>("choose_report_output_directory");
+  const result = await invokeTauri<ChooseReportOutputDirectoryResult>(
+    "choose_report_output_directory"
+  );
   if (result.localServer !== undefined) {
     cachedInfo = result.localServer;
   }

@@ -1,4 +1,5 @@
 import type { MetricEvent } from "../api/types";
+import { useI18n } from "../i18n/I18nProvider";
 
 export interface AndroidFallbackNoticeProps {
   metrics?: MetricEvent[];
@@ -6,6 +7,7 @@ export interface AndroidFallbackNoticeProps {
 }
 
 export function AndroidFallbackNotice({ metrics = [], diagnostics = [] }: AndroidFallbackNoticeProps) {
+  const { t } = useI18n();
   const deviceLevelNetwork = metrics.some(
     (metric) => metric.metricName.startsWith("network_") && metric.precision === "device_level"
   );
@@ -21,14 +23,14 @@ export function AndroidFallbackNotice({ metrics = [], diagnostics = [] }: Androi
   }
 
   return (
-    <div className="notice-stack" aria-label="Android fallback notices">
+    <div className="notice-stack" aria-label={t("session.androidNetworkNotice")}>
       {deviceLevelNetwork ? (
-        <p className="notice-text">Device-level network counters may include traffic from other apps.</p>
+        <p className="notice-text">{t("android.fallbackNetwork")}</p>
       ) : null}
       {meminfoFallback ? (
-        <p className="notice-text">Memory fell back to /proc/&lt;pid&gt;/status with lower confidence.</p>
+        <p className="notice-text">{t("android.fallbackMemory")}</p>
       ) : null}
-      {fpsDiagnostic ? <p className="notice-text">Android FPS probe is experimental.</p> : null}
+      {fpsDiagnostic ? <p className="notice-text">{t("android.fpsExperimental")}</p> : null}
     </div>
   );
 }

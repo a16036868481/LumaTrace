@@ -5,5 +5,7 @@ export function isMockDevice(device: Device): boolean {
 }
 
 export function visibleUserDevices(devices: Device[] | null | undefined): Device[] {
-  return (devices ?? []).filter((device) => !isMockDevice(device));
+  return (devices ?? []).filter(
+    (device) => !isMockDevice(device) && (device.platform === "windows" || device.platform === "android")
+  );
 }

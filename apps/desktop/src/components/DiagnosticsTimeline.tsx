@@ -1,4 +1,5 @@
 import type { DiagnosticRecord } from "../api/types";
+import { useI18n } from "../i18n/I18nProvider";
 import { formatTimestamp } from "../utils/format";
 import { EmptyState } from "./EmptyState";
 import { JsonPreview } from "./JsonPreview";
@@ -8,14 +9,16 @@ export interface DiagnosticsTimelineProps {
   title?: string;
 }
 
-export function DiagnosticsTimeline({ diagnostics, title = "Diagnostics Timeline" }: DiagnosticsTimelineProps) {
+export function DiagnosticsTimeline({ diagnostics, title }: DiagnosticsTimelineProps) {
+  const { t } = useI18n();
+  const resolvedTitle = title ?? t("tools.diagnostics");
   if (diagnostics.length === 0) {
-    return <EmptyState title="No diagnostics" message="Warnings, fallbacks, and lifecycle events will appear here." />;
+    return <EmptyState title={t("tools.noDiagnostics")} message={t("tools.noDiagnosticsMessage")} />;
   }
 
   return (
-    <section className="diagnostics-timeline" aria-label={title}>
-      <h2>{title}</h2>
+    <section className="diagnostics-timeline" aria-label={resolvedTitle}>
+      <h2>{resolvedTitle}</h2>
       <div className="diagnostic-list">
         {diagnostics.map((record) => (
           <article key={record.id} className={`diagnostic-item diagnostic-item--${record.level}`}>

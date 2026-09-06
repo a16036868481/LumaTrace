@@ -105,7 +105,7 @@ describe("Report details", () => {
     expect(await screen.findByText("1.5 MB")).toBeTruthy();
     expect(screen.getAllByText("Report Session").length).toBeGreaterThan(0);
     expect(screen.getByRole("button", { name: "Export JSON" })).toBeTruthy();
-    expect(screen.getAllByText("N/A").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Not collected").length).toBeGreaterThan(0);
   });
 
   it("shows PresentMon capture section without raw paths", async () => {

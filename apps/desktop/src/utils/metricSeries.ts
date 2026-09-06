@@ -4,6 +4,22 @@ export const CHART_METRIC_NAMES = ["fps", "frame_time_ms", "cpu_percent", "memor
 
 export type ChartMetricName = (typeof CHART_METRIC_NAMES)[number];
 
+const LIVE_METRIC_NAMES = [
+  ...CHART_METRIC_NAMES,
+  "gpu_utilization",
+  "power_w",
+  "cpu_temperature_c",
+  "gpu_temperature_c",
+  "battery_level_percent",
+  "battery_temperature_c"
+] as const;
+
+const REJECTED_METRIC_SOURCES = new Set(["windows:acpi-processor-thermal-zone"]);
+
+export function isTrustedMetricEvent(event: MetricEvent): boolean {
+  return !REJECTED_METRIC_SOURCES.has(event.source ?? "");
+}
+
 export interface MetricSeriesPoint {
   timestampMs: number;
   value: number | null;
@@ -49,16 +65,19 @@ function comparePoints(a: MetricSeriesPoint, b: MetricSeriesPoint): number {
 
 export function groupMetricEventsByName(events: MetricEvent[]): Record<string, MetricEvent[]> {
   const grouped: Record<string, MetricEvent[]> = {};
-  for (const event of [...events].sort(compareEvents)) {
+  for (const event of events.filter(isTrustedMetricEvent).sort(compareEvents)) {
     grouped[event.metricName] ??= [];
     grouped[event.metricName]?.push(event);
   }
   return grouped;
 }
 
-export function getLatestMetricByName(events: MetricEvent[], metricName: string): MetricEvent | null {
+export function getLatestMetricByName(
+  events: MetricEvent[],
+  metricName: string
+): MetricEvent | null {
   const matching = events
-    .filter((event) => event.metricName === metricName)
+    .filter((event) => event.metricName === metricName && isTrustedMetricEvent(event))
     .sort(compareEvents);
   return matching.at(-1) ?? null;
 }
@@ -68,7 +87,10 @@ export function appendMetricEventToSeries(
   event: MetricEvent,
   options: AppendMetricOptions = {}
 ): MetricSeriesState {
-  if (!CHART_METRIC_NAMES.includes(event.metricName as ChartMetricName)) {
+  if (
+    !isTrustedMetricEvent(event) ||
+    !LIVE_METRIC_NAMES.includes(event.metricName as (typeof LIVE_METRIC_NAMES)[number])
+  ) {
     return state;
   }
 

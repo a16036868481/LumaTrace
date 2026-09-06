@@ -12,6 +12,7 @@ export interface RealtimeMetricChartProps {
   valueFormatter?: (value: number | null, unit: string) => string;
   height?: number;
   paused?: boolean;
+  loading?: boolean;
   showTooltip?: boolean;
   showLegend?: boolean;
 }
@@ -49,6 +50,7 @@ export function RealtimeMetricChart({
   valueFormatter = formatMetricValue,
   height = 180,
   paused = false,
+  loading = false,
   showTooltip = true,
   showLegend = true
 }: RealtimeMetricChartProps) {
@@ -59,6 +61,7 @@ export function RealtimeMetricChart({
     .filter((value): value is number => typeof value === "number" && Number.isFinite(value));
   const hasMock = visibleSeries.some((point) => point.source === "mock");
   const hasData = numericValues.length > 0;
+  const isWaitingForData = loading && !hasData;
   const minValue = hasData ? Math.min(...numericValues) : 0;
   const maxValue = hasData ? Math.max(...numericValues) : 1;
   const padding = 18;
@@ -68,7 +71,8 @@ export function RealtimeMetricChart({
   const range = maxValue - minValue || 1;
   const scaledPoints: ScaledPoint[] = visibleSeries.map((point, index) => ({
     ...point,
-    x: padding + (visibleSeries.length <= 1 ? 0 : (index / (visibleSeries.length - 1)) * innerWidth),
+    x:
+      padding + (visibleSeries.length <= 1 ? 0 : (index / (visibleSeries.length - 1)) * innerWidth),
     y:
       point.value === null
         ? null
@@ -78,57 +82,84 @@ export function RealtimeMetricChart({
   const latest = visibleSeries.at(-1);
 
   return (
-    <section className="chart-card" aria-label={title}>
+    <section className={`chart-card${isWaitingForData ? " is-loading" : ""}`} aria-label={title}>
       <div className="chart-card__header">
         <div>
           <h3>{title}</h3>
-          <p>{latest !== undefined ? valueFormatter(latest.value, unit) : t("common.na")}</p>
+          <p>
+            {isWaitingForData
+              ? t("session.waitingForMetricsTitle")
+              : latest !== undefined
+                ? valueFormatter(latest.value, unit)
+                : t("common.na")}
+          </p>
         </div>
         <div className="summary-row">
           {hasMock ? <span className="status-pill">{t("common.source")}: mock</span> : null}
           {paused ? <span className="status-pill">{t("common.paused")}</span> : null}
         </div>
       </div>
-      <svg className="realtime-chart" role="img" aria-label={title} viewBox={`0 0 ${width} ${height}`}>
-        <title>{title}</title>
-        <line x1={padding} x2={width - padding} y1={height - padding} y2={height - padding} />
-        <line x1={padding} x2={padding} y1={padding} y2={height - padding} />
-        {hasData ? (
-          <>
-            <text x={padding + 4} y={padding + 10}>
-              {yAxisFormatter?.(maxValue) ?? valueFormatter(maxValue, unit)}
+      {isWaitingForData ? (
+        <div
+          className="chart-card__loading"
+          role="progressbar"
+          aria-label={title}
+          style={{ minHeight: height }}
+        >
+          <span className="chart-card__loading-pulse" aria-hidden="true" />
+          <span className="chart-card__loading-track" aria-hidden="true">
+            <span />
+          </span>
+        </div>
+      ) : (
+        <svg
+          className="realtime-chart"
+          role="img"
+          aria-label={title}
+          viewBox={`0 0 ${width} ${height}`}
+        >
+          <title>{title}</title>
+          <line x1={padding} x2={width - padding} y1={height - padding} y2={height - padding} />
+          <line x1={padding} x2={padding} y1={padding} y2={height - padding} />
+          {hasData ? (
+            <>
+              <text x={padding + 4} y={padding + 10}>
+                {yAxisFormatter?.(maxValue) ?? valueFormatter(maxValue, unit)}
+              </text>
+              <text x={padding + 4} y={height - padding - 4}>
+                {yAxisFormatter?.(minValue) ?? valueFormatter(minValue, unit)}
+              </text>
+            </>
+          ) : (
+            <text x={width / 2} y={height / 2} textAnchor="middle">
+              {t("common.na")}
             </text>
-            <text x={padding + 4} y={height - padding - 4}>
-              {yAxisFormatter?.(minValue) ?? valueFormatter(minValue, unit)}
-            </text>
-          </>
-        ) : (
-          <text x={width / 2} y={height / 2} textAnchor="middle">
-            {t("common.na")}
-          </text>
-        )}
-        {segments.map((segment, index) => (
-          <path key={`${title}-${index}`} d={segment} />
-        ))}
-        {scaledPoints.map((point, index) =>
-          point.y === null ? null : (
-            <circle key={`${point.timestampMs}-${index}`} cx={point.x} cy={point.y} r="3">
-              {showTooltip ? (
-                <title>
-                  {`${formatTimestamp(point.timestampMs)}
+          )}
+          {segments.map((segment, index) => (
+            <path key={`${title}-${index}`} d={segment} />
+          ))}
+          {scaledPoints.map((point, index) =>
+            point.y === null ? null : (
+              <circle key={`${point.timestampMs}-${index}`} cx={point.x} cy={point.y} r="3">
+                {showTooltip ? (
+                  <title>
+                    {`${formatTimestamp(point.timestampMs)}
 ${t("common.value")}: ${valueFormatter(point.value, unit)}
 ${t("common.source")}: ${point.source ?? t("common.na")}
 ${t("common.precision")}: ${point.precision ?? t("common.na")}
 ${t("common.confidence")}: ${point.confidence ?? t("common.na")}`}
-                </title>
-              ) : null}
-            </circle>
-          )
-        )}
-      </svg>
-      {showLegend ? (
+                  </title>
+                ) : null}
+              </circle>
+            )
+          )}
+        </svg>
+      )}
+      {showLegend && !isWaitingForData ? (
         <div className="chart-card__legend">
-          <span>{t("chart.points")}: {visibleSeries.length}</span>
+          <span>
+            {t("chart.points")}: {visibleSeries.length}
+          </span>
           <span>{t("chart.nullsNotZero")}</span>
         </div>
       ) : null}

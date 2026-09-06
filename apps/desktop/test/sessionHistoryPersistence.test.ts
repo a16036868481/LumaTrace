@@ -2,6 +2,7 @@ import { describe, expect, it, beforeEach } from "vitest";
 import {
   clearSessionHistory,
   loadSessionHistory,
+  removeSessionHistoryEntries,
   saveSessionHistoryEntry,
   SESSION_HISTORY_STORAGE_KEY
 } from "../src/state/sessionHistoryPersistence";
@@ -64,5 +65,27 @@ describe("session history persistence", () => {
       token: "secret"
     });
     expect(localStorage.getItem(SESSION_HISTORY_STORAGE_KEY)).not.toContain("secret");
+  });
+
+  it("removes only the requested result history entries", () => {
+    for (const sessionId of ["s1", "s2", "s3"]) {
+      saveSessionHistoryEntry({
+        sessionId,
+        name: sessionId,
+        deviceId: "d1",
+        targetId: "t1",
+        status: "stopped",
+        updatedAt: Number(sessionId.slice(1))
+      });
+    }
+
+    expect(removeSessionHistoryEntries(["s1", "s3"]).map((entry) => entry.sessionId)).toEqual([
+      "s2"
+    ]);
+    expect(loadSessionHistory().map((entry) => entry.sessionId)).toEqual(["s2"]);
+
+    removeSessionHistoryEntries(["s2"]);
+    expect(loadSessionHistory()).toEqual([]);
+    expect(localStorage.getItem(SESSION_HISTORY_STORAGE_KEY)).toBeNull();
   });
 });

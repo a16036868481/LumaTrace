@@ -119,6 +119,20 @@ export function clearSessionHistory(storage: Storage = window.localStorage): voi
   storage.removeItem(SESSION_HISTORY_STORAGE_KEY);
 }
 
+export function removeSessionHistoryEntries(
+  sessionIds: readonly string[],
+  storage: Storage = window.localStorage
+): PersistedSessionHistoryEntry[] {
+  const removedIds = new Set(sessionIds);
+  const next = loadSessionHistory(storage).filter((item) => !removedIds.has(item.sessionId));
+  if (next.length === 0) {
+    storage.removeItem(SESSION_HISTORY_STORAGE_KEY);
+  } else {
+    storage.setItem(SESSION_HISTORY_STORAGE_KEY, JSON.stringify(next));
+  }
+  return next;
+}
+
 export function sessionToHistoryEntry(
   session: Session,
   options: {

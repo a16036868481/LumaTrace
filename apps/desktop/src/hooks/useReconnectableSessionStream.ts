@@ -102,6 +102,10 @@ export function useReconnectableSessionStream(
           setSessionStatus(status);
           if (status === "running" && socketRef.current?.readyState === WebSocket.OPEN) {
             setConnectionStatus("open");
+          } else if (status === "stopped" || status === "failed") {
+            stoppedRef.current = true;
+            clearTimer();
+            setConnectionStatus(status === "failed" ? "error" : "stopped");
           }
         },
         onStopped: () => {

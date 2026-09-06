@@ -1,9 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { AppShell } from "../src/app/AppShell";
 import { ApiError } from "../src/api/errors";
 import { ApiErrorView } from "../src/components/ApiErrorView";
 import { MetricCard } from "../src/components/MetricCard";
+import { I18nProvider } from "../src/i18n/I18nProvider";
+import { locales } from "../src/i18n/translations";
 
 import "../src/styles/tokens.css";
 import "../src/styles/globals.css";
@@ -20,11 +22,14 @@ function ok(data: unknown): Response {
 
 afterEach(() => {
   vi.restoreAllMocks();
+  if (typeof localStorage.clear === "function") {
+    localStorage.clear();
+  }
   window.history.replaceState({}, "", "/");
 });
 
 describe("basic desktop rendering", () => {
-  it("renders AppShell and dashboard device data", async () => {
+  it("renders the simple home flow", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn(async (input: RequestInfo | URL) => {
@@ -48,14 +53,24 @@ describe("basic desktop rendering", () => {
       })
     );
 
-    render(<AppShell />);
-
-    expect(screen.getByRole("heading", { name: "Dashboard" })).toBeTruthy();
-    expect(screen.getByRole("heading", { name: "Found a bug?" })).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Open GitHub Issues" }).getAttribute("href")).toBe(
-      "https://github.com/a16036868481/LumaTrace/issues"
+    render(
+      <I18nProvider>
+        <AppShell />
+      </I18nProvider>
     );
-    expect(await screen.findByText("Local PC")).toBeTruthy();
+
+    expect(screen.getByRole("heading", { name: "See performance clearly." })).toBeTruthy();
+    expect(screen.getByText("Choose a platform")).toBeTruthy();
+    expect(await screen.findByRole("button", { name: /Windows/ })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /Android/ })).toBeTruthy();
+    const languageSelector = screen.getByRole("combobox", { name: "Language" });
+    expect(languageSelector).toBeTruthy();
+    fireEvent.click(languageSelector);
+    expect(screen.getAllByRole("option")).toHaveLength(locales.length);
+    fireEvent.click(screen.getByRole("option", { name: /^Español/ }));
+    expect(await screen.findByRole("heading", { name: "Ver el rendimiento con claridad." })).toBeTruthy();
+    expect(await screen.findByRole("combobox", { name: "Idioma" })).toBeTruthy();
+    expect(screen.queryByRole("heading", { name: "Found a bug?" })).toBeNull();
   });
 
   it("renders ApiErrorView without stack traces", () => {

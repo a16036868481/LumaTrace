@@ -50,7 +50,7 @@ describe("Android diagnostics UI", () => {
 
     expect(screen.getByText(/logcat or bugreport/)).toBeTruthy();
     expect(screen.getAllByText(/Device-level network counters/).length).toBeGreaterThan(0);
-    expect(screen.getByText(/Android FPS probe is experimental/)).toBeTruthy();
+    expect(screen.getByText(/Android FPS detection is experimental/)).toBeTruthy();
   });
 
   it("renders diagnostics timeline and export controls", async () => {

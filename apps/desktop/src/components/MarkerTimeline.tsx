@@ -1,9 +1,11 @@
 import type { EventMarker } from "../api/types";
 import { formatTimestamp } from "../utils/format";
+import { useI18n } from "../i18n/I18nProvider";
 
 export function MarkerTimeline({ markers }: { markers: EventMarker[] }) {
+  const { t } = useI18n();
   if (markers.length === 0) {
-    return <p className="muted-text">No markers yet.</p>;
+    return <p className="muted-text">{t("marker.empty")}</p>;
   }
 
   return (

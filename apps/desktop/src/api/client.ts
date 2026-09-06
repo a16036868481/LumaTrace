@@ -46,7 +46,11 @@ function appendQuery(url: URL | string, query: RequestOptions["query"]): string 
   return params.length > 0 ? `${url}?${params}` : url;
 }
 
-export function buildApiUrl(baseUrl: string, path: string, query?: RequestOptions["query"]): string {
+export function buildApiUrl(
+  baseUrl: string,
+  path: string,
+  query?: RequestOptions["query"]
+): string {
   const normalizedBase = trimTrailingSlash(baseUrl);
   if (normalizedBase.length > 0) {
     const url = new URL(path, `${normalizedBase}/`);
@@ -126,10 +130,13 @@ export class ApiClient {
   }
 
   async get<T>(path: string, options: RequestOptions = {}): Promise<T> {
-    const response = await (this.fetchImpl ?? fetch)(buildApiUrl(await this.resolveBaseUrl(), path, options.query), {
-      method: "GET",
-      headers: await this.buildHeaders()
-    });
+    const response = await (this.fetchImpl ?? fetch)(
+      buildApiUrl(await this.resolveBaseUrl(), path, options.query),
+      {
+        method: "GET",
+        headers: await this.buildHeaders()
+      }
+    );
     return parseJsonResponse<T>(response);
   }
 
@@ -145,17 +152,55 @@ export class ApiClient {
     } else {
       requestInit.headers = await this.buildHeaders();
     }
-    const response = await (this.fetchImpl ?? fetch)(buildApiUrl(await this.resolveBaseUrl(), path, options.query), {
-      ...requestInit
-    });
+    const response = await (this.fetchImpl ?? fetch)(
+      buildApiUrl(await this.resolveBaseUrl(), path, options.query),
+      {
+        ...requestInit
+      }
+    );
+    return parseJsonResponse<T>(response);
+  }
+
+  async delete<T>(path: string, options: RequestOptions = {}): Promise<T> {
+    const response = await (this.fetchImpl ?? fetch)(
+      buildApiUrl(await this.resolveBaseUrl(), path, options.query),
+      {
+        method: "DELETE",
+        headers: await this.buildHeaders()
+      }
+    );
     return parseJsonResponse<T>(response);
   }
 
   async getText(path: string, options: RequestOptions = {}): Promise<string> {
-    const response = await (this.fetchImpl ?? fetch)(buildApiUrl(await this.resolveBaseUrl(), path, options.query), {
-      method: "GET",
-      headers: await this.buildHeaders()
-    });
+    const response = await (this.fetchImpl ?? fetch)(
+      buildApiUrl(await this.resolveBaseUrl(), path, options.query),
+      {
+        method: "GET",
+        headers: await this.buildHeaders()
+      }
+    );
+    return parseTextExport(response);
+  }
+
+  async postText(path: string, body?: unknown, options: RequestOptions = {}): Promise<string> {
+    const requestInit: RequestInit = {
+      method: "POST",
+      headers: await this.buildHeaders(
+        body === undefined
+          ? {}
+          : {
+              "content-type": "application/json"
+            }
+      )
+    };
+    if (body !== undefined) {
+      requestInit.body = JSON.stringify(body);
+    }
+    const response = await (this.fetchImpl ?? fetch)(
+      buildApiUrl(await this.resolveBaseUrl(), path, options.query),
+      requestInit
+    );
     return parseTextExport(response);
   }
 }

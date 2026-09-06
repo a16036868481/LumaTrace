@@ -113,8 +113,8 @@ export function DeviceDetailPage() {
       });
       setLifecycleMessage(
         result.ok
-          ? `Start App completed with ${result.method}${result.pid === undefined ? "" : `, PID ${result.pid}`}.`
-          : `Start App failed: ${result.warnings.join("; ")}`
+          ? t("device.startCompleted", { method: result.method, pid: result.pid ?? t("common.na") })
+          : t("device.startFailed", { reason: result.warnings.join("; ") })
       );
     } catch (error) {
       setLifecycleError(normalizeApiError(error));
@@ -140,8 +140,8 @@ export function DeviceDetailPage() {
       });
       setLifecycleMessage(
         result.ok
-          ? `Stop App completed${result.stopped === true ? "; process stopped." : "."}`
-          : `Stop App failed: ${result.warnings.join("; ")}`
+          ? t("device.stopCompleted")
+          : t("device.stopFailed", { reason: result.warnings.join("; ") })
       );
     } catch (error) {
       setLifecycleError(normalizeApiError(error));
@@ -202,7 +202,7 @@ export function DeviceDetailPage() {
             </div>
             <div>
               <dt>{t("common.os")}</dt>
-              <dd>{selectedDevice.osVersion ?? "N/A"}</dd>
+              <dd>{selectedDevice.osVersion ?? t("common.na")}</dd>
             </div>
           </dl>
         ) : null}
@@ -221,7 +221,7 @@ export function DeviceDetailPage() {
           <p className="notice-text">
             PresentMon: {presentMonStatus.status}
             {presentMonStatus.version === undefined ? "" : ` (${presentMonStatus.version})`} -{" "}
-            {presentMonStatus.reason ?? "used only for future FPS/frame-time capture"}
+            {presentMonStatus.reason ?? t("presentMon.defaultReason")}
           </p>
         ) : null}
         {selectedDevice?.platform === "windows" ? (
@@ -286,11 +286,11 @@ export function DeviceDetailPage() {
                 <tr key={target.id}>
                   <td>{target.name}</td>
                   <td>{target.type}</td>
-                  <td>{target.pid ?? "N/A"}</td>
+                   <td>{target.pid ?? t("common.na")}</td>
                   {selectedDevice?.platform === "windows" ? (
                     <td>{sanitizeExecutablePath(target.executablePath)}</td>
                   ) : null}
-                  <td>{typeof target.tags?.launcherComponent === "string" ? target.tags.launcherComponent : "N/A"}</td>
+                   <td>{typeof target.tags?.launcherComponent === "string" ? target.tags.launcherComponent : t("common.na")}</td>
                   <td>
                     <a
                       className="button button-secondary"

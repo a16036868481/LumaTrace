@@ -42,10 +42,10 @@ export function filterSeriesStateByWindow(
   window: MetricWindow,
   nowMs?: number
 ): MetricSeriesState {
-  return {
-    fps: filterSeriesByWindow(state.fps ?? [], window, nowMs),
-    frame_time_ms: filterSeriesByWindow(state.frame_time_ms ?? [], window, nowMs),
-    cpu_percent: filterSeriesByWindow(state.cpu_percent ?? [], window, nowMs),
-    memory_mb: filterSeriesByWindow(state.memory_mb ?? [], window, nowMs)
-  };
+  return Object.fromEntries(
+    Object.entries(state).map(([metricName, series]) => [
+      metricName,
+      filterSeriesByWindow(series, window, nowMs)
+    ])
+  );
 }

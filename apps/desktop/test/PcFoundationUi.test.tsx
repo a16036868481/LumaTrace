@@ -109,7 +109,7 @@ describe("PC Foundation UI", () => {
     expect(screen.getByText("4321")).toBeTruthy();
     expect(screen.getByText(/C:\\Users\\<user>\\/)).toBeTruthy();
     expect(await screen.findByText(/PresentMon: missing/)).toBeTruthy();
-    expect(await screen.findByText(/Windows log access group/)).toBeTruthy();
+    expect(await screen.findByText(/keeps running without administrator privileges/)).toBeTruthy();
     expect(await screen.findByText("timed capture: N/A")).toBeTruthy();
 
     fireEvent.change(screen.getByLabelText("Search processes"), { target: { value: "editor" } });

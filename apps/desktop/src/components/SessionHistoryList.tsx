@@ -3,6 +3,14 @@ import { useI18n } from "../i18n/I18nProvider";
 import { formatDuration } from "../utils/format";
 import { EmptyState } from "./EmptyState";
 
+const historyStatusKeys = {
+  created: "report.status.created",
+  running: "report.status.running",
+  paused: "report.status.paused",
+  stopped: "report.status.stopped",
+  failed: "report.status.failed"
+} as const;
+
 export function SessionHistoryList({
   items,
   localOnly = false,
@@ -41,14 +49,14 @@ export function SessionHistoryList({
                 <strong>{item.name}</strong>
                 <div className="muted-text">{item.sessionId}</div>
               </td>
-              <td>{item.status}</td>
+              <td>{t(historyStatusKeys[item.status])}</td>
               <td>{item.targetName ?? item.targetId}</td>
               <td>
                 {item.startedAt !== undefined && item.endedAt !== undefined
                   ? formatDuration(item.endedAt - item.startedAt)
                   : t("common.na")}
               </td>
-              <td>{item.source}</td>
+              <td>{t(item.source === "server" ? "history.source.server" : "history.source.local")}</td>
               <td>
                 <div className="summary-row">
                   <button className="button button-secondary" type="button" onClick={() => onResume(item)}>

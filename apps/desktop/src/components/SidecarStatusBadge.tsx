@@ -8,9 +8,11 @@ interface SidecarStatusBadgeProps {
 export function SidecarStatusBadge({ status }: SidecarStatusBadgeProps) {
   const { t } = useI18n();
   const label = status?.status ?? "dev";
+  const displayLabel =
+    label === "running" ? t("common.ready") : label === "dev" ? t("common.dev") : label;
   return (
     <span className="status-pill" aria-label={t("common.sidecar")}>
-      {t("common.sidecar")}: {label}
+      {t("common.sidecar")}: {displayLabel}
     </span>
   );
 }

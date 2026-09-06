@@ -52,11 +52,15 @@ describe("accessibility basics", () => {
     expect(screen.getByLabelText("Search app/process")).toBeTruthy();
     expect(screen.getByLabelText("Sample Interval")).toBeTruthy();
     expect(screen.getByText(/Smaller numbers collect more often/)).toBeTruthy();
-    expect(screen.getByLabelText("Report Output Directory")).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Set report folder" })).toBeTruthy();
+    expect(screen.queryByLabelText("Report Output Directory")).toBeNull();
+    expect(screen.queryByRole("button", { name: "Set report folder" })).toBeNull();
+    expect(screen.getByText("Advanced settings (optional)").closest("details")?.hasAttribute("open")).toBe(false);
     expect(screen.queryByLabelText("Session Name")).toBeNull();
     expect(screen.queryByLabelText("Profile")).toBeNull();
-    expect(screen.getByRole("button", { name: "Start Test" })).toBeTruthy();
+    const startButton = screen.getByRole("button", { name: "Start Test" }) as HTMLButtonElement;
+    expect(startButton.disabled).toBe(true);
+    fireEvent.click(screen.getByRole("option", { name: /Example Game/ }));
+    expect(startButton.disabled).toBe(false);
     expect(screen.queryByRole("button", { name: "Keyboard shortcuts" })).toBeNull();
 
     render(
@@ -66,6 +70,6 @@ describe("accessibility basics", () => {
       </>
     );
     expect(screen.getByRole("img", { name: "FPS chart" })).toBeTruthy();
-    expect(screen.getAllByText(/WS:/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Live connection.*connected/)).toBeTruthy();
   });
 });

@@ -29,4 +29,33 @@ describe("RealtimeMetricChart", () => {
     expect(screen.getByText("source: mock")).toBeTruthy();
     expect(() => unmount()).not.toThrow();
   });
+
+  it("shows loading progress until the first numeric value arrives", () => {
+    const { rerender } = render(<RealtimeMetricChart title="CPU" unit="%" series={[]} loading />);
+
+    expect(screen.getByRole("progressbar", { name: "CPU" })).toBeTruthy();
+    expect(screen.queryByRole("img", { name: "CPU" })).toBeNull();
+    expect(screen.queryByText("N/A")).toBeNull();
+
+    rerender(
+      <RealtimeMetricChart
+        title="CPU"
+        unit="%"
+        loading
+        series={[
+          {
+            timestampMs: 1000,
+            value: 12.5,
+            source: "windows:process-times",
+            precision: "estimated",
+            confidence: "medium"
+          }
+        ]}
+      />
+    );
+
+    expect(screen.queryByRole("progressbar", { name: "CPU" })).toBeNull();
+    expect(screen.getByRole("img", { name: "CPU" })).toBeTruthy();
+    expect(screen.getAllByText("12.5%").length).toBeGreaterThan(0);
+  });
 });
